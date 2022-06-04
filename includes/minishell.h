@@ -6,7 +6,7 @@
 /*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 16:43:38 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/03 17:51:59 by estarck          ###   ########.fr       */
+/*   Updated: 2022/06/04 09:51:01 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int		parsing(t_shell *shell);
 
 //Parsing utils
 t_cmd	*add_lst(t_shell *shell);
-int		count_argv(t_shell *shell, char *str, int l);
+int		count_argv(t_shell *shell, char *str);
 int		argv_length(t_shell *shell, char *str);
 
 //Gestion syntax

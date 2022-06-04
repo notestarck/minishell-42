@@ -1,56 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_free.c                                          :+:      :+:    :+:   */
+/*   find_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/03 15:17:40 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/04 13:59:41 by estarck          ###   ########.fr       */
+/*   Created: 2022/06/04 14:05:01 by estarck           #+#    #+#             */
+/*   Updated: 2022/06/04 14:12:06 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	free_dchar(char **str)
+static	void find_path(t_shell *shell, t_cmd *cmd)
 {
-	int	i;
+	DIR				*dir;
+	struct dirent	*dp;
 
-	i = 0;
-	while (str[i])
+	while (*shell->env != NULL)
 	{
-		free(str[i]);
-		i++;
+		dir = opendir(*shell->env);
+		if (dir == NULL)
+			perror ("error opendir");
+		dp = readdir(dir);
+		
 	}
-	free(str[i]);
-	free(str);
 }
 
-static void	free_char(char *str)
-{
-	free(str);
-}
-
-static void	free_cmd(t_shell *shell)
+void	find_cmd(t_shell *shell)
 {
 	t_cmd	*tmp;
-	t_cmd	*n_tmp;
 
 	tmp = shell->cmd;
-	n_tmp = NULL;
-	while (tmp != NULL)
+	while (tmp)
 	{
-		n_tmp = tmp->next;
-		free_char(tmp->cmd);
-		free_dchar(tmp->argv);
-		free(tmp);
-		tmp = n_tmp;
+		
+		tmp = tmp->next;
 	}
-	shell->cmd = NULL;
-}
-
-void	ft_free(t_shell *shell)
-{
-	if (shell->cmd != NULL)
-		free_cmd(shell);
 }

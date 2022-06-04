@@ -6,7 +6,7 @@
 /*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 14:00:33 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/03 18:35:16 by estarck          ###   ########.fr       */
+/*   Updated: 2022/06/04 13:57:09 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,19 +26,19 @@ int	argv_length(t_shell *shell, char *str)
 	return (l);
 }
 
-int	count_argv(t_shell *shell, char *str, int l)
+int	count_argv(t_shell *shell, char *str)
 {
 	int	i;
 	int	c;
 
 	i = 0;
 	c = 0;
-	while (i < l)
+	while (str[i])
 	{
 		if (str[i] != ' ')
 		{
 			c++;
-			while (str[i] != ' ' && i <= l)
+			while (str[i] != ' ' && str[i])
 			{
 				if (str[i] == '\'' || str[i] == '"')
 					i = check_quote(shell, &str[i]) + i;
@@ -47,7 +47,7 @@ int	count_argv(t_shell *shell, char *str, int l)
 				i++;
 			}
 		}
-		while (str[i] == ' ' && i <= l)
+		while (str[i] == ' ' && str[i])
 			i++;
 	}
 	return (c);
@@ -75,5 +75,6 @@ t_cmd	*add_lst(t_shell *shell)
 		ft_perror("error : malloc", shell, 1);
 		exit (0);
 	}
+	tmp->next = NULL;
 	return (tmp);
 }
