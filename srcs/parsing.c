@@ -6,7 +6,7 @@
 /*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 09:17:09 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/03 18:34:03 by estarck          ###   ########.fr       */
+/*   Updated: 2022/06/04 09:19:04 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,29 +14,10 @@
 
 static void	cpy_args(t_shell *shell, char *str, int l)
 {
-	int		i;
-	int		j;
-	int		lgt;
-	int		c_arg;
 	t_cmd	*tmp;
 
-	i = 0;
-	j = 0;
-	lgt = 0;
-	c_arg = count_argv(shell, str, l);
 	tmp = add_lst(shell);
-	tmp->argv = malloc(sizeof(char *) * c_arg + 1);
-	while (i < c_arg)
-	{
-		while (str[j] == ' ' && str[j])
-			j++;
-		lgt = argv_length(shell, &str[j]);
-		tmp->argv[i] = malloc(sizeof(char) * lgt + 1);
-		ft_strlcpy(tmp->argv[i], &str[j], lgt + 1);
-		j = lgt + j;
-		i++;
-	}
-	tmp->argv[i] = NULL;
+	tmp->argv = malloc(sizeof(char *) * )
 }
 
 static int	find_pip(t_shell *shell, char *str)

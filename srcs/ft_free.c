@@ -6,7 +6,7 @@
 /*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 15:17:40 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/03 18:36:38 by estarck          ###   ########.fr       */
+/*   Updated: 2022/06/04 09:06:10 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ static void	free_dchar(char **str)
 		i++;
 	}
 	printf("%s\n", str[i]);
+	free(str[i]);
 	free(str);
 }
 
