@@ -6,7 +6,7 @@
 /*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 09:17:09 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/04 13:59:11 by estarck          ###   ########.fr       */
+/*   Updated: 2022/06/06 10:13:28 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static void	cpy_args(t_shell *shell, char *str, int l)
 		i = 0;
 	}
 	tmp->argv[c_arg] = NULL;
-	free(arg - l);
+	//free(arg - l); trouver une solution pour free
 }
 
 static int	find_pip(t_shell *shell, char *str)

@@ -6,7 +6,7 @@
 /*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 16:43:38 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/04 09:51:01 by estarck          ###   ########.fr       */
+/*   Updated: 2022/06/06 12:21:43 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ typedef struct s_cmd
 typedef struct s_shell
 {
 	char	**env;
-	char	*path;
+	char	**path;
 	char	*pwd;
 	char	*ret_prompt;
 	int		nbr_sep;
@@ -95,6 +95,12 @@ int		argv_length(t_shell *shell, char *str);
 //Gestion syntax
 int		check_error(t_shell *shell);
 int		check_quote(t_shell *shell, char *str);
+
+//path cmd
+void	find_cmd(t_shell *shell);
+
+//Exec cmd
+void		exec_all(t_shell *shell);
 
 //Gestion free
 void	ft_free(t_shell *shell);

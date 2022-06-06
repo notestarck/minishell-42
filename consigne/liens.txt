@@ -11,3 +11,5 @@ http://manpagesfr.free.fr/man/man2/pipe.2.html
 https://github.com/iciamyplant/Minishell
 
 https://github.com/adbenoit-9
+
+https://n-pn.fr/t/2318-c--programmation-systeme-execve-fork-et-pipe

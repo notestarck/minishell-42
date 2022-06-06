@@ -6,7 +6,7 @@
 /*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 14:00:33 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/04 13:57:09 by estarck          ###   ########.fr       */
+/*   Updated: 2022/06/06 10:08:27 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	count_argv(t_shell *shell, char *str)
 
 	i = 0;
 	c = 0;
-	while (str[i])
+	while (str[i] && str[i] != '|')
 	{
 		if (str[i] != ' ')
 		{
@@ -42,8 +42,6 @@ int	count_argv(t_shell *shell, char *str)
 			{
 				if (str[i] == '\'' || str[i] == '"')
 					i = check_quote(shell, &str[i]) + i;
-				if (str[i + 1] == '|')
-					c++;
 				i++;
 			}
 		}

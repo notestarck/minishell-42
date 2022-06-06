@@ -6,7 +6,7 @@
 /*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 09:09:00 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/04 13:44:42 by estarck          ###   ########.fr       */
+/*   Updated: 2022/06/06 12:21:10 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 static t_shell	*init_mshell(char **envp)
 {
+	char	*tmp;
 	t_shell	*shell;
 
 	shell = malloc(sizeof(t_shell));
@@ -24,7 +25,8 @@ static t_shell	*init_mshell(char **envp)
 	}
 	shell->env = envp;
 	shell->pwd = getenv("PWD");
-	shell->pwd = getenv("PATH");
+	tmp = getenv("PATH");
+	shell->path = ft_split(ft_strchr(tmp, '/'), ':');
 	return (shell);
 }
 
@@ -46,7 +48,11 @@ static int	launch_mshell(t_shell *shell)
 	ret = 0;
 	(void)shell;
 	if (parsing(shell))
+	{
+		find_cmd(shell);
+		exec_all(shell);
 		ft_free(shell);
+	}
 
 	return (ret);
 }
