@@ -6,7 +6,7 @@
 /*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 09:09:00 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/07 09:58:26 by estarck          ###   ########.fr       */
+/*   Updated: 2022/06/07 16:14:45 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	main(int argc, char **argv, char **envp)
 	while (42)
 	{
 		display_prompt(shell);
-		if (launch_mshell(shell) == -1)
+		if (launch_mshell(shell))
 			break ;
 	}
 	//faire les derniers free si besoin genre t_shell

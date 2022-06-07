@@ -6,7 +6,7 @@
 /*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 16:43:38 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/07 13:22:18 by estarck          ###   ########.fr       */
+/*   Updated: 2022/06/07 15:54:42 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ typedef struct s_shell
 {
 	char	**env;
 	char	*pwd;
+	int		nbr_pipe;
 	char	*builtins[8];
 	char	*ret_prompt;
 	int		error;

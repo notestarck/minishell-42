@@ -6,7 +6,7 @@
 /*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 14:05:01 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/07 09:51:29 by estarck          ###   ########.fr       */
+/*   Updated: 2022/06/07 14:25:53 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static int	find_cmd(t_shell *shell, t_cmd *cmd)
 		i++;
 	while (shell->builtins[y] != NULL)
 	{
-		if (!ft_strncmp(shell->builtins[y], &cmd->argv[i], ft_strlen(shell->builtins[i])))
+		if (!ft_strncmp(&cmd->argv[i], shell->builtins[y], ft_strlen(shell->builtins[i]) + 1))
 		{
 			return (0);
 		}
