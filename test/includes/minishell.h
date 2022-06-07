@@ -6,7 +6,7 @@
 /*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 16:43:38 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/07 08:35:42 by estarck          ###   ########.fr       */
+/*   Updated: 2022/06/07 13:22:18 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdio.h>
+# include <fcntl.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <dirent.h>
@@ -62,7 +63,7 @@ typedef enum e_bool
 
 typedef struct s_cmd
 {
-	char			*cmd[4];
+	char			**cmd;
 	char			*argv;
 	//char			*input;
 	//char			*output;

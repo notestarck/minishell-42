@@ -6,7 +6,7 @@
 /*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 09:11:42 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/07 08:24:01 by estarck          ###   ########.fr       */
+/*   Updated: 2022/06/07 14:14:17 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,18 +35,17 @@ int	exec_cmd(t_shell *shell)
 		if (pid == 0)
 		{
 			close (pipefd[READ]);
-			if (cmd->next != NULL)
-			{
-				dup2(pipefd[WRITE], STDOUT_FILENO);
-			}
-			execve(cmd->cmd[0], cmd->cmd, shell->env);
+			dup2(pipefd[WRITE], STDOUT_FILENO);
+			execve(cmd->cmd[0], cmd->cmd, NULL);
 			perror("error : execve");
 		}
 		else
 		{
-			close (pipefd[WRITE]);
+      		close(pipefd[WRITE]);
 			dup2(pipefd[READ], STDIN_FILENO);
-			wait (NULL);
+			waitpid (-1, NULL, 0);
+			if (cmd->next == NULL)
+				execve(cmd->cmd[0], cmd->cmd, NULL);
 			cmd = cmd->next;
 		}
 	}
@@ -64,10 +63,10 @@ void	exec_all(t_shell *shell)
 	}
 	if (pid == 0)
 	{
-		exec_cmd(shell);
+			exec_cmd(shell);
 	}
 	else
 	{
-		wait (NULL);
+		waitpid (-1, NULL, 0);
 	}
 }

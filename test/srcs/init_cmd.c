@@ -6,7 +6,7 @@
 /*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 14:05:01 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/07 08:35:38 by estarck          ###   ########.fr       */
+/*   Updated: 2022/06/07 09:51:29 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 static void	write_cmd(t_cmd *cmd)
 {
+	cmd->cmd = malloc(sizeof(char *) * 4);
 	cmd->cmd[0] = "/bin/bash";
 	cmd->cmd[1] = "-c";
 	//cmd->cmd[2] = "-i";

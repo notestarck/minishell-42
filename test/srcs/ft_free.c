@@ -6,7 +6,7 @@
 /*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 15:17:40 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/07 07:43:09 by estarck          ###   ########.fr       */
+/*   Updated: 2022/06/07 09:58:57 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ static void	free_cmd(t_shell *shell)
 	while (tmp != NULL)
 	{
 		n_tmp = tmp->next;
-		//free_dchar(tmp->cmd);
 		free_char(tmp->argv);
+		free(tmp->cmd);
 		free(tmp);
 		tmp = n_tmp;
 	}

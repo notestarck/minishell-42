@@ -6,7 +6,7 @@
 /*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 09:17:09 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/07 08:45:26 by estarck          ###   ########.fr       */
+/*   Updated: 2022/06/07 14:14:31 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@ static void	cpy_args(t_shell *shell, char *str, int l)
 	t_cmd	*tmp;
 
 	tmp = add_lst(shell);
-	//if (str[l] == '|')
-		//l--;
 	tmp->argv = malloc(sizeof(char) * l + 1);
 	ft_strlcpy(tmp->argv, str, l);
 }
