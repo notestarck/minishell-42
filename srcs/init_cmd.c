@@ -6,11 +6,19 @@
 /*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 14:05:01 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/07 18:20:52 by estarck          ###   ########.fr       */
+/*   Updated: 2022/06/08 11:48:51 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static void	write_blt(t_cmd *cmd, int blt)
+{
+	cmd->cmd = malloc(sizeof (char *) * 2);
+	cmd->cmd[0] = cmd->argv;
+	cmd->cmd[1] = NULL;
+	cmd->blt = blt;
+}
 
 static void	write_cmd(t_cmd *cmd)
 {
@@ -21,6 +29,7 @@ static void	write_cmd(t_cmd *cmd)
 	//cmd->cmd[2] = "-s";
 	cmd->cmd[2] = cmd->argv;
 	cmd->cmd[3] = NULL;
+	cmd->blt = 9;
 }
 
 static int	find_cmd(t_shell *shell, t_cmd *cmd)
@@ -34,8 +43,11 @@ static int	find_cmd(t_shell *shell, t_cmd *cmd)
 		i++;
 	while (shell->builtins[y] != NULL)
 	{
-		if (ft_memcmp(shell->builtins[y], &cmd->argv[i], ft_strlen(shell->builtins[y])) == 0)
+		if (!ft_memcmp(shell->builtins[y], &cmd->argv[i], ft_strlen(shell->builtins[y])))
+		{
+			write_blt(cmd, y);
 			return (0);
+		}
 		y++;
 	}
 	return (1);
@@ -50,8 +62,6 @@ void	init_cmd(t_shell *shell)
 	{
 		if (find_cmd(shell, tmp))
 			write_cmd(tmp);
-		else
-			printf("a coder\n");
 		tmp = tmp->next;
 	}
 }

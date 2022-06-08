@@ -6,7 +6,7 @@
 /*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 16:43:38 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/06 12:21:43 by estarck          ###   ########.fr       */
+/*   Updated: 2022/06/08 12:10:35 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdio.h>
+# include <fcntl.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <dirent.h>
@@ -62,21 +63,19 @@ typedef enum e_bool
 
 typedef struct s_cmd
 {
-	char			*cmd;
-	char			**argv;
-	//char			*input;
-	//char			*output;
-	//struct s_cmd	*prev;
+	char			**cmd;
+	char			*argv;
+	int				blt;
 	struct s_cmd	*next;
 }	t_cmd;
 
 typedef struct s_shell
 {
 	char	**env;
-	char	**path;
 	char	*pwd;
+	int		nbr_pipe;
+	char	*builtins[8];
 	char	*ret_prompt;
-	int		nbr_sep;
 	int		error;
 	t_cmd	*cmd;
 }	t_shell;
@@ -97,14 +96,16 @@ int		check_error(t_shell *shell);
 int		check_quote(t_shell *shell, char *str);
 
 //path cmd
-void	find_cmd(t_shell *shell);
+void	init_cmd(t_shell *shell);
 
 //Exec cmd
-void		exec_all(t_shell *shell);
+void	exec_all(t_shell *shell);
+void	pipefd_manag(t_shell *shell, t_cmd *cmd, int *pipefd, int j);
+
+//blt
+void	blt_pwd(t_shell *shell);
 
 //Gestion free
 void	ft_free(t_shell *shell);
-
-
 
 #endif

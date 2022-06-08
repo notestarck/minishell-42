@@ -6,7 +6,7 @@
 /*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 09:09:00 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/06 12:21:10 by estarck          ###   ########.fr       */
+/*   Updated: 2022/06/08 12:33:18 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 static t_shell	*init_mshell(char **envp)
 {
-	char	*tmp;
 	t_shell	*shell;
 
 	shell = malloc(sizeof(t_shell));
@@ -25,14 +24,20 @@ static t_shell	*init_mshell(char **envp)
 	}
 	shell->env = envp;
 	shell->pwd = getenv("PWD");
-	tmp = getenv("PATH");
-	shell->path = ft_split(ft_strchr(tmp, '/'), ':');
+	shell->builtins[0] = "echo";
+	shell->builtins[1] = "cd";
+	shell->builtins[2] = "pwd";
+	shell->builtins[3] = "export";
+	shell->builtins[4] = "unset";
+	shell->builtins[5] = "env";
+	shell->builtins[6] = "exit";
+	shell->builtins[7] = NULL;
 	return (shell);
 }
 
 static void	display_prompt(t_shell *shell)
 {
-	shell->ret_prompt = readline("mmini_shell $ ");
+	shell->ret_prompt = readline("mini_shell $> ");
 	if (shell->ret_prompt == NULL)
 	{
 		ft_perror(NULL, shell, 1);
@@ -49,7 +54,7 @@ static int	launch_mshell(t_shell *shell)
 	(void)shell;
 	if (parsing(shell))
 	{
-		find_cmd(shell);
+		init_cmd(shell);
 		exec_all(shell);
 		ft_free(shell);
 	}
@@ -67,7 +72,7 @@ int	main(int argc, char **argv, char **envp)
 	while (42)
 	{
 		display_prompt(shell);
-		if (launch_mshell(shell) == -1)
+		if (launch_mshell(shell))
 			break ;
 	}
 	//faire les derniers free si besoin genre t_shell

@@ -1,26 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstsize.c                                       :+:      :+:    :+:   */
+/*   blt1.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/01 18:03:24 by estarck           #+#    #+#             */
-/*   Updated: 2022/03/02 14:31:07 by estarck          ###   ########.fr       */
+/*   Created: 2022/06/08 11:52:10 by estarck           #+#    #+#             */
+/*   Updated: 2022/06/08 13:05:47 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-int	ft_lstsize(t_list *lst)
+void	pipefd_manag(t_shell *shell, t_cmd *cmd, int *pipefd, int j)
 {
 	int	i;
 
 	i = 0;
-	while (lst != 0x0)
-	{
-		lst = (*lst).next;
+	if (cmd->next)
+		dup2 (pipefd[j + 1], STDOUT_FILENO);
+	if (j != 0)
+		dup2(pipefd[j - 2], STDIN_FILENO);
+	while (i < 2 * shell->nbr_pipe)
+		close (pipefd[i++]);
+}
+
+void	blt_pwd(t_shell *shell)
+{
+	int	i;
+
+	i = 0;
+	while (ft_strncmp(shell->env[i], "PWD=", 4))
 		i++;
-	}
-	return (i);
+	ft_putstr_fd(shell->env[i] + 4, 1);
+	ft_putchar_fd('\n', 1);
 }

@@ -6,7 +6,7 @@
 /*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 09:17:09 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/06 10:13:28 by estarck          ###   ########.fr       */
+/*   Updated: 2022/06/07 16:14:52 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,31 +14,31 @@
 
 static void	cpy_args(t_shell *shell, char *str, int l)
 {
-	int		i;
-	int		c_arg;
-	int		nb_arg;
-	char	*arg;
 	t_cmd	*tmp;
 
-	i = 0;
-	c_arg = -1;
-	arg = malloc(sizeof(char) * l + 1);
-	ft_strlcpy(arg, str, l + 1);
-	nb_arg = count_argv(shell, arg);
 	tmp = add_lst(shell);
-	tmp->argv = malloc(sizeof(char *) * nb_arg + 1);
-	while (++c_arg < nb_arg)
+	tmp->argv = malloc(sizeof(char) * l + 1);
+	ft_strlcpy(tmp->argv, str, l);
+}
+
+static int	count_pip(t_shell *shell, char *str)
+{
+	int	i;
+	int	p;
+
+	i = 0;
+	p = 0;
+	while (str[i] != '\0')
 	{
-		while (*arg == ' ' && arg)
-			arg++;
-		i = argv_length(shell, arg);
- 		tmp->argv[c_arg] = malloc(sizeof(char) * i + 1);
- 		ft_strlcpy(tmp->argv[c_arg], arg, i + 1);
-		arg = arg + i;
-		i = 0;
+		if (str[i] == '\'' || str[i] == '"')
+			i = check_quote(shell, &str[i]) + i;
+		if (str[i] == '|' && str[i + 1] != '|')
+			p++;
+		else if (str[i] == '|' && str[i + 1] == '|')
+			i++;
+		i++;
 	}
-	tmp->argv[c_arg] = NULL;
-	//free(arg - l); trouver une solution pour free
+	return (p);
 }
 
 static int	find_pip(t_shell *shell, char *str)
@@ -52,9 +52,7 @@ static int	find_pip(t_shell *shell, char *str)
 			l = check_quote(shell, &str[l]) + l;
 		l++;
 	}
-	if (str[l] == '|')
-		l++;
-	return (l);
+	return (l + 1);
 }
 
 int	parsing(t_shell *shell)
@@ -72,5 +70,6 @@ int	parsing(t_shell *shell)
 		cpy_args(shell, &shell->ret_prompt[i], l);
 		i = l + i;
 	}
+	shell->nbr_pipe = count_pip(shell, shell->ret_prompt);
 	return (1);
 }

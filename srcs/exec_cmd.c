@@ -6,68 +6,61 @@
 /*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 09:11:42 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/06 12:20:58 by estarck          ###   ########.fr       */
+/*   Updated: 2022/06/08 12:10:28 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	exec_cmd(t_shell *shell)
+static void	run_builtin(t_shell *shell, t_cmd *cmd, int *pipefd, int j)
 {
+	pipefd_manag(shell, cmd, pipefd, j);
+	if (cmd->blt == PWD)
+		blt_pwd(shell);
+	else
+		printf("a coder\n");
+}
+
+static void	run_execve(t_shell *shell, t_cmd *cmd, int *pipefd, int j)
+{
+	pipefd_manag(shell, cmd, pipefd, j);
+	execve (*cmd->cmd, cmd->cmd, shell->env);
+}
+
+static void	run_pipe(t_shell *shell)
+{
+	int		i;
 	pid_t	pid;
-	int		pipefd[2];
+	int		pipefd[2 * shell->nbr_pipe];
 	t_cmd	*cmd;
+	int	j = 0;
 
 	cmd = shell->cmd;
-	while (cmd != NULL)
+	i = 0;
+	for(i = 0; i < (shell->nbr_pipe); i++)
+		pipe(pipefd + i * 2);
+	while (cmd)
 	{
-		if (pipe(pipefd) == -1)
-		{
-			perror("error : pipe");
-			return (0);
-		}
 		pid = fork();
-		if (pid == -1)
-		{
-			perror ("error : fork");
-			return (0);
-		}
+		if (pid < 0)
+			perror("error");
 		if (pid == 0)
 		{
-			close (pipefd[READ]);
-			if (cmd->next != NULL)
-			{
-				dup2(pipefd[WRITE], STDOUT_FILENO);
-			}
-			execve(cmd->cmd, cmd->argv, NULL);
-			perror("error : execve");
+			if (cmd->blt == 9)
+				run_execve(shell, cmd, pipefd, j);
+			else
+				run_builtin(shell, cmd, pipefd, j);
 		}
-		else
-		{
-			close (pipefd[WRITE]);
-			dup2(pipefd[READ], STDIN_FILENO);
-			wait (NULL);
-			cmd = cmd->next;
-		}
+		cmd = cmd->next;
+		j += 2;
 	}
-	return (0);
+	for(i = 0; i < 2 * shell->nbr_pipe; i++)
+		close(pipefd[i]);
+	for(i = 0; i < shell->nbr_pipe + 1; i++)
+		waitpid(-1, 0, 0);
 }
 
 void	exec_all(t_shell *shell)
 {
-	pid_t	pid;
-
-	pid = fork();
-	if (pid == -1)
-	{
-		perror ("error : fork");
-	}
-	if (pid == 0)
-	{
-		exec_cmd(shell);
-	}
-	else
-	{
-		wait (NULL);
-	}
+	run_pipe(shell);
 }

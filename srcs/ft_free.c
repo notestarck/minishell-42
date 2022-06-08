@@ -6,13 +6,13 @@
 /*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 15:17:40 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/04 13:59:41 by estarck          ###   ########.fr       */
+/*   Updated: 2022/06/07 09:58:57 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	free_dchar(char **str)
+/*static void	free_dchar(char **str)
 {
 	int	i;
 
@@ -24,7 +24,7 @@ static void	free_dchar(char **str)
 	}
 	free(str[i]);
 	free(str);
-}
+}*/
 
 static void	free_char(char *str)
 {
@@ -41,8 +41,8 @@ static void	free_cmd(t_shell *shell)
 	while (tmp != NULL)
 	{
 		n_tmp = tmp->next;
-		free_char(tmp->cmd);
-		free_dchar(tmp->argv);
+		free_char(tmp->argv);
+		free(tmp->cmd);
 		free(tmp);
 		tmp = n_tmp;
 	}
