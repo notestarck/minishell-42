@@ -20,10 +20,10 @@ static int	valid_path(char *av)
 	if (stat(av, &buf) == -1)
 	{
 		perror("error stat");
-		return (0);
+		return (1);
 	}
 	else
-		return (1);
+		return (0);
 }
 
 //cherche la cmd dans les path de l'env
