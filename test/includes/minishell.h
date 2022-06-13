@@ -6,7 +6,7 @@
 /*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:35:23 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/09 11:36:38 by estarck          ###   ########.fr       */
+/*   Updated: 2022/06/13 13:59:22 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,17 @@ typedef enum e_bool
 	RIGHT
 }	t_bool;
 
+enum e_write
+{
+	READ,
+	WRITE
+};
+
 typedef struct s_lst
 {
 	char			*p_cmd;
 	char			**argv;
+	int				pipefd[2];
 	int				error;
 	struct s_lst	*prev;
 	struct s_lst	*next;
