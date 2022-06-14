@@ -6,17 +6,28 @@
 /*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 10:43:07 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/13 15:38:59 by estarck          ###   ########.fr       */
+/*   Updated: 2022/06/14 13:12:57 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	exec_cmd(t_data *shell)
+static void	exec_cmd(t_data *shell, t_lst *cmd)
 {
+	if (cmd->next)
+		dup2(cmd->pipefd[WRITE], STDOUT_FILENO);
+	if (cmd->prev != NULL)
+		dup2(cmd->prev->pipefd[READ], STDIN_FILENO);
+	close (cmd->pipefd[READ]);
+	if (execve(cmd->p_cmd, cmd->argv, shell->env) == -1)
+		perror("error : execve");
+}
+
+void run_cmd(t_data *shell)
+{
+	t_lst	*cmd;
 	pid_t	pid;
 	int		status;
-	t_lst	*cmd;
 
 	cmd = shell->cmd;
 	while (cmd)
@@ -27,13 +38,13 @@ void	exec_cmd(t_data *shell)
 			perror ("fork");
 		else if (pid == 0)
 		{
-			if (cmd->next)
-				dup2(cmd->pipefd[WRITE], STDOUT_FILENO);
-			if (cmd->prev != NULL)
-				dup2(cmd->prev->pipefd[READ], STDIN_FILENO);
-			close (cmd->pipefd[READ]);
-			if (execve(cmd->p_cmd, cmd->argv, shell->env) == -1)
-				perror("error : execve");
+			if (cmd->built == 9)
+				exec_cmd(shell, cmd);
+			else
+			{
+				exec_blt(shell, cmd);
+				return ;
+			}
 		}
 		else
 		{

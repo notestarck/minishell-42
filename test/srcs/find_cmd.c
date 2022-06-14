@@ -19,7 +19,7 @@ static int	valid_path(char *av)
 
 	if (stat(av, &buf) == -1)
 	{
-		perror("error stat");
+		perror("error cmd");
 		return (1);
 	}
 	else
@@ -60,23 +60,21 @@ int	find_cmd(t_data *shell)
 	tmp = shell->cmd;
 	while (tmp)
 	{
-		if (ft_strchr(tmp->argv[0], 47))
+		if (init_blt(shell, tmp) == -1)
 		{
-			if (valid_path(tmp->argv[0]))
+			if (ft_strchr(tmp->argv[0], 47))
 			{
-				perror("error cmd");
-				return (0);
+				if (valid_path(tmp->argv[0]))
+					return (0);
+				tmp->p_cmd = tmp->argv[0];
 			}
-			tmp->p_cmd = tmp->argv[0];
-		}
-		else
-		{
-			tmp->p_cmd = find_path(shell->env_path, tmp->argv[0]); // Penser a free
-			if (tmp->p_cmd == NULL)
+			else
 			{
-				perror("error cmd");
-				return (0);
+				tmp->p_cmd = find_path(shell->env_path, tmp->argv[0]); // Penser a free
+				if (tmp->p_cmd == NULL)
+					return (0);
 			}
+			tmp->built = 9;
 		}
 		tmp = tmp->next;
 	}

@@ -12,9 +12,13 @@ SRCS	=	main.c \
 			parsing.c \
 			parsing_utils.c \
 			syntax_error.c \
+			init_blt.c \
 			exec_cmd.c \
 			free_shell.c \
-			find_cmd.c
+			find_cmd.c \
+			exec_blt.c \
+			cd.c \
+			pwd.c
 _SRCS	=	$(patsubst %,$(SRCS_D)/%,$(SRCS))
 
 OBJS_D	=	./objs
