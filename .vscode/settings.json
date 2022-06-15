@@ -2,6 +2,7 @@
     "files.associations": {
 		"minishell.h": "c",
 		"complex": "c",
-		"exception": "c"
+		"exception": "c",
+		"cstdio": "c"
 	}
 }

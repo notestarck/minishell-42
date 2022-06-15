@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+        */
+/*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 10:43:07 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/15 16:33:44 by reclaire         ###   ########.fr       */
+/*   Updated: 2022/06/15 18:26:53y estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	exec_cmd(t_data *shell, t_lst *cmd)
+static void	fd_manager(t_data *shell, t_lst *cmd)
 {
 	t_lst	*tmp;
 
@@ -23,10 +23,14 @@ static void	exec_cmd(t_data *shell, t_lst *cmd)
 		dup2(cmd->pipefd[WRITE], STDOUT_FILENO);
 	while (tmp)
 	{
-		close(cmd->pipefd[READ]);
-		close(cmd->pipefd[WRITE]);
+		close(tmp->pipefd[READ]);
+		close(tmp->pipefd[WRITE]);
 		tmp = tmp->next;
 	}
+}
+
+static void	exec_cmd(t_data *shell, t_lst *cmd)
+{
 	if (execve(cmd->p_cmd, cmd->argv, shell->env) == -1)
 		perror("error : execve");
 }
@@ -46,6 +50,7 @@ void run_cmd(t_data *shell)
 			perror ("fork");
 		else if (pid == 0)
 		{
+			fd_manager(shell, cmd);
 			if (cmd->built == 9)
 				exec_cmd(shell, cmd);
 			else
