@@ -46,6 +46,8 @@ void	env_new(t_data *shell, char *key, char *value)
 	}
 	out[i] = value;
 	out[i + 1] = NULL;
+	free(shell->env);
+	shell->env = out;
 }
 
 /* Set a env variable, identified by "key" to "value". 
