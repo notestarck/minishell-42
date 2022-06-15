@@ -27,6 +27,34 @@ char	*env_get(t_data *shell, char *key)
 	return (NULL);
 }
 
+void	env_del(t_data *shell, char *key)
+{
+	int		size;
+	int		i;
+	int		j;
+	char	**out;
+
+	size = 0;
+	while (shell->env[size])
+		size++;
+	out = malloc(sizeof(char *) * size);
+	i = 0;
+	j = 0;
+	while (i < size)
+	{
+		if (!ft_strncmp(shell->env[i + j], key, ft_strlen(key)))
+		{
+			free(shell->env[i + j]);
+			j++;
+			continue ;
+		}
+		out[i] = shell->env[i + j];
+		i++;
+	}
+	free(shell->env);
+	shell->env = out;
+}
+
 void	env_new(t_data *shell, char *key, char *value)
 {
 	int		size;
@@ -46,6 +74,8 @@ void	env_new(t_data *shell, char *key, char *value)
 	}
 	out[i] = value;
 	out[i + 1] = NULL;
+	free(shell->env);
+	shell->env = out;
 }
 
 /* Set a env variable, identified by "key" to "value". 
