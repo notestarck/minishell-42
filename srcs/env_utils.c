@@ -33,6 +33,7 @@ void	env_del(t_data *shell, char *key)
 	int		i;
 	int		j;
 	char	**out;
+	char	*curr;
 
 	size = 0;
 	while (shell->env[size])
@@ -42,15 +43,18 @@ void	env_del(t_data *shell, char *key)
 	j = 0;
 	while (i < size)
 	{
-		if (!ft_strncmp(shell->env[i + j], key, ft_strlen(key)))
+		curr = ft_substr(shell->env[i + j], 0, ft_strlen(key));
+		if (!ft_strncmp(curr, key, ft_strlen(key) + 1))
 		{
 			free(shell->env[i + j]);
 			j++;
-			continue ;
+			break ;
 		}
-		out[i] = shell->env[i + j];
+		out[i] = ft_strdup(shell->env[i + j]);
+		free(shell->env[i + j]);
 		i++;
 	}
+	out[i] = NULL;
 	free(shell->env);
 	shell->env = out;
 }
@@ -60,6 +64,7 @@ void	env_new(t_data *shell, char *key, char *value)
 	int		size;
 	int		i;
 	char	**out;
+	char	*tmp;
 
 	size = 0;
 	while (shell->env[size])
@@ -67,12 +72,14 @@ void	env_new(t_data *shell, char *key, char *value)
 	size += 2;
 	out = malloc(sizeof(char *) * size);
 	i = 0;
-	while (i < size - 1)
+	while (i < size - 2)
 	{
 		out[i] = shell->env[i];
 		i++;
 	}
-	out[i] = value;
+	tmp = ft_strjoin(key, "=");
+	out[i] = ft_strjoin(tmp, value);
+	free(tmp);
 	out[i + 1] = NULL;
 	free(shell->env);
 	shell->env = out;
@@ -84,11 +91,13 @@ void	env_set(t_data *shell, char *key, char *value)
 {
 	int		i;
 	char	*tmp;
+	char	*curr;
 
 	i = 0;
 	while (shell->env[i])
 	{
-		if (!ft_strncmp(shell->env[i], key, ft_strlen(key)))
+		curr = ft_substr(shell->env[i], 0, ft_strlen(key));
+		if (!ft_strncmp(curr, key, ft_strlen(key) + 1))
 		{
 			free(shell->env[i]);
 			shell->env[i] = ft_strdup(key);
@@ -98,6 +107,7 @@ void	env_set(t_data *shell, char *key, char *value)
 			free(tmp);
 			return ;
 		}
+		free(curr);
 		i++;
 	}
 	env_new(shell, key, value);
