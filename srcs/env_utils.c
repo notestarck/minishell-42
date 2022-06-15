@@ -30,12 +30,22 @@ char	*env_get(t_data *shell, char *key)
 void	env_new(t_data *shell, char *key, char *value)
 {
 	int		size;
-	char	*out;
+	int		i;
+	char	**out;
 
 	size = 0;
 	while (shell->env[size])
 		size++;
-	
+	size += 2;
+	out = malloc(sizeof(char *) * size);
+	i = 0;
+	while (i < size - 1)
+	{
+		out[i] = shell->env[i];
+		i++;
+	}
+	out[i] = value;
+	out[i + 1] = NULL;
 }
 
 /* Set a env variable, identified by "key" to "value". 
@@ -43,7 +53,6 @@ void	env_new(t_data *shell, char *key, char *value)
 void	env_set(t_data *shell, char *key, char *value)
 {
 	int		i;
-	char	*env_data;
 	char	*tmp;
 
 	i = 0;
