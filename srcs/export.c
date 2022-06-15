@@ -1,25 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memcpy.c                                        :+:      :+:    :+:   */
+/*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/22 12:43:24 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/07 18:13:23 by estarck          ###   ########.fr       */
+/*   Created: 2022/06/15 16:00:51 by estarck           #+#    #+#             */
+/*   Updated: 2022/06/15 16:25:25 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-void	*ft_memcpy(void *dst, const void *src, size_t n)
+void	exec_export(t_data *shell, t_lst *cmd)
 {
-	void	*d;
-
-	d = dst;
-	if (!dst && !src)
-		return (0);
-	while (n-- > 0)
-		*(char *)d++ = *(char *)src++;
-	return (dst);
+	(void)shell;
+	printf("%s\n", cmd->argv[1]);
 }

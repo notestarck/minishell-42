@@ -1,22 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_blt.c                                         :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/14 12:43:30 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/14 17:31:16 by estarck          ###   ########.fr       */
+/*   Created: 2022/06/15 11:57:56 by estarck           #+#    #+#             */
+/*   Updated: 2022/06/15 15:55:51 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+# include <unistd.h>
+# include <stdlib.h>
+# include <stdio.h>
 
-void	exec_blt(t_data *shell, t_lst *cmd)
+static void init_fork(char **envp)
 {
-	if (cmd->built == 1)
-		exec_cd(shell, cmd);
-	else if (cmd->built == 2)
-		exec_pwd(shell, cmd);
-	return ;
+	pid_t	pid;
+	char	*sh[4];
+
+	sh [0] = "/bin/sh";
+	sh [1] = "-c";
+	sh [2] = "bash --rcfile  ./.sshrc";
+	sh [3] = NULL;
+	pid = fork();
+	if (pid == 0)
+		execve("/bin/sh", sh, envp);
+	else
+		wait(NULL);
+}
+
+int	main(int argc, char **argv, char **envp)
+{
+	init_fork(envp);
+	return (0);
 }

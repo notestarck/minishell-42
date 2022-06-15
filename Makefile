@@ -8,14 +8,18 @@ LIB		=	-lreadline
 
 SRCS_D	=	./srcs
 SRCS	=	main.c \
-			ft_perror.c \
+			init_path.c \
 			parsing.c \
 			parsing_utils.c \
 			syntax_error.c \
-			ft_free.c \
-			init_cmd.c \
+			init_blt.c \
 			exec_cmd.c \
-			blt1.c
+			free_shell.c \
+			find_cmd.c \
+			exec_blt.c \
+			cd.c \
+			pwd.c \
+			export.c
 _SRCS	=	$(patsubst %,$(SRCS_D)/%,$(SRCS))
 
 OBJS_D	=	./objs
@@ -60,6 +64,7 @@ clean	:
 			@echo "$(_BLUE)Clean des .o$(_END)"
 			@make -C ./libft clean
 			@$(RM) $(_OBJS)
+			@$(RM) -rf objs
 
 fclean	:	clean
 			@echo "$(_BLUE)Clean des executables$(_END)"

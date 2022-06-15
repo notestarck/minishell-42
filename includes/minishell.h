@@ -5,23 +5,34 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/30 16:43:38 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/08 12:10:35 by estarck          ###   ########.fr       */
+/*   Created: 2022/06/08 15:35:23 by estarck           #+#    #+#             */
+/*   Updated: 2022/06/15 16:24:14 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include <unistd.h>
-# include <stdlib.h>
 # include <stdio.h>
-# include <fcntl.h>
+# include <stdlib.h>
+# include <unistd.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-# include <dirent.h>
 # include <sys/stat.h>
+# include <dirent.h>
 # include "libft.h"
+
+typedef enum e_bool
+{
+	FALSE,
+	RIGHT
+}	t_bool;
+
+enum e_write
+{
+	READ,
+	WRITE
+};
 
 enum e_built
 {
@@ -33,7 +44,7 @@ enum e_built
 	UNSET,
 	ENV,
 	EXIT,
-	ERROR = 9
+	CMD = 9
 };
 
 enum e_sep
@@ -49,63 +60,56 @@ enum e_sep
 	OR
 };
 
-enum e_write
+typedef struct s_lst
 {
-	READ,
-	WRITE
-};
+	char			*p_cmd;
+	char			**argv;
+	int				built;
+	int				sep;
+	int				pipefd[2];
+	int				error;
+	struct s_lst	*prev;
+	struct s_lst	*next;
+}	t_lst;
 
-typedef enum e_bool
+typedef struct s_data
 {
-	FALSE,
-	RIGHT
-}	t_bool;
-
-typedef struct s_cmd
-{
-	char			**cmd;
-	char			*argv;
-	int				blt;
-	struct s_cmd	*next;
-}	t_cmd;
-
-typedef struct s_shell
-{
-	char	**env;
-	char	*pwd;
-	int		nbr_pipe;
-	char	*builtins[8];
 	char	*ret_prompt;
-	int		error;
-	t_cmd	*cmd;
-}	t_shell;
+	t_lst	*cmd;
+	char	*builtins[8];
+	char	**env;
+	char	**env_path;
+}	t_data;
 
-//Gestion des erreurs
-void	ft_perror(char	*err_mess, t_shell *shell, int free_lvl);
+//Init
+void	init_env_path(t_data *shell);
+int		init_blt(t_data *shell, t_lst *cmd);
 
 //Parsing
-int		parsing(t_shell *shell);
+t_lst	*parse_prompt(t_data *shell);
+int		find_cmd(t_data *shell);
 
 //Parsing utils
-t_cmd	*add_lst(t_shell *shell);
-int		count_argv(t_shell *shell, char *str);
-int		argv_length(t_shell *shell, char *str);
-
-//Gestion syntax
-int		check_error(t_shell *shell);
-int		check_quote(t_shell *shell, char *str);
-
-//path cmd
-void	init_cmd(t_shell *shell);
+t_lst	*add_cmd(t_lst *cmd);
+t_lst	*new_cmd(void);
+char	*ft_strcut(char *str, char tok);
+int		count_argv(t_lst *cmd, char *str);
 
 //Exec cmd
-void	exec_all(t_shell *shell);
-void	pipefd_manag(t_shell *shell, t_cmd *cmd, int *pipefd, int j);
+void	run_cmd(t_data *shell);
 
-//blt
-void	blt_pwd(t_shell *shell);
+//Exec blt
+void	exec_blt(t_data *shell, t_lst *cmd);
+void	exec_cd(t_data *shell, t_lst *cmd);
+void	exec_pwd(t_data *shell, t_lst *cmd);
+void	exec_export(t_data *shell, t_lst *cmd);
 
-//Gestion free
-void	ft_free(t_shell *shell);
+//Free minishell
+void	free_cmd(t_lst *cmd);
+
+//syntax error
+int		check_error(t_lst *cmd);
+int		check_quote(t_lst *cmd, char *str);
+
 
 #endif

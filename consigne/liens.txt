@@ -14,6 +14,8 @@ https://github.com/adbenoit-9
 
 https://n-pn.fr/t/2318-c--programmation-systeme-execve-fork-et-pipe
 
+https://misc.flogisoft.com/bash/tip_colors_and_formatting
+
 
 exam
 
