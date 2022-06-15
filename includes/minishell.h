@@ -6,7 +6,7 @@
 /*   By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:35:23 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/15 16:34:42 by reclaire         ###   ########.fr       */
+/*   Updated: 2022/06/15 17:38:41 by reclaire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ void	exec_cd(t_data *shell, t_lst *cmd);
 void	exec_pwd(t_data *shell, t_lst *cmd);
 void	exec_env(t_data *shell, t_lst *cmd);
 void	exec_export(t_data *shell, t_lst *cmd);
+void	exec_unset(t_data *shell, t_lst *cmd);
 
 //Free minishell
 void	free_cmd(t_lst *cmd);
@@ -117,5 +118,7 @@ int		check_quote(t_lst *cmd, char *str);
 //Utils
 char	*env_get(t_data *shell, char *key);
 void	env_set(t_data *shell, char *key, char *value);
+void	env_new(t_data *shell, char *key, char *value);
+void	env_del(t_data *shell, char *key);
 
 #endif

@@ -6,7 +6,7 @@
 #    By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/25 09:55:54 by reclaire          #+#    #+#              #
-#    Updated: 2022/06/15 16:32:22 by reclaire         ###   ########.fr        #
+#    Updated: 2022/06/15 17:39:32 by reclaire         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,10 +37,13 @@ $(NAME):	libft.a $(OBJS)
 all:		$(NAME)
 
 clean:
+			$(MAKE) clean -C ./libft
 			$(RM) $(OBJS) $(OBJS_B)
 			
 fclean:		clean
+			$(MAKE) fclean -C ./libft
 			$(RM) $(NAME)
+			$(RM) libft.a
 
 re:			fclean all clean
 
