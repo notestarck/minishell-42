@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+        */
+/*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 11:11:55 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/15 16:59:27 by reclaire         ###   ########.fr       */
+/*   Updated: 2022/06/15 21:07:00 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ void	exec_cd(t_data *shell, t_lst *cmd)
 		free(cmd->argv[1]);
 		cmd->argv[1] = env_get(shell, "OLDPWD");
 	}
-	ft_printf("			%s\n", cmd->argv[1]);
 	tmp = env_get(shell, "PWD");
 	env_set(shell, "OLDPWD", tmp);
 	free(tmp);

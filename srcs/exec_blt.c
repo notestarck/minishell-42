@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_blt.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+        */
+/*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 12:43:30 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/15 17:38:35 by reclaire         ###   ########.fr       */
+/*   Updated: 2022/06/15 20:59:11 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	exec_blt(t_data *shell, t_lst *cmd)
 	else if (cmd->built == PWD)
 		exec_pwd(shell, cmd);
 	else if (cmd->built == ENV)
-		exec_env(shell, cmd);
+		exec_env(shell);
 	else if (cmd->built == EXPORT)
 		exec_export(shell, cmd);
 	else if (cmd->built == UNSET)

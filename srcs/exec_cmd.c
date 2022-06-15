@@ -62,11 +62,11 @@ void run_cmd(t_data *shell)
 		else
 		{
 			close(cmd->pipefd[WRITE]);
-			waitpid(pid, &status, 0);
 			if (cmd->prev != NULL)
 				close(cmd->prev->pipefd[READ]);
 			if (cmd->next == NULL)
 				close(cmd->pipefd[READ]);
+			waitpid(pid, &status, 0);
 			cmd = cmd->next;
 		}
 	}

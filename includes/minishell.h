@@ -6,7 +6,7 @@
 /*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:35:23 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/15 18:23:23 by estarck          ###   ########.fr       */
+/*   Updated: 2022/06/15 20:59:21 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ void	run_cmd(t_data *shell);
 void	exec_blt(t_data *shell, t_lst *cmd);
 void	exec_cd(t_data *shell, t_lst *cmd);
 void	exec_pwd(t_data *shell, t_lst *cmd);
-void	exec_env(t_data *shell, t_lst *cmd);
+void	exec_env(t_data *shell);
 void	exec_export(t_data *shell, t_lst *cmd);
 void	exec_unset(t_data *shell, t_lst *cmd);
 

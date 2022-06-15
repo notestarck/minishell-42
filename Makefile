@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+         #
+#    By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/25 09:55:54 by reclaire          #+#    #+#              #
-#    Updated: 2022/06/15 17:39:32 by reclaire         ###   ########.fr        #
+#    Updated: 2022/06/15 21:01:16 by estarck          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,12 +17,9 @@ OBJS		=	${SRCS:.c=.o}
 
 INCLUDES  	=	-I./includes -I./libft/includes
 CC			=	gcc
-#CFLAGS		:=	-Wall -Wextra -Werror -O3
-CFLAGS		:=	-O3 -lreadline
+#CFLAGS		=	-Wall -Wextra -Werror -O3
+LREADLINE	:=	-lreadline
 RM			=	rm -f
-ifdef MOREFLAGS
-CFLAGS		:=	$(CFLAGS) $(MOREFLAGS)
-endif
 
 %.o: %.c
 			$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
@@ -32,7 +29,7 @@ libft.a:
 			cp libft/libft.a .
 
 $(NAME):	libft.a $(OBJS)
-			$(CC) $(CFLAGS) $(OBJS) libft.a -o $(NAME)
+			$(CC) $(LREADLINE) $(OBJS) libft.a -o $(NAME)
 
 all:		$(NAME)
 
