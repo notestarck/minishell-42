@@ -6,7 +6,7 @@
 /*   By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 10:43:07 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/15 00:06:43 by reclaire         ###   ########.fr       */
+/*   Updated: 2022/06/15 16:33:44 by reclaire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,19 @@
 
 static void	exec_cmd(t_data *shell, t_lst *cmd)
 {
-	if (cmd->next)
-		dup2(cmd->pipefd[WRITE], STDOUT_FILENO);
+	t_lst	*tmp;
+
+	tmp = shell->cmd;
 	if (cmd->prev != NULL)
 		dup2(cmd->prev->pipefd[READ], STDIN_FILENO);
-	close (cmd->pipefd[READ]);
+	if (cmd->next)
+		dup2(cmd->pipefd[WRITE], STDOUT_FILENO);
+	while (tmp)
+	{
+		close(cmd->pipefd[READ]);
+		close(cmd->pipefd[WRITE]);
+		tmp = tmp->next;
+	}
 	if (execve(cmd->p_cmd, cmd->argv, shell->env) == -1)
 		perror("error : execve");
 }
@@ -50,6 +58,10 @@ void run_cmd(t_data *shell)
 		{
 			close(cmd->pipefd[WRITE]);
 			waitpid(pid, &status, 0);
+			if (cmd->prev != NULL)
+				close(cmd->prev->pipefd[READ]);
+			if (cmd->next == NULL)
+				close(cmd->pipefd[READ]);
 			cmd = cmd->next;
 		}
 	}

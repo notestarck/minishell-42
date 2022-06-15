@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
+/*   By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 16:04:41 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/09 10:26:37 by estarck          ###   ########.fr       */
+/*   Updated: 2022/06/15 16:33:47 by reclaire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ t_lst	*add_cmd(t_lst *cmd)
 	while (cmd->next != NULL)
 		cmd = cmd->next;
 	new->error = 0;
+	new->built = -1;
 	cmd->next = new;
 	new->prev = cmd;
 	new->next = NULL;
@@ -37,6 +38,7 @@ t_lst	*new_cmd(void)
 	if (new == NULL)
 		perror("error : malloc");
 	new->error = 0;
+	new->built = -1;
 	new->next = NULL;
 	new->prev = NULL;
 	new->argv = NULL;

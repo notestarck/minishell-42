@@ -1,26 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_blt.c                                         :+:      :+:    :+:   */
+/*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+        */
+/*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/14 12:43:30 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/15 16:34:12 by reclaire         ###   ########.fr       */
+/*   Created: 2022/06/15 16:00:51 by estarck           #+#    #+#             */
+/*   Updated: 2022/06/15 16:25:25 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	exec_blt(t_data *shell, t_lst *cmd)
+void	exec_export(t_data *shell, t_lst *cmd)
 {
-	if (cmd->built == CD)
-		exec_cd(shell, cmd);
-	else if (cmd->built == PWD)
-		exec_pwd(shell, cmd);
-	else if (cmd->built == ENV)
-		exec_env(shell, cmd);
-	else if (cmd->built == 3)
-		exec_export(shell, cmd);
-	return ;
+	(void)shell;
+	printf("%s\n", cmd->argv[1]);
 }

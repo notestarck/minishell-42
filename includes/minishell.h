@@ -6,7 +6,7 @@
 /*   By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:35:23 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/15 16:19:44 by reclaire         ###   ########.fr       */
+/*   Updated: 2022/06/15 16:34:42 by reclaire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,7 @@ void	exec_blt(t_data *shell, t_lst *cmd);
 void	exec_cd(t_data *shell, t_lst *cmd);
 void	exec_pwd(t_data *shell, t_lst *cmd);
 void	exec_env(t_data *shell, t_lst *cmd);
+void	exec_export(t_data *shell, t_lst *cmd);
 
 //Free minishell
 void	free_cmd(t_lst *cmd);
