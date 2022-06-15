@@ -3,64 +3,54 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
+/*   By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/06 09:11:42 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/08 12:10:28 by estarck          ###   ########.fr       */
+/*   Created: 2022/06/09 10:43:07 by estarck           #+#    #+#             */
+/*   Updated: 2022/06/15 00:06:43 by reclaire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	run_builtin(t_shell *shell, t_cmd *cmd, int *pipefd, int j)
+static void	exec_cmd(t_data *shell, t_lst *cmd)
 {
-	pipefd_manag(shell, cmd, pipefd, j);
-	if (cmd->blt == PWD)
-		blt_pwd(shell);
-	else
-		printf("a coder\n");
+	if (cmd->next)
+		dup2(cmd->pipefd[WRITE], STDOUT_FILENO);
+	if (cmd->prev != NULL)
+		dup2(cmd->prev->pipefd[READ], STDIN_FILENO);
+	close (cmd->pipefd[READ]);
+	if (execve(cmd->p_cmd, cmd->argv, shell->env) == -1)
+		perror("error : execve");
 }
 
-static void	run_execve(t_shell *shell, t_cmd *cmd, int *pipefd, int j)
+void run_cmd(t_data *shell)
 {
-	pipefd_manag(shell, cmd, pipefd, j);
-	execve (*cmd->cmd, cmd->cmd, shell->env);
-}
-
-static void	run_pipe(t_shell *shell)
-{
-	int		i;
+	t_lst	*cmd;
 	pid_t	pid;
-	int		pipefd[2 * shell->nbr_pipe];
-	t_cmd	*cmd;
-	int	j = 0;
+	int		status;
 
 	cmd = shell->cmd;
-	i = 0;
-	for(i = 0; i < (shell->nbr_pipe); i++)
-		pipe(pipefd + i * 2);
 	while (cmd)
 	{
+		pipe(cmd->pipefd);
 		pid = fork();
-		if (pid < 0)
-			perror("error");
-		if (pid == 0)
+		if (pid == -1)
+			perror ("fork");
+		else if (pid == 0)
 		{
-			if (cmd->blt == 9)
-				run_execve(shell, cmd, pipefd, j);
+			if (cmd->built == 9)
+				exec_cmd(shell, cmd);
 			else
-				run_builtin(shell, cmd, pipefd, j);
+			{
+				exec_blt(shell, cmd);
+				return ;
+			}
 		}
-		cmd = cmd->next;
-		j += 2;
+		else
+		{
+			close(cmd->pipefd[WRITE]);
+			waitpid(pid, &status, 0);
+			cmd = cmd->next;
+		}
 	}
-	for(i = 0; i < 2 * shell->nbr_pipe; i++)
-		close(pipefd[i]);
-	for(i = 0; i < shell->nbr_pipe + 1; i++)
-		waitpid(-1, 0, 0);
-}
-
-void	exec_all(t_shell *shell)
-{
-	run_pipe(shell);
 }

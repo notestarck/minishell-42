@@ -5,71 +5,87 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/03 09:17:09 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/07 16:14:52 by estarck          ###   ########.fr       */
+/*   Created: 2022/06/08 15:52:00 by estarck           #+#    #+#             */
+/*   Updated: 2022/06/09 11:48:00 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	cpy_args(t_shell *shell, char *str, int l)
-{
-	t_cmd	*tmp;
-
-	tmp = add_lst(shell);
-	tmp->argv = malloc(sizeof(char) * l + 1);
-	ft_strlcpy(tmp->argv, str, l);
-}
-
-static int	count_pip(t_shell *shell, char *str)
+static int	parse_arg(t_lst *cmd, char *str)
 {
 	int	i;
-	int	p;
 
 	i = 0;
-	p = 0;
-	while (str[i] != '\0')
+	while (str[i] != ' ' && str[i])
 	{
 		if (str[i] == '\'' || str[i] == '"')
-			i = check_quote(shell, &str[i]) + i;
-		if (str[i] == '|' && str[i + 1] != '|')
-			p++;
-		else if (str[i] == '|' && str[i + 1] == '|')
+			i = check_quote(cmd, str) + i;
+		if (str[i] == '|' && str[i + 1] == '|')
 			i++;
 		i++;
 	}
-	return (p);
+	return (i);
 }
 
-static int	find_pip(t_shell *shell, char *str)
-{
-	int	l;
-
-	l = 0;
-	while (str[l] != '|' && str[l] != '\0')
-	{
-		if (str[l] == '\'' || str[l] == '"')
-			l = check_quote(shell, &str[l]) + l;
-		l++;
-	}
-	return (l + 1);
-}
-
-int	parsing(t_shell *shell)
+static int	cpy_arg(t_lst *cmd, char *str)
 {
 	int	i;
+	int	j;
 	int	l;
 
 	i = 0;
-	l = 0;
-	while (shell->ret_prompt[i] != '\0')
+	j = 0;
+	while (str[i] && (str[i] != '|' || str[i + 1] == '|'))
 	{
-		l = find_pip(shell, &shell->ret_prompt[i]);
-		if (check_error(shell))
-			return (0);
-		cpy_args(shell, &shell->ret_prompt[i], l);
-		i = l + i;
+		l = 0;
+		l = parse_arg(cmd, &str[i]);
+		cmd->argv[j] = malloc(sizeof(char) * (l + 1));
+		if (!cmd->argv[j])
+			perror("error : malloc");
+		ft_strlcpy(cmd->argv[j], &str[i], l + 1);
+		i = i + l;
+		while (str[i] == ' ' && str[i] != '\0')
+			i++;
+		j++;
 	}
-	shell->nbr_pipe = count_pip(shell, shell->ret_prompt);
-	return (1);
+	cmd->argv[j] = NULL;
+	if (str[i] == '|')
+		i++;
+	return (i);
+}
+
+static void	init_arg(t_lst *cmd, char *str)
+{
+	cmd->argv = malloc(sizeof(char *) * (count_argv(cmd, str) + 1));
+	if (!cmd->argv)
+		perror("error : malloc");
+}
+
+static void	split(t_data *shell, t_lst *cmd)
+{
+	t_lst	*tmp;
+	char	*str;
+
+	tmp = cmd;
+	str = ft_strcut(shell->ret_prompt, ' ');
+	while (*str != '\0')
+	{
+		init_arg(tmp, str);
+		str = cpy_arg(tmp, str) + str;
+		if (*str != '\0')
+		{
+			tmp = add_cmd(cmd);
+			str = ft_strcut(str, ' ');
+		}
+	}
+}
+
+t_lst	*parse_prompt(t_data *shell)
+{
+	t_lst	*cmd;
+
+	cmd = new_cmd();
+	split(shell, cmd);
+	return (cmd);
 }

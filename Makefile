@@ -1,71 +1,47 @@
-NAME	=	minishell
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2022/02/25 09:55:54 by reclaire          #+#    #+#              #
+#    Updated: 2022/06/15 00:17:33 by reclaire         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
 
-INCLUDE	=	-I./includes \
-			-I./libft/includes
+.DEFAULT_GOAL := all
+NAME		=	minishell
+SRCS		=	${wildcard srcs/*.c}
+OBJS		=	${SRCS:.c=.o}
 
-LIBFT	=	-L./libft -lft			
-LIB		=	-lreadline
+INCLUDES  	=	-I./includes -I./libft/includes
+CC			=	gcc
+#CFLAGS		:=	-Wall -Wextra -Werror -O3
+CFLAGS		:=	-O3 -lreadline
+RM			=	rm -f
+ifdef MOREFLAGS
+CFLAGS		:=	$(CFLAGS) $(MOREFLAGS)
+endif
 
-SRCS_D	=	./srcs
-SRCS	=	main.c \
-			ft_perror.c \
-			parsing.c \
-			parsing_utils.c \
-			syntax_error.c \
-			ft_free.c \
-			init_cmd.c \
-			exec_cmd.c \
-			blt1.c
-_SRCS	=	$(patsubst %,$(SRCS_D)/%,$(SRCS))
+%.o: %.c
+			$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
-OBJS_D	=	./objs
-OBJS	=	${SRCS:.c=.o}
-_OBJS	=	$(patsubst %,$(OBJS_D)/%,$(OBJS))
+libft.a:
+			$(MAKE) -C ./libft
+			cp libft/libft.a .
 
-CC		=	gcc
-CFLAGS	=	-Wall -Wextra -Werror
+$(NAME):	libft.a $(OBJS)
+			$(CC) $(CFLAGS) $(OBJS) libft.a -o $(NAME)
 
-RM		=	rm -rf
+all:		$(NAME)
 
-# Mise en forme
-_END	=	$'\x1b[0m
-_BOLD	=	$'\x1b[1m
-_UNDER	=	$'\x1b[4m
-_REV	=	$'\x1b[7m
+clean:
+			$(RM) $(OBJS) $(OBJS_B)
+			
+fclean:		clean
+			$(RM) $(NAME)
 
-# Couleurs
-_GREY	=	$'\x1b[30m
-_RED	=	$'\x1b[31m
-_GREEN	=	$'\x1b[32m
-GREEN	=	\033[1;32m
-_YELLOW	=	$'\x1b[33m
-_BLUE	=	$'\x1b[34m
-_PURPLE	=	$'\x1b[35m
-_CYAN	=	$'\x1b[36m
-_WHITE	=	$'\x1b[37m
+re:			fclean all clean
 
-all		:	$(NAME)
-
-$(NAME)	:	$(_OBJS)
-			@echo "$(_RED)Compilation libft.a en cours...$(_END)"
-			@make -C ./libft
-			@echo "$(_RED)Compilation minishell en cours...$(_END)"
-			@$(CC) $(CFLAGS) $(INCLUDE) $(LIBFT) $(LIB) $(_OBJS) -o $(NAME)
-			@echo "$(_GREEN)$(_BOLD)Fin de la compilation de minishell$(_END)"
-
-$(OBJS_D)/%.o: $(SRCS_D)/%.c
-			@$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
-
-clean	:	
-			@echo "$(_BLUE)Clean des .o$(_END)"
-			@make -C ./libft clean
-			@$(RM) $(_OBJS)
-
-fclean	:	clean
-			@echo "$(_BLUE)Clean des executables$(_END)"
-			@$(RM) ./libft/libft.a
-			@$(RM) $(NAME)
-
-re		:	fclean all
-
-.PHONY	:	all clean fclean re
+.PHONY:		fclean all clean re

@@ -6,23 +6,24 @@
 /*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 11:30:23 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/03 16:31:14 by estarck          ###   ########.fr       */
+/*   Updated: 2022/06/09 10:32:08 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	check_error(t_shell *shell)
+int	check_error(t_lst *cmd)
 {
-	if (shell->error == -1)
+	while (cmd)
 	{
-		shell->error = 0;
-		return (1);
+		if (cmd->error == 1)
+			return (0);
+		cmd = cmd->next;
 	}
-	return (0);
+	return (1);
 }
 
-int	check_quote(t_shell *shell, char *str)
+int	check_quote(t_lst *cmd, char *str)
 {
 	int	i;
 	int	s_quote;
@@ -45,6 +46,6 @@ int	check_quote(t_shell *shell, char *str)
 			i++;
 	}
 	if (s_quote || d_quote)
-		shell->error = -1;
+		cmd->error = 1;
 	return (i);
 }

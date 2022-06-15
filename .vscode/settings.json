@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+		"minishell.h": "c",
+		"complex": "c",
+		"exception": "c"
+	}
+}

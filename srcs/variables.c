@@ -1,25 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memcpy.c                                        :+:      :+:    :+:   */
+/*   variables.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
+/*   By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/22 12:43:24 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/07 18:13:23 by estarck          ###   ########.fr       */
+/*   Created: 2022/06/15 16:01:44 by reclaire          #+#    #+#             */
+/*   Updated: 2022/06/15 16:03:09 by reclaire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-void	*ft_memcpy(void *dst, const void *src, size_t n)
+char	*parse_string(t_data *shell, char *str)
 {
-	void	*d;
-
-	d = dst;
-	if (!dst && !src)
-		return (0);
-	while (n-- > 0)
-		*(char *)d++ = *(char *)src++;
-	return (dst);
+	
 }

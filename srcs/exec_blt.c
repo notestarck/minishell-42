@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_blt.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
+/*   By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 12:43:30 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/14 17:31:16 by estarck          ###   ########.fr       */
+/*   Updated: 2022/06/15 15:56:52 by reclaire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,11 @@
 
 void	exec_blt(t_data *shell, t_lst *cmd)
 {
-	if (cmd->built == 1)
+	if (cmd->built == CD)
 		exec_cd(shell, cmd);
-	else if (cmd->built == 2)
+	else if (cmd->built == PWD)
 		exec_pwd(shell, cmd);
+	else if (cmd->built == ENV)
+		exec_env(shell, cmd);
 	return ;
 }

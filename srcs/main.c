@@ -3,27 +3,46 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
+/*   By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/03 09:09:00 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/08 12:33:18 by estarck          ###   ########.fr       */
+/*   Created: 2022/06/08 15:39:17 by estarck           #+#    #+#             */
+/*   Updated: 2022/06/15 16:27:48 by reclaire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static t_shell	*init_mshell(char **envp)
+static void	init_env(t_data *shell, char **env)
 {
-	t_shell	*shell;
+	int	i;
 
-	shell = malloc(sizeof(t_shell));
-	if (shell == NULL)
+	i = 0;
+	(void)shell;
+	while (env[i])
+		i++;
+	shell->env = malloc(sizeof(char *) * (i + 1)); //penser a free
+	if (shell->env == NULL)
+		perror("error : malloc env");
+	i = 0;
+	while (env[i])
 	{
-		perror("error : init shell");
-		exit (0);
+		shell->env[i] = malloc(sizeof(char) * (ft_strlen(env[i]) + 1));
+		ft_strlcpy(shell->env[i], env[i], ft_strlen(env[i]) + 1);
+		i++;
 	}
-	shell->env = envp;
-	shell->pwd = getenv("PWD");
+}
+
+static void	launch_shell(t_data *shell)
+{
+	shell->ret_prompt = readline("minishell $> ");
+	add_history(shell->ret_prompt);
+}
+
+static t_data	*init_shell(void)
+{
+	t_data	*shell;
+
+	shell = malloc(sizeof(t_data)); //ret erreur
 	shell->builtins[0] = "echo";
 	shell->builtins[1] = "cd";
 	shell->builtins[2] = "pwd";
@@ -32,49 +51,30 @@ static t_shell	*init_mshell(char **envp)
 	shell->builtins[5] = "env";
 	shell->builtins[6] = "exit";
 	shell->builtins[7] = NULL;
+	init_env_path(shell);
 	return (shell);
 }
 
-static void	display_prompt(t_shell *shell)
+int	main(int argc, char **argv, char **env)
 {
-	shell->ret_prompt = readline("mini_shell $> ");
-	if (shell->ret_prompt == NULL)
-	{
-		ft_perror(NULL, shell, 1);
-		exit (0);
-	}
-	add_history(shell->ret_prompt);
-}
-
-static int	launch_mshell(t_shell *shell)
-{
-	int	ret;
-
-	ret = 0;
-	(void)shell;
-	if (parsing(shell))
-	{
-		init_cmd(shell);
-		exec_all(shell);
-		ft_free(shell);
-	}
-
-	return (ret);
-}
-
-int	main(int argc, char **argv, char **envp)
-{
-	t_shell	*shell;
+	t_data	*shell;
 
 	(void)argc;
 	(void)argv;
-	shell = init_mshell(envp);
+	shell = init_shell();
+	init_env(shell, env);
 	while (42)
 	{
-		display_prompt(shell);
-		if (launch_mshell(shell))
-			break ;
+		launch_shell(shell);
+		shell->cmd = parse_prompt(shell);
+		if (*shell->ret_prompt != '\0')
+		{
+			if (check_error(shell->cmd))
+			{
+				if (find_cmd(shell))
+					run_cmd(shell);
+			}
+			free_cmd(shell->cmd);
+		}
 	}
-	//faire les derniers free si besoin genre t_shell
-	return (0);
 }
