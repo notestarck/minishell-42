@@ -52,6 +52,12 @@ void run_cmd(t_data *shell)
 	tmp = shell->cmd;
 	while (cmd)
 	{
+		if (cmd->built != 9 && cmd->built != ECHO)
+		{
+			exec_blt(shell, cmd);
+			cmd = cmd->next;
+			continue ;
+		}
 		pid = fork();
 		if (pid < 0)
 			perror ("fork");

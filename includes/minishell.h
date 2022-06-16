@@ -6,7 +6,7 @@
 /*   By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:35:23 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/16 17:41:22 by reclaire         ###   ########.fr       */
+/*   Updated: 2022/06/16 22:04:29 by reclaire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ typedef struct s_lst
 
 typedef struct s_data
 {
+	pid_t	pid;
 	char	*ret_prompt;
 	t_lst	*cmd;
 	char	*builtins[8];

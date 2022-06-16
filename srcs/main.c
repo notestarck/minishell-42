@@ -6,7 +6,7 @@
 /*   By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:39:17 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/16 17:41:51 by reclaire         ###   ########.fr       */
+/*   Updated: 2022/06/16 23:27:17 by reclaire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ static t_data	*init_shell(void)
 	shell->builtins[5] = "env";
 	shell->builtins[6] = "exit";
 	shell->builtins[7] = NULL;
+	shell->pid = 0;
 	init_env_path(shell);
 	return (shell);
 }
@@ -85,6 +86,7 @@ int	main(int argc, char **argv, char **env)
 	(void)argv;
 	signal(2, quit_mini);
 	shell = init_shell();
+	if (shell->pid == 0)
 	init_env(shell, env);
 	while (42)
 	{
