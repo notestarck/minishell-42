@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
+/*   By: reclaire <reclaire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/25 11:44:54 by estarck           #+#    #+#             */
-/*   Updated: 2022/03/01 10:04:21 by estarck          ###   ########.fr       */
+/*   Created: 2022/02/24 15:00:23 by reclaire          #+#    #+#             */
+/*   Updated: 2022/03/03 15:50:32 by reclaire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,19 @@
 
 void	ft_putnbr_fd(int n, int fd)
 {
-	long int	r;
-
-	r = n;
-	if (r < 0)
-	{
-		r = -r;
-		write(fd, "-", 1);
-	}
-	if (r > 9)
-	{
-		ft_putnbr_fd(r / 10, fd);
-		ft_putchar_fd((r % 10) + '0', fd);
-	}
+	if (n == -2147483648)
+		ft_putstr_fd("-2147483648", fd);
 	else
-		ft_putchar_fd(r + '0', fd);
+	{
+		if (n < 0)
+		{
+			ft_putchar_fd('-', fd);
+			n = n * -1;
+		}
+		if (n > 9)
+		{
+			ft_putnbr_fd(n / 10, fd);
+		}
+		ft_putchar_fd((n % 10) + '0', fd);
+	}
 }

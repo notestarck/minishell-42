@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_front.c                                  :+:      :+:    :+:   */
+/*   ft_lstadd_front_bonus.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
+/*   By: reclaire <reclaire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/01 16:31:44 by estarck           #+#    #+#             */
-/*   Updated: 2022/03/01 16:54:45 by estarck          ###   ########.fr       */
+/*   Created: 2022/03/01 19:08:18 by reclaire          #+#    #+#             */
+/*   Updated: 2022/03/01 19:10:49 by reclaire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,6 @@
 
 void	ft_lstadd_front(t_list **lst, t_list *new)
 {
-	(*new).next = *lst;
-	*lst = new;
+	new->next = lst[0];
+	lst[0] = new;
 }

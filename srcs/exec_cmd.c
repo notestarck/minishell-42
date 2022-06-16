@@ -33,7 +33,6 @@ static void	exec_cmd(t_data *shell, t_lst *cmd)
 {
 	if (execve(cmd->p_cmd, cmd->argv, shell->env) == -1)
 		perror("error : execve");
-		exit (0);
 }
 
 void run_cmd(t_data *shell)
@@ -64,7 +63,7 @@ void run_cmd(t_data *shell)
 			else
 			{
 				exec_blt(shell, cmd);
-				return ;
+				exit(0);
 			}
 		}
 		cmd = cmd->next;

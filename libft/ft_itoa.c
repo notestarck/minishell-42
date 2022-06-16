@@ -3,65 +3,65 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
+/*   By: reclaire <reclaire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/24 11:05:31 by estarck           #+#    #+#             */
-/*   Updated: 2022/03/01 12:26:43 by estarck          ###   ########.fr       */
+/*   Created: 2022/02/23 20:49:50 by reclaire          #+#    #+#             */
+/*   Updated: 2022/03/03 15:50:32 by reclaire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	ft_len(long n)
+static int	num_digits(long n)
 {
-	int	l;
+	int	r;
 
-	l = 0;
+	r = 0;
 	if (n < 0)
 	{
-		n = -n;
-		l++;
+		n *= -1;
+		r++;
 	}
-	while (n > 0)
+	if (n == 0)
+		return (1);
+	while (n != 0)
 	{
-		n = n / 10;
-		l++;
+		n /= 10;
+		r++;
 	}
-	return (l);
+	return (r);
 }
 
-static char	*ft_writedest(char *dest, long nb, int i)
+void	check_negative(long *nb, char *str)
 {
-	if (nb == 0)
-		dest[0] = '0';
-	if (nb < 0)
+	if (*nb < 0)
 	{
-		dest[0] = '-';
-		nb = -nb;
+		*nb *= -1;
+		str[0] = '-';
 	}
-	while (nb > 0)
-	{
-		dest[i] = nb % 10 + '0';
-		nb = nb / 10;
-		i--;
-	}
-	return (dest);
 }
 
 char	*ft_itoa(int n)
 {
-	char	*dest;
-	int		i;
 	long	nb;
+	int		i;
+	char	*str;
 
 	nb = n;
-	i = ft_len(nb);
+	i = num_digits(nb);
+	str = ft_malloc((i + 1) * sizeof(char));
+	str[i--] = '\0';
 	if (nb == 0)
-		i = 1;
-	dest = (char *)malloc(sizeof(char) * i + 1);
-	if (dest == 0x0)
-		return (0x0);
-	dest[i--] = '\0';
-	ft_writedest(dest, nb, i);
-	return (dest);
+	{
+		str[0] = '0';
+		return (str);
+	}
+	check_negative(&nb, str);
+	while (nb > 0)
+	{
+		str[i] = (nb % 10) + '0';
+		nb /= 10;
+		i--;
+	}
+	return (str);
 }

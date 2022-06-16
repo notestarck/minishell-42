@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstsize.c                                       :+:      :+:    :+:   */
+/*   ft_lstsize_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
+/*   By: reclaire <reclaire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/01 18:03:24 by estarck           #+#    #+#             */
-/*   Updated: 2022/03/02 14:31:07 by estarck          ###   ########.fr       */
+/*   Created: 2022/03/01 19:11:27 by reclaire          #+#    #+#             */
+/*   Updated: 2022/03/01 19:13:34 by reclaire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,15 @@
 
 int	ft_lstsize(t_list *lst)
 {
-	int	i;
+	int		r;
+	t_list	*current;
 
-	i = 0;
-	while (lst != 0x0)
+	r = 0;
+	current = lst;
+	while (current != NULL)
 	{
-		lst = (*lst).next;
-		i++;
+		r++;
+		current = current->next;
 	}
-	return (i);
+	return (r);
 }

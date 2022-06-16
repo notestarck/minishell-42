@@ -3,83 +3,87 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
+/*   By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/24 10:37:27 by estarck           #+#    #+#             */
-/*   Updated: 2022/03/02 16:49:58 by estarck          ###   ########.fr       */
+/*   Created: 2022/02/24 08:09:13 by swalter           #+#    #+#             */
+/*   Updated: 2022/05/17 22:37:47 by reclaire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	ft_countwords(char const *s, char c);
-static int	ft_len(char const *s, char c);
-static int	ft_issep(char const *s, char c);
+static	int	char_is_separator(char c, char charset)
+{
+	if (c == charset || c == '\0')
+		return (1);
+	return (0);
+}
+
+static	int	count_words(char *str, char charset)
+{
+	int	i;
+	int	words;
+
+	words = 0;
+	i = 0;
+	while (str[i] != '\0')
+	{
+		if (char_is_separator(str[i + 1], charset) == 1
+			&& char_is_separator(str[i], charset) == 0)
+			words++;
+		i++;
+	}
+	return (words);
+}
+
+static	void	write_word(char *dest, char *from, char charset)
+{
+	int	i;
+
+	i = 0;
+	while (char_is_separator(from[i], charset) == 0)
+	{
+		dest[i] = from[i];
+		i++;
+	}
+	dest[i] = '\0';
+}
+
+static	int	write_split(char **split, char *str, char charset)
+{
+	int		i;
+	int		j;
+	int		word;
+
+	word = 0;
+	i = 0;
+	while (str[i] != '\0')
+	{
+		if (char_is_separator(str[i], charset) == 1)
+			i++;
+		else
+		{
+			j = 0;
+			while (char_is_separator(str[i + j], charset) == 0)
+				j++;
+			split[word] = ft_malloc(sizeof(char) * (j + 1));
+			write_word(split[word], str + i, charset);
+			i += j;
+			word++;
+		}
+	}
+	return (1);
+}
 
 char	**ft_split(char const *s, char c)
 {
-	char	**dest;
-	int		l;
-	int		i;
+	char	**res;
+	int		words;
 
-	i = 0;
-	dest = malloc(sizeof(*dest) * (ft_countwords(s, c) + 1));
-	if (dest == 0x0)
-		return (0x0);
-	while (*s != '\0')
-	{
-		while (ft_issep(s, c))
-			s++;
-		if (*s == '\0')
-			break ;
-		l = (ft_len(s, c));
-		dest[i] = malloc(sizeof(char) * (l + 1));
-		if (dest[i] == 0x0)
-			return (0x0);
-		ft_strlcpy(dest[i], s, l + 1);
-		s = s + l;
-		i++;
-	}
-	dest[i] = 0x0;
-	return (dest);
-}
-
-static int	ft_countwords(char const *s, char c)
-{
-	int	i;
-	int	cw;
-
-	i = 0;
-	cw = 0;
-	while (s[i] != '\0')
-	{
-		if (s[i] != c)
-			cw++;
-		while (s[i] != c && s[i] != '\0')
-			i++;
-		if (s[i] == c)
-			i++;
-	}
-	return (cw);
-}
-
-static int	ft_len(char const *s, char c)
-{
-	int	l;
-
-	l = 0;
-	while (*s != '\0' && *s != c)
-	{
-		l++;
-		s++;
-	}
-	return (l);
-}
-
-static int	ft_issep(char const *s, char c)
-{
-	if (*s == c)
-		return (1);
-	else
-		return (0);
+	words = count_words((char *)s, c);
+	res = ft_malloc(sizeof(char *) * (words + 1));
+	res[words] = 0;
+	if (!write_split(res, (char *)s, c))
+		return (NULL);
+	return (res);
 }

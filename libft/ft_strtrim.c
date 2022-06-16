@@ -3,46 +3,46 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
+/*   By: reclaire <reclaire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/24 09:12:13 by estarck           #+#    #+#             */
-/*   Updated: 2022/02/26 14:08:18 by estarck          ###   ########.fr       */
+/*   Created: 2022/02/23 15:52:44 by reclaire          #+#    #+#             */
+/*   Updated: 2022/03/03 15:50:32 by reclaire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <stdio.h>
 
-static int	ft_isset(char c, char const *set);
-
-char	*ft_strtrim(char const *s1, char const *set)
-{
-	char	*dest;
-	int		start;
-	int		end;
-
-	start = 0;
-	end = ft_strlen(s1);
-	while (s1[start] != '\0' && ft_isset(s1[start], set))
-		start++;
-	while (end > start && ft_isset(s1[end - 1], set))
-		end--;
-	dest = (char *)malloc(sizeof(*s1) * (end - start + 1));
-	if (dest == 0x0)
-		return (0x0);
-	ft_strlcpy(dest, &(s1[start]), end - start + 1);
-	return (dest);
-}
-
-static int	ft_isset(char c, char const *set)
+static int	is_in_set(char c, char const *set)
 {
 	int	i;
 
 	i = 0;
 	while (set[i] != '\0')
 	{
-		if (set[i] == c)
+		if (c == set[i])
 			return (1);
 		i++;
 	}
 	return (0);
+}
+
+char	*ft_strtrim(char const *s1, char const *set)
+{
+	int		start;
+	int		end;
+	char	*new;
+
+	start = 0;
+	while (is_in_set(s1[start], set))
+		start++;
+	end = ft_strlen(s1) - 1;
+	while (is_in_set(s1[end], set))
+		end--;
+	end++;
+	if (start >= end)
+		return (ft_strdup(""));
+	new = ft_malloc((end - start + 1) * sizeof(char));
+	ft_strlcpy(new, (char *)(s1 + start), end - start + 1);
+	return (new);
 }

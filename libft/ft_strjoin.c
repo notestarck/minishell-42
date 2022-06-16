@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
+/*   By: reclaire <reclaire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/23 18:44:13 by estarck           #+#    #+#             */
-/*   Updated: 2022/02/23 21:24:09 by estarck          ###   ########.fr       */
+/*   Created: 2022/02/23 15:42:29 by reclaire          #+#    #+#             */
+/*   Updated: 2022/03/03 15:50:32 by reclaire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,25 @@
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {
-	char	*r;
+	size_t				s1_len;
+	size_t				s2_len;
+	char				*new;
+	unsigned long		i;
 
-	r = malloc(sizeof(char) * (ft_strlen((char *)s1)
-				+ ft_strlen((char *)s2) + 1));
-	if (r == 0x0)
-		return (0x0);
-	ft_strlcpy(r, s1, ft_strlen((char *)s1) + 1);
-	ft_strlcat(r, s2, ft_strlen((char *)s1) + ft_strlen((char *)s2) + 1);
-	return (r);
+	s1_len = ft_strlen(s1);
+	s2_len = ft_strlen(s2);
+	new = ft_malloc((s1_len + s2_len + 1) * sizeof(char));
+	i = 0;
+	while (i < s1_len)
+	{
+		new[i] = s1[i];
+		i++;
+	}
+	while (i < s2_len + s1_len)
+	{
+		new[i] = s2[i - s1_len];
+		i++;
+	}
+	new[i] = '\0';
+	return (new);
 }

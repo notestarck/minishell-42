@@ -12,14 +12,14 @@
 
 #include "libft.h"
 
-char    *ft_str_appnd(char *a, char *b, int free_a, int free_b)
+char	*ft_str_appnd(char *a, char *b, int free_a, int free_b)
 {
-    char    *new;
+	char	*new;
 
-    new = ft_strjoin(a, b);
-    if (free_a)
-        free(a);
-    if (free_b)
-        free(b);
-    return (new);
+	new = ft_strjoin(a, b);
+	if (free_a)
+		free(a);
+	if (free_b)
+		free(b);
+	return (new);
 }

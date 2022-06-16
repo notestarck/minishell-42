@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_blt.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
+/*   By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 12:43:30 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/15 20:59:11 by estarck          ###   ########.fr       */
+/*   Updated: 2022/06/16 16:22:02 by reclaire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,7 @@ void	exec_blt(t_data *shell, t_lst *cmd)
 		exec_export(shell, cmd);
 	else if (cmd->built == UNSET)
 		exec_unset(shell, cmd);
+	else if (cmd->built == ECHO)
+		exec_echo(shell, cmd);
 	return ;
 }

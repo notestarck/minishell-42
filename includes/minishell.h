@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
+/*   By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:35:23 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/16 13:13:10 by estarck          ###   ########.fr       */
+/*   Updated: 2022/06/16 16:22:17 by reclaire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,7 @@ void	exec_pwd(t_data *shell, t_lst *cmd);
 void	exec_env(t_data *shell);
 void	exec_export(t_data *shell, t_lst *cmd);
 void	exec_unset(t_data *shell, t_lst *cmd);
+void	exec_echo(t_data *shell, t_lst *cmd);
 
 //Free minishell
 void	free_cmd(t_lst *cmd);

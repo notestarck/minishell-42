@@ -6,7 +6,7 @@
 #    By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/25 09:55:54 by reclaire          #+#    #+#              #
-#    Updated: 2022/06/16 02:02:25 by reclaire         ###   ########.fr        #
+#    Updated: 2022/06/16 16:36:15 by reclaire         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME		=	minishell
 SRCS		=	${wildcard srcs/*.c}
 OBJS		=	${SRCS:.c=.o}
 
-INCLUDES  	=	-I./includes -I./libft/includes
+INCLUDES  	=	-I./includes -I./libft
 CC			=	gcc
 #CFLAGS		:=	-Wall -Wextra -Werror -O3
 CFLAGS		:=	-O3

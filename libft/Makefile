@@ -5,84 +5,116 @@
 #                                                     +:+ +:+         +:+      #
 #    By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2022/02/23 21:25:34 by estarck           #+#    #+#              #
-#    Updated: 2022/06/16 02:30:29 by reclaire         ###   ########.fr        #
+#    Created: 2022/02/25 09:55:54 by reclaire          #+#    #+#              #
+#    Updated: 2022/05/18 15:11:26 by reclaire         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME	=	libft.a
-SRCS	= 	ft_atoi.c \
-			ft_isalnum.c \
+.DEFAULT_GOAL := all
+
+NAME	=	libft.a	
+SRCS	=	ft_atoi.c \
+			ft_bzero.c \
+			ft_calloc.c \
+			ft_getindex.c \
+			ft_is_prime.c \
 			ft_isalpha.c \
+			ft_isalnum.c \
 			ft_isascii.c \
 			ft_isdigit.c \
+            ft_str_isnum.c \
 			ft_isprint.c \
-			ft_memcmp.c \
-			ft_strncmp.c \
-			ft_tolower.c \
-			ft_toupper.c \
-			ft_bzero.c \
-			ft_putchar_fd.c \
-			ft_putendl_fd.c \
-			ft_putnbr_fd.c \
-			ft_putstr_fd.c \
-			ft_striteri.c \
-			ft_calloc.c \
+			ft_itoa.c \
+            ft_min.c \
+            ft_fmin.c \
+            ft_max.c \
+            ft_fmax.c \
+            ft_isrange.c \
+            ft_abs.c \
+            ft_fabs.c \
+            ft_str_appnd.c \
+            ft_malloc.c \
+			ft_magnitude.c \
+			ft_pow.c \
+			ft_range.c \
+			ft_nrange.c \
+			ft_uitoa.c \
 			ft_memchr.c \
+			ft_memcmp.c \
 			ft_memcpy.c \
 			ft_memmove.c \
 			ft_memset.c \
-			ft_itoa.c \
-			ft_str_appnd.c \
+			ft_putchar_fd.c \
+			ft_putendl_fd.c \
+			ft_putstr_fd.c \
+			ft_putnbr_fd.c \
+			ft_split.c \
 			ft_strchr.c \
 			ft_strdup.c \
+			ft_striteri.c \
 			ft_strjoin.c \
+			ft_strcat.c \
+			ft_strlcat.c \
+			ft_strlcpy.c \
+			ft_wrap.c \
+			ft_strlen.c \
 			ft_strmapi.c \
+			ft_strcmp.c \
+			ft_strncmp.c \
 			ft_strnstr.c \
 			ft_strrchr.c \
 			ft_strtrim.c \
 			ft_substr.c \
-			ft_split.c \
-			ft_strlcat.c \
-			ft_strlcpy.c \
-			ft_strlen.c \
+			ft_tolower.c \
+			ft_toupper.c \
 			ft_lstnew.c \
-			ft_lstadd_front.c \
 			ft_lstsize.c \
+			ft_lstadd_front.c \
 			ft_lstlast.c \
 			ft_lstadd_back.c \
 			ft_lstdelone.c \
 			ft_lstclear.c \
 			ft_lstiter.c \
 			ft_lstmap.c \
-			ft_printf.c \
-			srcs/ft_printf_utils.c \
-			srcs/ft_printhexa.c \
-			srcs/ft_ptrhexa.c \
-			srcs/ft_uitoa.c \
-			get_next_line.c \
-			srcs/get_next_line_utils.c \
-			ft_htol.c
-OBJS	= ${SRCS:.c=.o}
-HEADER	= ./includes
-CFLAGS	= -Wall -Wextra -Werror
-CC		= gcc
-RM		= rm -f
+			ft_lstremoveif.c \
+			gnl/ft_gnl.c \
+			gnl/ft_gnl2.c \
+			ft_printf/ft_printf.c \
+			ft_printf/handle_c.c \
+			ft_printf/handle_d.c \
+			ft_printf/handle_i.c \
+			ft_printf/handle_p.c \
+			ft_printf/handle_s.c \
+			ft_printf/handle_u.c \
+			ft_printf/handle_uX.c \
+			ft_printf/handle_x.c
 
-.c.o:
-			@${CC} ${CFLAGS} -I${HEADER} -c $< -o ${<:.c=.o}
+OBJS		=	${SRCS:.c=.o}
+INCLUDES  	=	-I./ -I./gnl -I./ft_printf
+CC			=	gcc
+CFLAGS		:=	-Wall -Wextra -Werror -O3
+ifdef MOREFLAGS
+CFLAGS		:=	$(CFLAGS) $(MOREFLAGS)
+endif
+RM			=	rm -f
 
-$(NAME):	${OBJS}	
-			@ar rc $(NAME) ${OBJS}
+_SRCSCOUNT	=	$(words $(SRCS))
+_COUNT		=	0
 
-all:		${NAME}
+%.o: %.c
+			$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+
+$(NAME):	$(OBJS)
+			ar -rcs $(NAME) $(OBJS)
+				
+all:		$(NAME)
 
 clean:
-			@${RM} ${OBJS}
-
+			$(RM) $(OBJS) $(OBJS_B)
+			
 fclean:		clean
-			@${RM} ${NAME}	
+			$(RM) $(NAME)
 
-re:			fclean all
+re:			fclean all clean
 
-.PHONY: 	all libft.a clean fclean re 
+.PHONY:		fclean all clean re start

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
+/*   By: reclaire <reclaire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/24 14:22:51 by estarck           #+#    #+#             */
-/*   Updated: 2022/02/28 18:16:31 by estarck          ###   ########.fr       */
+/*   Created: 2022/02/23 18:19:15 by reclaire          #+#    #+#             */
+/*   Updated: 2022/03/03 15:50:32 by reclaire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,17 @@
 
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {
-	char			*dest;
-	unsigned int	i;
+	int		i;
+	char	*new;
 
-	dest = ft_strdup(s);
-	if (dest == 0x0)
-		return (0x0);
+	new = ft_strdup(s);
+	if (new == NULL)
+		return (NULL);
 	i = 0;
-	while (dest[i])
+	while (s[i] != '\0')
 	{
-		dest [i] = f(i, s[i]);
+		new[i] = f(i, s[i]);
 		i++;
 	}
-	return (dest);
+	return (new);
 }

@@ -3,35 +3,49 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
+/*   By: reclaire <reclaire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/23 15:29:32 by estarck           #+#    #+#             */
-/*   Updated: 2022/02/25 13:25:25 by estarck          ###   ########.fr       */
+/*   Created: 2022/02/22 21:47:40 by reclaire          #+#    #+#             */
+/*   Updated: 2022/03/16 11:48:13 by reclaire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strnstr(const char *s, const char *tofind, size_t len)
-{
-	size_t	i;
-	size_t	j;
+//unsigned long	count(const char *src)
+//{
+//	int	i;
+//
+//	i = 0;
+//	while (src[i] != '\0')
+//		i++;
+//	return (i);
+//}
 
-	i = 0;
-	if (*tofind == '\0' || tofind == 0x0)
-		return ((char *)s);
-	while (s[i] != '\0')
+char	*ft_strnstr(const char *str, const char *to_find, size_t len)
+{
+	unsigned long	istr;
+	int				ifind;
+	int				xfind;
+
+	istr = 0;
+	ifind = 0;
+	if ((to_find[ifind]) == '\0' && ft_strlen(to_find) <= len)
+		return ((char *)str);
+	while (str[istr] != '\0' && istr < len)
 	{
-		j = 0;
-		while (tofind[j] == s[i + j] && i + j < len)
+		if (str[istr] == to_find[ifind])
 		{
-			if (tofind[j + 1] == '\0')
+			xfind = istr;
+			while (str[istr++] == to_find[ifind++])
 			{
-				return ((char *)s + i);
+				if (to_find[ifind] == '\0' && ft_strlen(to_find) + xfind <= len)
+					return ((char *)&str[xfind]);
 			}
-			j++;
+			istr = xfind;
+			ifind = 0;
 		}
-		i++;
+		istr++;
 	}
-	return (0);
+	return (0x0);
 }

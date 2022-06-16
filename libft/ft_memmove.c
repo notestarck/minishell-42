@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
+/*   By: reclaire <reclaire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/22 16:52:43 by estarck           #+#    #+#             */
-/*   Updated: 2022/02/25 15:12:29 by estarck          ###   ########.fr       */
+/*   Created: 2022/02/22 20:28:48 by reclaire          #+#    #+#             */
+/*   Updated: 2022/03/03 15:50:32 by reclaire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 
 void	*ft_memmove(void *dst, const void *src, size_t len)
 {
-	size_t	i;
+	unsigned long	i;
 
-	i = 0;
 	if (!dst && !src)
-		return (0);
+		return (dst);
+	i = 0;
 	if (dst > src)
 	{
-		while (len--)
+		while (len-- > 0)
 			*(char *)(dst + len) = *(char *)(src + len);
 	}
 	else

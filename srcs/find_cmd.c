@@ -33,10 +33,10 @@ static char	*find_path(char **env_path, char *cmd)
 	struct dirent	*dp;
 	char			*tmp;
 	char			*out;
+	char			*path;
 
 	while (*env_path != NULL)
 	{
-		char	*path;
 
 		dir = opendir(*env_path);
 		if (access(*env_path, R_OK))
@@ -54,15 +54,16 @@ static char	*find_path(char **env_path, char *cmd)
 				path = ft_str_appnd(path, dp->d_name, 1, 0);
 				if (access(path, X_OK))
 				{
-					ft_printf("-minishell: %s/%s: Permission denied.\n", *env_path, dp->d_name);
+					ft_printf("-minishell: %s/%s: Permission denied.\n",
+						*env_path, dp->d_name);
 					dp = readdir(dir);
-					continue;
+					continue ;
 				}
 				closedir(dir);
 				tmp = ft_strjoin(*env_path, "/");
 				out = ft_strjoin(tmp, cmd);
 				free(tmp);
-				return (out) ;
+				return (out);
 			}
 			dp = readdir(dir);
 		}
