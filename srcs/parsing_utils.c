@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+        */
+/*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 16:04:41 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/15 16:33:47 by reclaire         ###   ########.fr       */
+/*   Updated: 2022/06/16 13:24:10 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ char	*ft_strcut(char *str, char tok)
 	return (&str[i]);
 }
 
-int	count_argv(t_lst *cmd, char *str)
+int	count_argv(t_data *shell, t_lst *cmd, char *str)
 {
 	int	i;
 	int	c;

@@ -6,7 +6,7 @@
 /*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:35:23 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/15 20:59:21 by estarck          ###   ########.fr       */
+/*   Updated: 2022/06/16 13:13:10 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ typedef struct s_data
 	char	*ret_prompt;
 	t_lst	*cmd;
 	char	*builtins[8];
+	int		nbr_pipe;
 	char	**env;
 	char	**env_path;
 }	t_data;
@@ -96,7 +97,7 @@ int		find_cmd(t_data *shell);
 t_lst	*add_cmd(t_lst *cmd);
 t_lst	*new_cmd(void);
 char	*ft_strcut(char *str, char tok);
-int		count_argv(t_lst *cmd, char *str);
+int	count_argv(t_data *shell, t_lst *cmd, char *str);
 
 //Exec cmd
 void	run_cmd(t_data *shell);
