@@ -31,25 +31,46 @@ static char	*find_path(char **env_path, char *cmd)
 {
 	DIR				*dir;
 	struct dirent	*dp;
+	char			*tmp;
+	char			*out;
 
 	while (*env_path != NULL)
 	{
+		char	*path;
+
 		dir = opendir(*env_path);
-		if (dir == NULL)
-			perror ("error opendir");
+		if (access(*env_path, R_OK))
+		{
+			closedir(dir);
+			env_path++;
+			continue ;
+		}
 		dp = readdir(dir);
 		while (dp)
 		{
 			if (!ft_strncmp(dp->d_name, cmd, ft_strlen(cmd) + 1))
 			{
+				path = ft_str_appnd(*env_path, "/", 0, 0);
+				path = ft_str_appnd(path, dp->d_name, 1, 0);
+				if (access(path, X_OK))
+				{
+					ft_printf("-minishell: %s/%s: Permission denied.\n", *env_path, dp->d_name);
+					dp = readdir(dir);
+					continue;
+				}
 				closedir(dir);
-				return (ft_strjoin(ft_strjoin(*env_path, "/"), cmd)) ;
+				tmp = ft_strjoin(*env_path, "/");
+				out = ft_strjoin(tmp, cmd);
+				free(tmp);
+				return (out) ;
 			}
 			dp = readdir(dir);
 		}
+		//free(dp);
 		closedir(dir);
 		env_path++;
 	}
+	ft_printf("-minishell: %s: command not found\n", cmd);
 	return (0);
 }
 

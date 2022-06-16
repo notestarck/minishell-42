@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+         #
+#    By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/23 21:25:34 by estarck           #+#    #+#              #
-#    Updated: 2022/04/14 09:33:20 by estarck          ###   ########.fr        #
+#    Updated: 2022/06/16 02:30:29 by reclaire         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,6 +33,7 @@ SRCS	= 	ft_atoi.c \
 			ft_memmove.c \
 			ft_memset.c \
 			ft_itoa.c \
+			ft_str_appnd.c \
 			ft_strchr.c \
 			ft_strdup.c \
 			ft_strjoin.c \
