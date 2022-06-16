@@ -36,12 +36,9 @@ static char	*find_path(char **env_path, char *cmd)
 
 	while (*env_path != NULL)
 	{
+		char	*path;
+
 		dir = opendir(*env_path);
-		//Une erreur opendir n'est pas grave, ca veut juste dire qu'on a pas les droits d'acceder au dossier
-		//Donc on la laisse passer, et on continue
-		//La fonction access nous permet de verifier proprement qu'on a tout les droits
-		//if (dir == NULL)
-		//	perror ("Error opendir");
 		if (access(*env_path, R_OK))
 		{
 			closedir(dir);
@@ -53,9 +50,11 @@ static char	*find_path(char **env_path, char *cmd)
 		{
 			if (!ft_strncmp(dp->d_name, cmd, ft_strlen(cmd) + 1))
 			{
-				if (access(dp->d_name, X_OK))
+				path = ft_str_appnd(*env_path, "/", 0, 0);
+				path = ft_str_appnd(path, dp->d_name, 1, 0);
+				if (access(path, X_OK))
 				{
-					ft_printf("-minishell: %s%s: Permission denied.\n", *env_path, dp->d_name);
+					ft_printf("-minishell: %s/%s: Permission denied.\n", *env_path, dp->d_name);
 					dp = readdir(dir);
 					continue;
 				}
