@@ -6,7 +6,7 @@
 /*   By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 12:43:30 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/16 16:22:02 by reclaire         ###   ########.fr       */
+/*   Updated: 2022/06/16 17:41:38 by reclaire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,7 @@ void	exec_blt(t_data *shell, t_lst *cmd)
 		exec_unset(shell, cmd);
 	else if (cmd->built == ECHO)
 		exec_echo(shell, cmd);
+	else if (cmd->built == EXIT)
+		return ;
 	return ;
 }

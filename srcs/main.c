@@ -6,7 +6,7 @@
 /*   By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:39:17 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/16 16:22:41 by reclaire         ###   ########.fr       */
+/*   Updated: 2022/06/16 17:41:51 by reclaire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ static t_data	*init_shell(void)
 //Quand on utilise des builtins, le message de fin s'affiche bizarrement
 //Les buitlins ne returnent surement pas, donc plusieurs fork écrive en meme temps
 
-void	quit(int sig)
+void	quit_mini(int sig)
 {
 	ft_printf("\n");
 	clear_history();
@@ -83,7 +83,7 @@ int	main(int argc, char **argv, char **env)
 
 	(void)argc;
 	(void)argv;
-	signal(2, quit);
+	signal(2, quit_mini);
 	shell = init_shell();
 	init_env(shell, env);
 	while (42)

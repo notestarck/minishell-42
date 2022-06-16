@@ -6,7 +6,7 @@
 /*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:52:00 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/16 13:25:45 by estarck          ###   ########.fr       */
+/*   Updated: 2022/06/16 17:13:20 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ static void	split(t_data *shell, t_lst *cmd)
 	while (*str != '\0')
 	{
 		init_arg(shell, tmp, str);
-		shell->nbr_pipe++;
 		str = cpy_arg(tmp, str) + str;
 		if (*str != '\0')
 		{
@@ -87,7 +86,6 @@ t_lst	*parse_prompt(t_data *shell)
 	t_lst	*cmd;
 
 	cmd = new_cmd();
-	shell->nbr_pipe = -1;
 	split(shell, cmd);
 	return (cmd);
 }

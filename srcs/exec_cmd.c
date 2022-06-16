@@ -74,5 +74,12 @@ void run_cmd(t_data *shell)
 		close(tmp->pipefd[WRITE]);
 		tmp = tmp->next;
 	}
-	waitpid(pid, &status, 0);
+	tmp = shell->cmd;
+	while (tmp)
+	{
+		waitpid(-1, 0, 0);
+		if (tmp->built == EXIT)
+			quit_mini(2);
+		tmp = tmp->next;
+	}
 }
