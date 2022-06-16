@@ -6,7 +6,7 @@
 /*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:39:17 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/16 13:21:22 by estarck          ###   ########.fr       */
+/*   Updated: 2022/06/16 15:57:41 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ static t_data	*init_shell(void)
 void	quit(int sig)
 {
 	ft_printf("\n");
-	rl_clear_history();
+	clear_history();
 	ft_printf("Farewell\n");
 	exit(0);
 }

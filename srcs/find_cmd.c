@@ -37,11 +37,6 @@ static char	*find_path(char **env_path, char *cmd)
 	while (*env_path != NULL)
 	{
 		dir = opendir(*env_path);
-		//Une erreur opendir n'est pas grave, ca veut juste dire qu'on a pas les droits d'acceder au dossier
-		//Donc on la laisse passer, et on continue
-		//La fonction access nous permet de verifier proprement qu'on a tout les droits
-		//if (dir == NULL)
-		//	perror ("Error opendir");
 		if (access(*env_path, R_OK))
 		{
 			closedir(dir);
