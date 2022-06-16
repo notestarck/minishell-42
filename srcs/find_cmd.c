@@ -31,25 +31,47 @@ static char	*find_path(char **env_path, char *cmd)
 {
 	DIR				*dir;
 	struct dirent	*dp;
+	char			*tmp;
+	char			*out;
 
 	while (*env_path != NULL)
 	{
 		dir = opendir(*env_path);
-		if (dir == NULL)
-			perror ("error opendir");
+		//Une erreur opendir n'est pas grave, ca veut juste dire qu'on a pas les droits d'acceder au dossier
+		//Donc on la laisse passer, et on continue
+		//La fonction access nous permet de verifier proprement qu'on a tout les droits
+		//if (dir == NULL)
+		//	perror ("Error opendir");
+		if (access(*env_path, R_OK))
+		{
+			closedir(dir);
+			env_path++;
+			continue ;
+		}
 		dp = readdir(dir);
 		while (dp)
 		{
 			if (!ft_strncmp(dp->d_name, cmd, ft_strlen(cmd) + 1))
 			{
+				if (access(dp->d_name, X_OK))
+				{
+					ft_printf("-minishell: %s%s: Permission denied.\n", *env_path, dp->d_name);
+					dp = readdir(dir);
+					continue;
+				}
 				closedir(dir);
-				return (ft_strjoin(ft_strjoin(*env_path, "/"), cmd)) ;
+				tmp = ft_strjoin(*env_path, "/");
+				out = ft_strjoin(tmp, cmd);
+				free(tmp);
+				return (out) ;
 			}
 			dp = readdir(dir);
 		}
+		//free(dp);
 		closedir(dir);
 		env_path++;
 	}
+	ft_printf("-minishell: %s: command not found\n", cmd);
 	return (0);
 }
 

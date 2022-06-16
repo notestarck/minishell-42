@@ -6,11 +6,12 @@
 /*   By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:39:17 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/15 16:33:46 by reclaire         ###   ########.fr       */
+/*   Updated: 2022/06/16 03:06:13 by reclaire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <signal.h>
 
 static void	init_env(t_data *shell, char **env)
 {
@@ -34,8 +35,24 @@ static void	init_env(t_data *shell, char **env)
 
 static void	launch_shell(t_data *shell)
 {
-	shell->ret_prompt = readline("minishell $> ");
-	add_history(shell->ret_prompt);
+	char	*tmp;
+	char	*prompt;
+	char	*usr;
+	char	*name;
+	char	*pwd;
+
+	usr = env_get(shell, "USER");
+	name = env_get(shell, "NAME");
+	pwd = env_get(shell, "PWD");
+	prompt = ft_str_appnd(usr, "@", 1, 0);
+	tmp = ft_str_appnd(prompt, name, 1, 1);
+	prompt = ft_str_appnd(tmp, ":", 1, 0);
+	tmp = ft_str_appnd(prompt, pwd, 1, 1);
+	prompt = ft_str_appnd(tmp, " $> ", 1, 0);
+	shell->ret_prompt = readline(prompt);
+	free(prompt);
+	if (*shell->ret_prompt != '\0')
+		add_history(shell->ret_prompt);
 }
 
 static t_data	*init_shell(void)
@@ -55,12 +72,24 @@ static t_data	*init_shell(void)
 	return (shell);
 }
 
+//Quand on utilise des builtins, le message de fin s'affiche bizarrement
+//Les buitlins ne returnent surement pas, donc plusieurs fork écrive en meme temps
+
+void	quit(int sig)
+{
+	ft_printf("\n");
+	rl_clear_history();
+	ft_printf("Farewell\n");
+	exit(0);
+}
+
 int	main(int argc, char **argv, char **env)
 {
 	t_data	*shell;
 
 	(void)argc;
 	(void)argv;
+	signal(2, quit);
 	shell = init_shell();
 	init_env(shell, env);
 	while (42)
@@ -76,5 +105,6 @@ int	main(int argc, char **argv, char **env)
 			}
 			free_cmd(shell->cmd);
 		}
+		free(shell->ret_prompt);
 	}
 }

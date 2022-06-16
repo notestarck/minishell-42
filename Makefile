@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+         #
+#    By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/25 09:55:54 by reclaire          #+#    #+#              #
-#    Updated: 2022/06/15 21:11:28 by estarck          ###   ########.fr        #
+#    Updated: 2022/06/16 02:02:25 by reclaire         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,9 @@ INCLUDES  	=	-I./includes -I./libft/includes
 CC			=	gcc
 #CFLAGS		:=	-Wall -Wextra -Werror -O3
 CFLAGS		:=	-O3
+ifdef MOREFLAGS
+CFLAGS		:=	$(CFLAGS) $(MOREFLAGS)
+endif
 RM			=	rm -f
 
 %.o: %.c

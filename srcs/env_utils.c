@@ -14,7 +14,8 @@
 
 char	*env_get(t_data *shell, char *key)
 {
-	int	i;
+	int		i;
+	char	*out;
 
 	i = 0;
 	while (shell->env[i])
@@ -24,7 +25,9 @@ char	*env_get(t_data *shell, char *key)
 					ft_strlen(shell->env[i])));
 		i++;
 	}
-	return (NULL);
+	out = malloc(sizeof(char));
+	out[0] = '\0';
+	return (out);
 }
 
 void	env_del(t_data *shell, char *key)
