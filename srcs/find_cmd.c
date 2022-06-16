@@ -36,6 +36,8 @@ static char	*find_path(char **env_path, char *cmd)
 
 	while (*env_path != NULL)
 	{
+		char	*path;
+
 		dir = opendir(*env_path);
 		if (access(*env_path, R_OK))
 		{
@@ -48,9 +50,11 @@ static char	*find_path(char **env_path, char *cmd)
 		{
 			if (!ft_strncmp(dp->d_name, cmd, ft_strlen(cmd) + 1))
 			{
-				if (access(dp->d_name, X_OK))
+				path = ft_str_appnd(*env_path, "/", 0, 0);
+				path = ft_str_appnd(path, dp->d_name, 1, 0);
+				if (access(path, X_OK))
 				{
-					ft_printf("-minishell: %s%s: Permission denied.\n", *env_path, dp->d_name);
+					ft_printf("-minishell: %s/%s: Permission denied.\n", *env_path, dp->d_name);
 					dp = readdir(dir);
 					continue;
 				}

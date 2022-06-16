@@ -37,18 +37,12 @@ static void	launch_shell(t_data *shell)
 {
 	char	*tmp;
 	char	*prompt;
-	char	*usr;
-	char	*name;
-	char	*pwd;
 
-	usr = env_get(shell, "USER");
-	name = env_get(shell, "NAME");
-	pwd = env_get(shell, "PWD");
-	prompt = ft_str_appnd(usr, "@", 1, 0);
-	tmp = ft_str_appnd(prompt, name, 1, 1);
-	prompt = ft_str_appnd(tmp, ":", 1, 0);
-	tmp = ft_str_appnd(prompt, pwd, 1, 1);
-	prompt = ft_str_appnd(tmp, " $> ", 1, 0);
+	prompt = ft_str_appnd(env_get(shell, "USER"), "@", 1, 0);
+	prompt = ft_str_appnd(prompt, env_get(shell, "NAME"), 1, 1);
+	prompt = ft_str_appnd(prompt, ":", 1, 0);
+	prompt = ft_str_appnd(prompt, env_get(shell, "PWD"), 1, 1);
+	prompt = ft_str_appnd(prompt, " $> ", 1, 0);
 	shell->ret_prompt = readline(prompt);
 	free(prompt);
 	if (*shell->ret_prompt != '\0')
