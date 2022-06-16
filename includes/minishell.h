@@ -6,7 +6,7 @@
 /*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:35:23 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/16 16:55:41 by estarck          ###   ########.fr       */
+/*   Updated: 2022/06/16 17:12:39 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,6 @@ typedef struct s_data
 	char	*ret_prompt;
 	t_lst	*cmd;
 	char	*builtins[8];
-	int		nbr_pipe;
 	char	**env;
 	char	**env_path;
 }	t_data;
