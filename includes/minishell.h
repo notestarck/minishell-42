@@ -6,7 +6,7 @@
 /*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:35:23 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/16 13:13:10 by estarck          ###   ########.fr       */
+/*   Updated: 2022/06/16 16:55:41 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ int		find_cmd(t_data *shell);
 t_lst	*add_cmd(t_lst *cmd);
 t_lst	*new_cmd(void);
 char	*ft_strcut(char *str, char tok);
-int	count_argv(t_data *shell, t_lst *cmd, char *str);
+int		count_argv(t_data *shell, t_lst *cmd, char *str);
 
 //Exec cmd
 void	run_cmd(t_data *shell);
@@ -122,5 +122,8 @@ char	*env_get(t_data *shell, char *key);
 void	env_set(t_data *shell, char *key, char *value);
 void	env_new(t_data *shell, char *key, char *value);
 void	env_del(t_data *shell, char *key);
+
+//Quit
+void	quit_mini(int sig);
 
 #endif

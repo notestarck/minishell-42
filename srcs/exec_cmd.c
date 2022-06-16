@@ -79,6 +79,8 @@ void run_cmd(t_data *shell)
 	while (tmp)
 	{
 		waitpid(-1, 0, 0);
+		if (tmp->built == EXIT)
+			quit_mini(2);
 		tmp = tmp->next;
 	}
 }
