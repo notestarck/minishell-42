@@ -1,0 +1,24 @@
+Makefile
+bash bash
+consigne
+includes
+libft
+libft.a
+minishell
+srcs
+test.txt
+total 288
+drwxr-xr-x@  14 manu  staff    448 17 jui 17:26 .
+drwxr-xr-x@  13 manu  staff    416 17 jui 17:26 ..
+-rw-r--r--    1 manu  staff   6148 17 jui 17:09 .DS_Store
+drwxr-xr-x@  14 manu  staff    448 17 jui 17:16 .git
+drwxr-xr-x@   3 manu  staff     96 17 jui 16:46 .vscode
+-rw-r--r--    1 manu  staff   1556 17 jui 08:51 Makefile
+drwxr-xr-x@   5 manu  staff    160 17 jui 16:46 bash bash
+drwxr-xr-x@   3 manu  staff     96 17 jui 16:46 consigne
+drwxr-xr-x@   3 manu  staff     96 17 jui 17:15 includes
+drwxr-xr-x@ 137 manu  staff   4384 17 jui 17:09 libft
+-rw-r--r--    1 manu  staff  70616 17 jui 17:08 libft.a
+-rwxr-xr-x    1 manu  staff  53600 17 jui 17:26 minishell
+drwxr-xr-x@  44 manu  staff   1408 17 jui 17:26 srcs
+-rw-------    1 manu  staff     75 17 jui 17:25 test.txt
