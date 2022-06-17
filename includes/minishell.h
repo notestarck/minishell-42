@@ -6,7 +6,7 @@
 /*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:35:23 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/17 12:19:22 by estarck          ###   ########.fr       */
+/*   Updated: 2022/06/17 12:44:16 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ enum e_write
 
 enum e_built
 {
-	UNKNOW = -1,
 	ECHO,
 	CD,
 	PWD,
@@ -47,6 +46,7 @@ enum e_built
 	UNSET,
 	ENV,
 	EXIT,
+	REDIR,
 	CMD = 9
 };
 
