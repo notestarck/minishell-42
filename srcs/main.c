@@ -42,7 +42,7 @@ static void	launch_shell(t_data *shell)
 	prompt = ft_str_appnd(prompt, env_get(shell, "NAME"), 1, 1);
 	prompt = ft_str_appnd(prompt, ": ", 1, 0);
 	prompt = ft_str_appnd(prompt, env_get(shell, "PWD"), 1, 1);
-	prompt = ft_str_appnd(prompt, "\nminishell $> ", 1, 0);
+	prompt = ft_str_appnd(prompt, " minishell $> ", 1, 0);
 	shell->ret_prompt = readline(prompt);
 	free(prompt);
 	if (*shell->ret_prompt != '\0')
@@ -60,7 +60,7 @@ static t_data	*init_shell(void)
 	shell->builtins[3] = "export";
 	shell->builtins[4] = "unset";
 	shell->builtins[5] = "env";
-	shell->builtins[6] = "exit";
+	shell->builtins[6] = "exit"; 
 	shell->builtins[7] = NULL;
 	shell->pid = 0;
 	init_env_path(shell);
@@ -87,7 +87,7 @@ int	main(int argc, char **argv, char **env)
 	signal(2, quit_mini);
 	shell = init_shell();
 	if (shell->pid == 0)
-	init_env(shell, env);
+		init_env(shell, env);
 	while (42)
 	{
 		launch_shell(shell);

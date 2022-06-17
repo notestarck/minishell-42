@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   syntax_error.c                                     :+:      :+:    :+:   */
+/*   syntax.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
+/*   By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 11:30:23 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/17 15:27:58 by estarck          ###   ########.fr       */
+/*   Updated: 2022/06/17 17:07:03 by reclaire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,11 @@ static void	check_sep(t_data *shell)
 	while (cmd)
 	{
 		i = 0;
+		if (!cmd->argv)
+		{
+			cmd = cmd->next;
+			continue ;
+		}
 		while (cmd->argv[i])
 		{
 			if (cmd->argv[i][0] == '<' && cmd->argv[i][1] == '\0')
@@ -91,6 +96,11 @@ static void	del_quote(t_data *shell)
 	while (tmp)
 	{
 		i = 0;
+		if (!tmp->argv)
+		{
+			tmp = tmp->next;
+			continue ;
+		}
 		while (tmp->argv[i])
 		{
 			if ((tmp->argv[i][0] == '\'' || tmp->argv[i][0] == '"')
