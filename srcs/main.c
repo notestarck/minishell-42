@@ -92,7 +92,7 @@ int	main(int argc, char **argv, char **env)
 	{
 		launch_shell(shell);
 		shell->cmd = parse_prompt(shell);
-		del_quote(shell);
+		check_syntax(shell);
 		if (*shell->ret_prompt != '\0')
 		{
 			if (check_error(shell->cmd))

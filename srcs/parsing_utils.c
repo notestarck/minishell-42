@@ -6,7 +6,7 @@
 /*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 16:04:41 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/16 13:24:10 by estarck          ###   ########.fr       */
+/*   Updated: 2022/06/17 13:55:49 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ t_lst	*add_cmd(t_lst *cmd)
 		cmd = cmd->next;
 	new->error = 0;
 	new->built = -1;
+	new->sep = -1;
 	cmd->next = new;
 	new->prev = cmd;
 	new->next = NULL;
@@ -39,6 +40,7 @@ t_lst	*new_cmd(void)
 		perror("error : malloc");
 	new->error = 0;
 	new->built = -1;
+	new->sep = -1;
 	new->next = NULL;
 	new->prev = NULL;
 	new->argv = NULL;

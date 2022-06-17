@@ -6,7 +6,7 @@
 /*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 11:30:23 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/17 12:38:12 by estarck          ###   ########.fr       */
+/*   Updated: 2022/06/17 14:08:52 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,39 @@ int	check_quote(t_lst *cmd, char *str)
 	return (i);
 }
 
-void	del_quote(t_data *shell)
+static void	check_sep(t_data *shell)
+{
+	int		i;
+	t_lst	*cmd;
+
+	cmd = shell->cmd;
+	while (cmd)
+	{
+		i = 0;
+		while (cmd->argv[i])
+		{
+			if (cmd->argv[i][0] == '<' && cmd->argv[i][1] == '\0')
+				cmd->sep = S_LEFT;
+			else if (cmd->argv[i][0] == '>' && cmd->argv[i][1] == '\0')
+				cmd->sep = S_RIGHT;
+			else if (cmd->argv[i][0] == '<' && cmd->argv[i][1] == '<' && cmd->argv[i][2] == '\0')
+				cmd->sep = D_LEFT;
+			else if (cmd->argv[i][0] == '>' && cmd->argv[i][1] == '>' && cmd->argv[i][2] == '\0')
+				cmd->sep = D_RIGHT;
+			else if (cmd->argv[i][0] == '&' && cmd->argv[i][1] == '&' && cmd->argv[i][2] == '\0')
+				cmd->sep = AND;
+			else if (cmd->argv[i][0] == '|' && cmd->argv[i][1] == '|' && cmd->argv[i][2] == '\0')
+				cmd->sep = OR;
+			else if (cmd->argv[i][0] == '*')
+				cmd->sep = WLCRD;
+			i++;
+		}
+		printf("test sep %d\n", cmd->sep);
+		cmd = cmd->next;
+	}
+}
+
+static void	del_quote(t_data *shell)
 {
 	int		i;
 	char	*str;
@@ -67,9 +99,9 @@ void	del_quote(t_data *shell)
 				&& ft_strncmp(tmp->argv[0], "ECHO", 4)))
 			{
 				if (tmp->argv[i][0] == '\'')
-					str = *ft_split(tmp->argv[i], '\'');
+					str = *ft_split(tmp->argv[i], '\''); //leak
 				else
-					str = *ft_split(tmp->argv[i], '"');
+					str = *ft_split(tmp->argv[i], '"'); //leak
 				free(tmp->argv[i]);
 				tmp->argv[i] = str;
 			}
@@ -77,4 +109,10 @@ void	del_quote(t_data *shell)
 		}
 		tmp = tmp->next;
 	}
+}
+
+void	check_syntax(t_data *shell)
+{
+	check_sep(shell);
+	del_quote(shell);
 }

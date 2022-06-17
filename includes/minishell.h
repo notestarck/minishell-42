@@ -6,7 +6,7 @@
 /*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:35:23 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/17 12:44:16 by estarck          ###   ########.fr       */
+/*   Updated: 2022/06/17 13:52:37 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,21 +46,19 @@ enum e_built
 	UNSET,
 	ENV,
 	EXIT,
-	REDIR,
 	CMD = 9
 };
 
 enum e_sep
 {
 	NONE = -1,
-	PIPE,
-	COMA,
 	S_RIGHT,
 	S_LEFT,
 	D_RIGHT,
 	D_LEFT,
 	AND,
-	OR
+	OR ,
+	WLCRD
 };
 
 typedef struct s_lst
@@ -117,7 +115,7 @@ void	free_cmd(t_lst *cmd);
 //syntax error
 int		check_error(t_lst *cmd);
 int		check_quote(t_lst *cmd, char *str);
-void	del_quote(t_data *shell);
+void	check_syntax(t_data *shell);
 
 //Utils
 char	*env_get(t_data *shell, char *key);
