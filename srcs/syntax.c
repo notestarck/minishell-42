@@ -6,7 +6,7 @@
 /*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 11:30:23 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/17 14:08:52 by estarck          ###   ########.fr       */
+/*   Updated: 2022/06/17 15:27:58 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ static void	check_sep(t_data *shell)
 				cmd->sep = WLCRD;
 			i++;
 		}
-		printf("test sep %d\n", cmd->sep);
 		cmd = cmd->next;
 	}
 }

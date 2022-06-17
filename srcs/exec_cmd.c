@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-static void	fd_manager(t_data *shell, t_lst *cmd)
+void	fd_manager(t_data *shell, t_lst *cmd)
 {
 	t_lst	*tmp;
 
@@ -52,9 +52,15 @@ void run_cmd(t_data *shell)
 	tmp = shell->cmd;
 	while (cmd)
 	{
-		if (cmd->built != 9 && cmd->built != ECHO)
+		if (cmd->built != 9 && cmd->built != ECHO && cmd->sep == -1)
 		{
 			exec_blt(shell, cmd);
+			cmd = cmd->next;
+			continue ;
+		}
+		if (cmd->sep != -1)
+		{
+			exec_op(shell, cmd);
 			cmd = cmd->next;
 			continue ;
 		}

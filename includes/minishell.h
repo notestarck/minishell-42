@@ -6,7 +6,7 @@
 /*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:35:23 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/17 13:52:37 by estarck          ###   ########.fr       */
+/*   Updated: 2022/06/17 16:08:04 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <signal.h>
+# include <fcntl.h>
 # include "libft.h"
 
 typedef enum e_bool
@@ -99,6 +100,11 @@ int		count_argv(t_data *shell, t_lst *cmd, char *str);
 
 //Exec cmd
 void	run_cmd(t_data *shell);
+void	fd_manager(t_data *shell, t_lst *cmd);
+
+//Exec op
+void	exec_op(t_data *shell, t_lst *cmd);
+void	s_left(t_data *shell, t_lst *cmd);
 
 //Exec blt
 void	exec_blt(t_data *shell, t_lst *cmd);
