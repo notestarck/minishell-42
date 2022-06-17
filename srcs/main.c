@@ -86,6 +86,9 @@ int	main(int argc, char **argv, char **env)
 	(void)argv;
 	signal(2, quit_mini);
 	shell = init_shell();
+	char *in = malloc(sizeof(char) * 100);
+	read(0, in, 100);
+	ft_printf("%d\n", *in);
 	if (shell->pid == 0)
 		init_env(shell, env);
 	while (42)
@@ -101,7 +104,6 @@ int	main(int argc, char **argv, char **env)
 					run_cmd(shell);
 			}
 			free_cmd(shell->cmd);
-			ft_printf("\n");
 		}
 		free(shell->ret_prompt);
 	}

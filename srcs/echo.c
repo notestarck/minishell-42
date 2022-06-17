@@ -6,7 +6,7 @@
 /*   By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 16:17:17 by reclaire          #+#    #+#             */
-/*   Updated: 2022/06/16 23:27:34 by reclaire         ###   ########.fr       */
+/*   Updated: 2022/06/17 17:24:46 by reclaire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,12 @@ int	print_var(t_data *shell, t_lst *cmd, char *arg)
 	return (i);
 }
 
-void	parse_arg(t_data *shell, t_lst *cmd, char *arg)
+int	special(t_data *shell, t_lst *cmd, char *arg)
+{
+	
+}
+
+void	parse_arg(t_data *shell, t_lst *cmd, char *arg, int spec)
 {
 	int	i;
 
@@ -39,6 +44,8 @@ void	parse_arg(t_data *shell, t_lst *cmd, char *arg)
 	{
 		if (arg[i] == '$')
 			i += print_var(shell, cmd, arg + i + 1);
+		else if (arg[i] == '\\' && spec)
+			i += special(shell, cmd, arg + i + 1);
 		else
 			write(1, arg + i, 1);
 		i++;
@@ -49,14 +56,40 @@ void	exec_echo(t_data *shell, t_lst *cmd)
 {
 	int	i;
 	int	j;
+	int	newline;
+	int	special_chars;
 
+	newline = 1;
+	special_chars = 0;
 	i = 1;
 	while (cmd->argv[i])
 	{
-		parse_arg(shell, cmd, cmd->argv[i]);
+		if (cmd->argv[i][0] != '-')
+			break ;
+		j = 1;
+		while (cmd->argv[i][j])
+		{
+			if (cmd->argv[i][j] == 'n')
+				newline = 0;
+			else if (cmd->argv[i][j] == 'e')
+				special_chars = 1;
+			else if (cmd->argv[i][j] == 'E')
+				special_chars = 0;
+			else
+				break ;
+			j++;
+		}
+		if (cmd->argv[i][j] != '\0')
+			break ;
+		i++;
+	}
+	while (cmd->argv[i])
+	{
+		parse_arg(shell, cmd, cmd->argv[i], special_chars);
 		write(1, " ", 1);
 		i++;
 	}
-	write(1, "\n", 1);
+	if (newline)
+		write(1, "\n", 1);
 	return ;
 }

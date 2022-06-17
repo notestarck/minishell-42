@@ -46,45 +46,23 @@ void	env_del(t_data *shell, char *key)
 	j = 0;
 	while (i < size && j < size)
 	{
-		//ft_printf("dwa\n");
-		//curr = ft_substr(shell->env[i + j], 0, ft_strlen(key));
-		//if (!ft_strncmp(curr, key, ft_strlen(key) + 1))
-		//{
-		//	//free(shell->env[i + j]);
-		//	j++;
-		//}
-		//else
-		//{
-		//	out[i] = ft_strdup(shell->env[i + j]);
-		//	free(shell->env[i + j]);
-		//	i++;
-		//}
 		curr = ft_substr(shell->env[j], 0, ft_strlen(key));
 		if (!ft_strncmp(curr, key, ft_strlen(key) + 1))
 		{
-//			ft_printf("%s  %s\n", key, curr);
 			free(shell->env[j]);
 			j++;
 		}
 		else
 		{
 			out[i] = ft_strdup(shell->env[j]);
-//			ft_printf("					%s\n", out[i]);
 			free(shell->env[j]);
 			i++;
 			j++;
 		}
 	}
-//	ft_printf("dnwau\n");
 	out[i] = NULL;
 	free(shell->env);
 	shell->env = out;
-	i = 0;
-//	while (out[i])
-//	{
-//		ft_printf("dwagyfibe		%s\n", out[i]);
-//		i++;
-//	}
 }
 
 void	env_new(t_data *shell, char *key, char *value)

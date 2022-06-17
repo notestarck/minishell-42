@@ -15,6 +15,9 @@
 		"utility": "c",
 		"vector": "c",
 		"cstdio": "c",
-		"libft.h": "c"
+		"libft.h": "c",
+		"__config": "c",
+		"chrono": "c",
+		"type_traits": "c"
 	}
 }
