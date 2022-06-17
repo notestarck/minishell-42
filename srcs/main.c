@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+        */
+/*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:39:17 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/16 23:27:17 by reclaire         ###   ########.fr       */
+/*   Updated: 2022/06/17 10:0 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,9 @@ static void	launch_shell(t_data *shell)
 
 	prompt = ft_str_appnd(env_get(shell, "USER"), "@", 1, 0);
 	prompt = ft_str_appnd(prompt, env_get(shell, "NAME"), 1, 1);
-	prompt = ft_str_appnd(prompt, ":", 1, 0);
+	prompt = ft_str_appnd(prompt, ": ", 1, 0);
 	prompt = ft_str_appnd(prompt, env_get(shell, "PWD"), 1, 1);
-	prompt = ft_str_appnd(prompt, " $> ", 1, 0);
+	prompt = ft_str_appnd(prompt, "\nminishell $> ", 1, 0);
 	shell->ret_prompt = readline(prompt);
 	free(prompt);
 	if (*shell->ret_prompt != '\0')
@@ -92,6 +92,7 @@ int	main(int argc, char **argv, char **env)
 	{
 		launch_shell(shell);
 		shell->cmd = parse_prompt(shell);
+		del_quote(shell);
 		if (*shell->ret_prompt != '\0')
 		{
 			if (check_error(shell->cmd))
@@ -100,6 +101,7 @@ int	main(int argc, char **argv, char **env)
 					run_cmd(shell);
 			}
 			free_cmd(shell->cmd);
+			ft_printf("\n");
 		}
 		free(shell->ret_prompt);
 	}

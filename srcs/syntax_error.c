@@ -6,7 +6,7 @@
 /*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 11:30:23 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/09 10:32:08 by estarck          ###   ########.fr       */
+/*   Updated: 2022/06/17 12:38:12 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,4 +48,33 @@ int	check_quote(t_lst *cmd, char *str)
 	if (s_quote || d_quote)
 		cmd->error = 1;
 	return (i);
+}
+
+void	del_quote(t_data *shell)
+{
+	int		i;
+	char	*str;
+	t_lst	*tmp;
+
+	tmp = shell->cmd;
+	while (tmp)
+	{
+		i = 0;
+		while (tmp->argv[i])
+		{
+			if ((tmp->argv[i][0] == '\'' || tmp->argv[i][0] == '"')
+				&& (ft_strncmp(tmp->argv[0], "echo", 4)
+				&& ft_strncmp(tmp->argv[0], "ECHO", 4)))
+			{
+				if (tmp->argv[i][0] == '\'')
+					str = *ft_split(tmp->argv[i], '\'');
+				else
+					str = *ft_split(tmp->argv[i], '"');
+				free(tmp->argv[i]);
+				tmp->argv[i] = str;
+			}
+			i++;
+		}
+		tmp = tmp->next;
+	}
 }
