@@ -6,7 +6,7 @@
 /*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:35:23 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/21 11:44:47 by estarck          ###   ########.fr       */
+/*   Updated: 2022/06/21 13:43:32 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ void	run_cmd(t_data *shell);
 void	fd_manager(t_data *shell, t_lst *cmd);
 
 //Exec op
-void	exec_op(t_data *shell, t_lst *cmd);
+void	run_op(t_data *shell, t_lst *cmd);
 void	s_left(t_data *shell, t_lst *cmd);
 void	s_right(t_data *shell, t_lst *cmd);
 void	d_right(t_data *shell, t_lst *cmd);

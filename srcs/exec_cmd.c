@@ -68,15 +68,10 @@ static void	exec_path(t_data *shell, t_lst *cmd)
 
 static void	exec_cmd(t_data *shell, t_lst *cmd)
 {
-	if (cmd->built != 9)
-	{
+	if (cmd->built != 9 && cmd->sep == -1)
 		builtin(shell, cmd);
-		return ;
-	}
-	//else if (cmd->built == 9 && cmd->sep != -1)
-	//{
-	//	//a coder
-	//}
+	else if (cmd->sep != -1)
+		run_op(shell, cmd);
 	else
 		exec_path(shell, cmd);
 }

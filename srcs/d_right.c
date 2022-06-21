@@ -6,7 +6,7 @@
 /*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 16:38:18 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/21 09:56:42 by estarck          ###   ########.fr       */
+/*   Updated: 2022/06/21 13:35:07 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	d_right(t_data *shell, t_lst *cmd)
 	if (pid < 0)
 	{
 		close (fd);
-		perror("error : fork s_right");
+		perror("error : fork d_right");
 	}
 	else if (pid == 0)
 	{
