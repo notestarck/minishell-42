@@ -32,7 +32,21 @@ int	print_var(t_data *shell, t_lst *cmd, char *arg)
 
 int	special(t_data *shell, t_lst *cmd, char *arg)
 {
-	
+	if (*arg == 'a')
+		write(1, "\a", 1);
+	if (*arg == 'b')
+		write(1, "\b", 1);
+	if (*arg == 't')
+		write(1, "\t", 1);
+	if (*arg == 'n')
+		write(1, "\n", 1);
+	if (*arg == 'v')
+		write(1, "\v", 1);
+	if (*arg == 'f')
+		write(1, "\f", 1);
+	if (*arg == 'r')
+		write(1, "\r", 1);
+	return (1);
 }
 
 void	parse_arg(t_data *shell, t_lst *cmd, char *arg, int spec)
