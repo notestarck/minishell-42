@@ -45,7 +45,7 @@ static void	launch_shell(t_data *shell)
 	prompt = ft_str_appnd(prompt, " minishell $> ", 1, 0);
 	shell->ret_prompt = readline(prompt);
 	free(prompt);
-	if (*shell->ret_prompt != '\0')
+	if (shell->ret_prompt && *shell->ret_prompt != '\0')
 		add_history(shell->ret_prompt);
 }
 
