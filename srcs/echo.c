@@ -31,7 +31,7 @@ int	special(char *arg)
 	return (1);
 }
 
-void	parse(char *arg, int spec)
+void	echo_parse(char *arg, int spec)
 {
 	int	i;
 
@@ -77,10 +77,12 @@ void	exec_echo(t_data *shell, t_lst *cmd)
 			break ;
 		i++;
 	}
+	echo_parse(cmd->argv[i], special_chars);
+	i++;
 	while (cmd->argv[i])
 	{
-		parse(cmd->argv[i], special_chars);
 		write(1, " ", 1);
+		echo_parse(cmd->argv[i], special_chars);
 		i++;
 	}
 	if (newline)
