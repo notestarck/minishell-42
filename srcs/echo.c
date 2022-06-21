@@ -12,25 +12,7 @@
 
 #include "minishell.h"
 
-int	print_var(t_data *shell, t_lst *cmd, char *arg)
-{
-	int		i;
-	char	*val;
-	char	*key;
-
-	i = 0;
-	while (ft_isalnum(arg[i]))
-		i++;
-	key = malloc(sizeof(char) * (i + 1));
-	ft_strlcpy(key, arg, i + 1);
-	val = env_get(shell, key);
-	i = ft_strlen(val);
-	write(1, val, i);
-	free(val);
-	return (i);
-}
-
-int	special(t_data *shell, t_lst *cmd, char *arg)
+int	special(char *arg)
 {
 	if (*arg == 'a')
 		write(1, "\a", 1);
@@ -49,17 +31,15 @@ int	special(t_data *shell, t_lst *cmd, char *arg)
 	return (1);
 }
 
-void	parse_arg(t_data *shell, t_lst *cmd, char *arg, int spec)
+void	parse(char *arg, int spec)
 {
 	int	i;
 
 	i = 0;
 	while (arg[i])
 	{
-		if (arg[i] == '$')
-			i += print_var(shell, cmd, arg + i + 1);
-		else if (arg[i] == '\\' && spec)
-			i += special(shell, cmd, arg + i + 1);
+		if (arg[i] == '\\' && spec)
+			i += special(arg + i + 1);
 		else
 			write(1, arg + i, 1);
 		i++;
@@ -99,7 +79,7 @@ void	exec_echo(t_data *shell, t_lst *cmd)
 	}
 	while (cmd->argv[i])
 	{
-		parse_arg(shell, cmd, cmd->argv[i], special_chars);
+		parse(cmd->argv[i], special_chars);
 		write(1, " ", 1);
 		i++;
 	}
