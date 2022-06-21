@@ -6,7 +6,7 @@
 /*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 16:38:18 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/17 16:46:42 by estarck          ###   ########.fr       */
+/*   Updated: 2022/06/21 14:09:55 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	s_right(t_data *shell, t_lst *cmd)
 
 	filename = find_dir(cmd);
 	args = find_args(cmd);
-	fd = open(filename, O_WRONLY | O_CREAT);
+	fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC);
 	if (fd == -1)
 	{
 		perror ("error : open dir");
@@ -71,15 +71,21 @@ void	s_right(t_data *shell, t_lst *cmd)
 		close (fd);
 		perror("error : fork s_right");
 	}
-	else if (pid == 0)
+	else if (pid == 0 && cmd->built == 9)
 	{
-		dup2(fd, STDOUT_FILENO);
+		fd_manager2(shell, cmd, fd);
 		execve(cmd->p_cmd, args, shell->env);
 		perror("error : ");
 	}
+	else if (pid == 0 && cmd->built != 9)
+	{
+		fd_manager2(shell, cmd, fd);
+		exec_blt(shell, cmd);
+		exit (0);
+	}
 	else
 	{
-		wait(NULL);
+		waitpid(-1, 0, 0);
 		close(fd);
 	}
 	free(args);
