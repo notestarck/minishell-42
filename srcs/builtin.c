@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_blt.c                                         :+:      :+:    :+:   */
+/*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+        */
+/*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/14 12:43:30 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/16 17:41:38 by reclaire         ###   ########.fr       */
+/*   Created: 2022/06/21 11:31:57 by estarck           #+#    #+#             */
+/*   Updated: 2022/06/21 11:55:17 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,4 +29,39 @@ void	exec_blt(t_data *shell, t_lst *cmd)
 	else if (cmd->built == EXIT)
 		return ;
 	return ;
+}
+
+static void	set_fork_builtin(t_data *shell, t_lst *cmd)
+{
+	pid_t	pid;
+	int		status;
+
+	pid = fork();
+	if (pid < 0)
+		perror ("fork");
+	if (pid == 0)
+	{
+		fd_manager(shell, cmd);
+		exec_blt(shell, cmd);
+		exit(0);
+	}
+	else
+	{
+		close(cmd->pipefd[WRITE]);
+		waitpid(pid, &status, 0);
+	}
+}
+
+void	builtin(t_data *shell, t_lst *cmd)
+{
+	if (cmd->built == PWD || cmd->built == ECHO || cmd->built == ENV)
+	{
+		set_fork_builtin(shell, cmd);
+		return ;
+	}
+	else if (cmd->built == CD || cmd->built == EXIT || cmd->built == EXPORT || cmd->built == UNSET)
+	{
+		exec_blt(shell, cmd);
+		return ;
+	}
 }

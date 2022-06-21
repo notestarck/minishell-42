@@ -6,7 +6,7 @@
 /*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 16:38:18 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/17 17:27:06 by estarck          ###   ########.fr       */
+/*   Updated: 2022/06/21 09:56:42 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,9 +73,11 @@ void	d_right(t_data *shell, t_lst *cmd)
 	}
 	else if (pid == 0)
 	{
+
 		dup2(fd, STDOUT_FILENO);
 		execve(cmd->p_cmd, args, shell->env);
 		perror("error : ");
+
 	}
 	else
 	{
