@@ -6,7 +6,7 @@
 /*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:35:23 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/21 14:18:46 by estarck          ###   ########.fr       */
+/*   Updated: 2022/06/21 17:24:14 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ typedef struct s_lst
 {
 	char			*p_cmd;
 	char			**argv;
+	char			**heredocs;
 	int				built;
 	int				sep;
 	int				pipefd[2];
