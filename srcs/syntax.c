@@ -123,5 +123,5 @@ static void	del_quote(t_data *shell)
 void	check_syntax(t_data *shell)
 {
 	check_sep(shell);
-	del_quote(shell);
+	//del_quote(shell);
 }
