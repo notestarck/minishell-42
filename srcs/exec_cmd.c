@@ -81,11 +81,47 @@ int	insert_var(t_data *shell, char **arg, int start)
 	value = env_get(shell, key);
 	out = ft_substr(*arg, 0, start);
 	out = ft_str_appnd(out, value, 1, 1);
-	//POURQUOI ??
 	out = ft_str_appnd(out, *arg + start + i, 1, 0);
 	free(*arg);
 	*arg = out;
 	return (start + i - 1);
+}
+
+void	remove_quotes(t_data *shell, t_lst *cmd)
+{
+	int		i;
+	int		j;
+	int		count;
+	char	*str;
+
+	i = 0;
+	while (cmd->argv[i])
+	{
+		j = 0;
+		count = 0;
+		while (cmd->argv[i][j])
+		{
+			if (cmd->argv[i][j] == '\'' || cmd->argv[i][j] == '\"')
+				count++;
+			j++;
+		}
+		str = ft_malloc(sizeof(char) * (ft_strlen(cmd->argv[i]) - count + 1));
+		j = 0;
+		count = 0;
+		while (cmd->argv[i][j])
+		{
+			if (cmd->argv[i][j] != '\'' && cmd->argv[i][j] != '\"')
+			{
+				str[count] = cmd->argv[i][j];
+				count++;
+			}
+			j++;
+		}
+		str[count] = '\0';
+		free(cmd->argv[i]);
+		cmd->argv[i] = str;
+		i++;
+	}
 }
 
 void	parse_args(t_data *shell, t_lst *cmd)
@@ -128,6 +164,7 @@ void	parse_args(t_data *shell, t_lst *cmd)
 static void	exec_cmd(t_data *shell, t_lst *cmd)
 {
 	parse_args(shell, cmd);
+	remove_quotes(shell, cmd);
 	if (cmd->built != 9 && cmd->sep == -1)
 		builtin(shell, cmd);
 	else if (cmd->sep != -1)
