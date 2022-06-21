@@ -6,7 +6,7 @@
 /*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:52:00 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/17 12:20:49 by estarck          ###   ########.fr       */
+/*   Updated: 2022/06/21 18:03:23 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int	parse_arg(t_lst *cmd, char *str)
 	{
 		if (str[i] == '\'' || str[i] == '"')
 			i = check_quote(cmd, str) + i;
-		if (str[i] == '|' && str[i + 1] == '|')
+		if ((str[i] == '|' && str[i + 1] == '|') || (str[i] == '\\'))
 			i++;
 		i++;
 	}
