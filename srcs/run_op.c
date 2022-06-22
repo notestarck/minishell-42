@@ -6,7 +6,7 @@
 /*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 16:05:56 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/22 15:23:54 by estarck          ###   ########.fr       */
+/*   Updated: 2022/06/22 17:53:00 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static void	exec_op(t_data *shell, t_lst *cmd)
 	else if (cmd->sep == D_LEFT)
 	{
 		run_heredocs(shell, cmd);
-		//exec_heredocs(shell, cmd);
+		exec_heredocs(shell, cmd);
 	}
 }
 

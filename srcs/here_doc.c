@@ -6,30 +6,19 @@
 /*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 17:33:56 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/22 15:30:04 by estarck          ###   ########.fr       */
+/*   Updated: 2022/06/22 17:53:26 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	del_tpmfile(t_lst *cmd)
-{
-	char	**argv;
-	pid_t	pid;
-
-	argv = malloc(sizeof(char *) * 3);
-	argv[0] = "/bin/rm";
-	argv[1] = cmd->tmpfile;
-	argv[2] = NULL;
-	pid = fork();
-	if (pid == 0)
-		execve("/bin/rm", argv, NULL);
-}
-
 void	exec_heredocs(t_data *shell, t_lst *cmd)
 {
 	pid_t	pid;
+	char	*argv[2];
 
+	argv[0] = cmd->argv[0];
+	argv[1] = NULL;
 	pid = fork();
 	if (pid < 0)
 	{
@@ -37,7 +26,7 @@ void	exec_heredocs(t_data *shell, t_lst *cmd)
 	}
 	else if (pid == 0)
 	{
-		execve(cmd->p_cmd, cmd->argv, shell->env);
+		execve(cmd->p_cmd, argv, shell->env);
 	}
 	else
 		wait (NULL);
@@ -77,6 +66,7 @@ void	run_heredocs(t_data *shell, t_lst *cmd)
 	free(buf);
 	close(fd);
 	cmd->pipefd[READ] = open(cmd->tmpfile, O_RDONLY, 0777);
+	unlink(cmd->tmpfile);
 	dup2(cmd->pipefd[READ], STDIN_FILENO);
 	close(cmd->pipefd[READ]);
 }
