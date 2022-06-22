@@ -67,9 +67,6 @@ static t_data	*init_shell(void)
 	return (shell);
 }
 
-//Quand on utilise des builtins, le message de fin s'affiche bizarrement
-//Les buitlins ne returnent surement pas, donc plusieurs fork écrive en meme temps
-
 void	quit_mini(int sig)
 {
 	ft_printf("\n");

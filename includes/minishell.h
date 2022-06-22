@@ -6,7 +6,7 @@
 /*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:35:23 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/21 17:44:10 by estarck          ###   ########.fr       */
+/*   Updated: 2022/06/22 12:17:06 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,11 +66,7 @@ typedef struct s_lst
 {
 	char			*p_cmd;
 	char			**argv;
-	
 	char			*tmpfile;
-	char			**heredocs;
-	int				heredocsfd[2];
-	
 	int				built;
 	int				sep;
 	int				pipefd[2];
@@ -110,6 +106,8 @@ void	fd_manager(t_data *shell, t_lst *cmd);
 //Exec op
 void	run_op(t_data *shell, t_lst *cmd);
 void	fd_manager2(t_data *shell, t_lst *cmd, int fd);
+void	run_heredocs(t_data *shell, t_lst *cmd);
+void	exec_heredocs(t_data *shell, t_lst *cmd);
 //void	fd_manager3(t_data *shell, t_lst *cmd, int fd);
 void	s_left(t_data *shell, t_lst *cmd);
 void	s_right(t_data *shell, t_lst *cmd);
