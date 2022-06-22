@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
+/*   By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 17:33:56 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/22 17:53:26 by estarck          ###   ########.fr       */
+/*   Updated: 2022/06/22 18:18:21 by reclaire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,20 @@
 void	exec_heredocs(t_data *shell, t_lst *cmd)
 {
 	pid_t	pid;
-	char	*argv[2];
+	char	**argv;
+	int		i;
 
-	argv[0] = cmd->argv[0];
-	argv[1] = NULL;
+	i = 0;
+	while (cmd->argv[i] && ft_strncmp(cmd->argv[i], "<<", 3))
+		i++;
+	argv = ft_malloc(sizeof(char *) * (i + 1));
+	i = 0;
+	while (cmd->argv[i] && ft_strncmp(cmd->argv[i], "<<", 3))
+	{
+		argv[i] = cmd->argv[i];
+		i++;
+	}
+	argv[i] = NULL;
 	pid = fork();
 	if (pid < 0)
 	{
