@@ -12,8 +12,9 @@
 
 #include "minishell.h"
 
-static void	close_fd(t_data *shell, t_lst *cmd)
+static void	close_fd(t_data *shell)
 {
+	int		signal;
 	t_lst	*tmp;
 
 	tmp = shell->cmd;
@@ -26,7 +27,7 @@ static void	close_fd(t_data *shell, t_lst *cmd)
 	tmp = shell->cmd;
 	while (tmp)
 	{
-		waitpid(-1, 0, 0);
+		waitpid(-1, &signal, 0);
 		if (tmp->built == EXIT)
 			quit_mini(2);
 		tmp = tmp->next;
@@ -52,7 +53,6 @@ void	fd_manager(t_data *shell, t_lst *cmd)
 
 static void	exec_path(t_data *shell, t_lst *cmd)
 {
-	int		status;
 	pid_t	pid;
 
 	pid = fork();
@@ -87,7 +87,7 @@ int	insert_var(t_data *shell, char **arg, int start)
 	return (start + i - 1);
 }
 
-void	remove_quotes(t_data *shell, t_lst *cmd)
+void	remove_quotes(t_lst *cmd)
 {
 	int		i;
 	int		j;
@@ -164,7 +164,7 @@ void	parse_args(t_data *shell, t_lst *cmd)
 static void	exec_cmd(t_data *shell, t_lst *cmd)
 {
 	parse_args(shell, cmd);
-	remove_quotes(shell, cmd);
+	remove_quotes(cmd);
 	if (cmd->built != 9 && cmd->sep == -1)
 		builtin(shell, cmd);
 	else if (cmd->sep != -1)
@@ -186,8 +186,10 @@ void	run_cmd(t_data *shell)
 	tmp = shell->cmd;
 	while (tmp)
 	{
+		if (tmp->heredoc)
+			init_heredoc(tmp);
 		exec_cmd(shell, tmp);
 		tmp = tmp->next;
 	}
-	close_fd(shell, tmp);
+	close_fd(shell);
 }

@@ -6,7 +6,7 @@
 /*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 16:38:18 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/21 14:10:50 by estarck          ###   ########.fr       */
+/*   Updated: 2022/06/23 11:25:36 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	d_right(t_data *shell, t_lst *cmd)
 
 	filename = find_dir(cmd);
 	args = find_args(cmd);
-	fd = open(filename, O_WRONLY | O_APPEND | O_CREAT);
+	fd = open(filename, O_WRONLY | O_APPEND | O_CREAT , 0777);
 	if (fd == -1)
 	{
 		perror ("error : open dir");

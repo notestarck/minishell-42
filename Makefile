@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+         #
+#    By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/25 09:55:54 by reclaire          #+#    #+#              #
-#    Updated: 2022/06/16 16:36:15 by reclaire         ###   ########.fr        #
+#    Updated: 2022/06/23 12:17:26 by estarck          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,8 +17,8 @@ OBJS		=	${SRCS:.c=.o}
 
 INCLUDES  	=	-I./includes -I./libft
 CC			=	gcc
-#CFLAGS		:=	-Wall -Wextra -Werror -O3
-CFLAGS		:=	-O3
+#CFLAGS		:=	-Wall -Wextra -Werror -O3 
+CFLAGS		:=	-g
 ifdef MOREFLAGS
 CFLAGS		:=	$(CFLAGS) $(MOREFLAGS)
 endif

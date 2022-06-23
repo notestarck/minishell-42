@@ -6,7 +6,7 @@
 /*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:35:23 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/22 17:53:08 by estarck          ###   ########.fr       */
+/*   Updated: 2022/06/23 11:10:21 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ typedef struct s_lst
 	char			*tmpfile;
 	int				built;
 	int				sep;
+	int				heredoc;
 	int				pipefd[2];
 	int				error;
 	struct s_lst	*prev;
@@ -97,7 +98,7 @@ int		find_cmd(t_data *shell);
 t_lst	*add_cmd(t_lst *cmd);
 t_lst	*new_cmd(void);
 char	*ft_strcut(char *str, char tok);
-int		count_argv(t_data *shell, t_lst *cmd, char *str);
+int		count_argv(t_lst *cmd, char *str);
 
 //Exec cmd
 void	run_cmd(t_data *shell);
@@ -106,8 +107,7 @@ void	fd_manager(t_data *shell, t_lst *cmd);
 //Exec op
 void	run_op(t_data *shell, t_lst *cmd);
 void	fd_manager2(t_data *shell, t_lst *cmd, int fd);
-void	run_heredocs(t_data *shell, t_lst *cmd);
-void	exec_heredocs(t_data *shell, t_lst *cmd);
+void	init_heredoc(t_lst *cmd);
 //void	fd_manager3(t_data *shell, t_lst *cmd, int fd);
 void	s_left(t_data *shell, t_lst *cmd);
 void	s_right(t_data *shell, t_lst *cmd);
@@ -121,7 +121,7 @@ void	exec_pwd(t_data *shell, t_lst *cmd);
 void	exec_env(t_data *shell);
 void	exec_export(t_data *shell, t_lst *cmd);
 void	exec_unset(t_data *shell, t_lst *cmd);
-void	exec_echo(t_data *shell, t_lst *cmd);
+void	exec_echo(t_lst *cmd);
 
 //Free minishell
 void	free_cmd(t_lst *cmd);

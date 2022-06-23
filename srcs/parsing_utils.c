@@ -6,7 +6,7 @@
 /*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 16:04:41 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/22 17:21:02 by estarck          ###   ########.fr       */
+/*   Updated: 2022/06/23 13:40:32 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ t_lst	*add_cmd(t_lst *cmd)
 	new->built = -1;
 	new->sep = -1;
 	new->tmpfile = "okkkkkk";
+	new->heredoc = 0;
 	cmd->next = new;
 	new->prev = cmd;
 	new->next = NULL;
@@ -43,6 +44,7 @@ t_lst	*new_cmd(void)
 	new->built = -1;
 	new->sep = -1;
 	new->tmpfile = "okkkkkk";
+	new->heredoc = 0;
 	new->next = NULL;
 	new->prev = NULL;
 	new->argv = NULL;
@@ -59,7 +61,7 @@ char	*ft_strcut(char *str, char tok)
 	return (&str[i]);
 }
 
-int	count_argv(t_data *shell, t_lst *cmd, char *str)
+int	count_argv(t_lst *cmd, char *str)
 {
 	int	i;
 	int	c;

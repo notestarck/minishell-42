@@ -6,7 +6,7 @@
 /*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 11:30:23 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/21 15:24:20 by estarck          ###   ########.fr       */
+/*   Updated: 2022/06/23 11:09:42 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ static void	check_sep(t_data *shell)
 			else if (cmd->argv[i][0] == '>' && cmd->argv[i][1] == '\0')
 				cmd->sep = S_RIGHT;
 			else if (cmd->argv[i][0] == '<' && cmd->argv[i][1] == '<' && cmd->argv[i][2] == '\0')
-				cmd->sep = D_LEFT;
+				cmd->heredoc = D_LEFT;
 			else if (cmd->argv[i][0] == '>' && cmd->argv[i][1] == '>' && cmd->argv[i][2] == '\0')
 				cmd->sep = D_RIGHT;
 			else if (cmd->argv[i][0] == '&' && cmd->argv[i][1] == '&' && cmd->argv[i][2] == '\0')
@@ -86,42 +86,7 @@ static void	check_sep(t_data *shell)
 	}
 }
 
-static void	del_quote(t_data *shell)
-{
-	int		i;
-	char	*str;
-	t_lst	*tmp;
-
-	tmp = shell->cmd;
-	while (tmp)
-	{
-		i = 0;
-		if (!tmp->argv)
-		{
-			tmp = tmp->next;
-			continue ;
-		}
-		while (tmp->argv[i])
-		{
-			if ((tmp->argv[i][0] == '\'' || tmp->argv[i][0] == '"')
-				&& (ft_strncmp(tmp->argv[0], "echo", 4)
-				&& ft_strncmp(tmp->argv[0], "ECHO", 4)))
-			{
-				if (tmp->argv[i][0] == '\'')
-					str = *ft_split(tmp->argv[i], '\''); //leak
-				else
-					str = *ft_split(tmp->argv[i], '"'); //leak
-				free(tmp->argv[i]);
-				tmp->argv[i] = str;
-			}
-			i++;
-		}
-		tmp = tmp->next;
-	}
-}
-
 void	check_syntax(t_data *shell)
 {
 	check_sep(shell);
-	//del_quote(shell);
 }

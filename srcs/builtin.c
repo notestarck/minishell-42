@@ -6,7 +6,7 @@
 /*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 11:31:57 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/21 11:55:17 by estarck          ###   ########.fr       */
+/*   Updated: 2022/06/23 11:12:34 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	exec_blt(t_data *shell, t_lst *cmd)
 	else if (cmd->built == UNSET)
 		exec_unset(shell, cmd);
 	else if (cmd->built == ECHO)
-		exec_echo(shell, cmd);
+		exec_echo(cmd);
 	else if (cmd->built == EXIT)
 		return ;
 	return ;

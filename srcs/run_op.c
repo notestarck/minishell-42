@@ -6,7 +6,7 @@
 /*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 16:05:56 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/22 17:53:00 by estarck          ###   ########.fr       */
+/*   Updated: 2022/06/23 10:03:09 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,17 +46,13 @@ void	fd_manager2(t_data *shell, t_lst *cmd, int fd)
 
 static void	exec_op(t_data *shell, t_lst *cmd)
 {
+	printf("%d\n", cmd->sep);
 	if (cmd->sep == S_LEFT)
 		s_left(shell, cmd);
 	else if (cmd->sep == S_RIGHT)
 		s_right(shell, cmd);
 	else if (cmd->sep == D_RIGHT)
 		d_right(shell, cmd);
-	else if (cmd->sep == D_LEFT)
-	{
-		run_heredocs(shell, cmd);
-		exec_heredocs(shell, cmd);
-	}
 }
 
 void	run_op(t_data *shell, t_lst *cmd)

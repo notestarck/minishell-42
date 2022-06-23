@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+        */
+/*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 16:17:17 by reclaire          #+#    #+#             */
-/*   Updated: 2022/06/17 17:24:46 by reclaire         ###   ########.fr       */
+/*   Updated: 2022/06/23 11:01:27 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	echo_parse(char *arg, int spec)
 	}
 }
 
-void	exec_echo(t_data *shell, t_lst *cmd)
+void	exec_echo(t_lst *cmd)
 {
 	int	i;
 	int	j;

@@ -35,7 +35,6 @@ static void	init_env(t_data *shell, char **env)
 
 static void	launch_shell(t_data *shell)
 {
-	char	*tmp;
 	char	*prompt;
 
 	prompt = ft_str_appnd(env_get(shell, "USER"), "@", 1, 0);
@@ -43,7 +42,7 @@ static void	launch_shell(t_data *shell)
 	prompt = ft_str_appnd(prompt, ": ", 1, 0);
 	prompt = ft_str_appnd(prompt, env_get(shell, "PWD"), 1, 1);
 	prompt = ft_str_appnd(prompt, " minishell $> ", 1, 0);
-	shell->ret_prompt = readline(prompt);
+	shell->ret_prompt = readline("minishell $> "); //prompt);
 	free(prompt);
 	if (shell->ret_prompt && *shell->ret_prompt != '\0')
 		add_history(shell->ret_prompt);
@@ -69,6 +68,7 @@ static t_data	*init_shell(void)
 
 void	quit_mini(int sig)
 {
+	(void)sig;
 	ft_printf("\n");
 	clear_history();
 	ft_printf("Farewell\n");

@@ -6,7 +6,7 @@
 /*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:52:00 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/21 18:03:23 by estarck          ###   ########.fr       */
+/*   Updated: 2022/06/23 11:11:54 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,9 @@ static int	cpy_arg(t_lst *cmd, char *str)
 	return (i);
 }
 
-static void	init_arg(t_data *shell, t_lst *cmd, char *str)
+static void	init_arg(t_lst *cmd, char *str)
 {
-	cmd->argv = malloc(sizeof(char *) * (count_argv(shell, cmd, str) + 1));
+	cmd->argv = malloc(sizeof(char *) * (count_argv(cmd, str) + 1));
 	if (!cmd->argv)
 		perror("error : malloc");
 }
@@ -71,7 +71,7 @@ static void	split(t_data *shell, t_lst *cmd)
 	str = ft_strcut(shell->ret_prompt, ' ');
 	while (*str != '\0')
 	{
-		init_arg(shell, tmp, str);
+		init_arg(tmp, str);
 		str = cpy_arg(tmp, str) + str;
 		if (*str != '\0')
 		{

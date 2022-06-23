@@ -3,24 +3,40 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+        */
+/*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 17:33:56 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/22 18:18:21 by reclaire         ###   ########.fr       */
+/*   Updated: 2022/06/23 14:14:47 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	exec_heredocs(t_data *shell, t_lst *cmd)
+static void	write_cat(t_lst *cmd)
 {
-	pid_t	pid;
+	char	**argv;
+
+	argv = malloc(sizeof(char *) * 2);
+	argv[0] = malloc(sizeof(char) * 4);
+	argv[1] = malloc(sizeof(char) * 1);
+	argv[0] = "cat";
+	argv[1] = NULL;
+	cmd->argv = argv;
+}
+
+static void	repars_heredocs(t_lst *cmd)
+{
 	char	**argv;
 	int		i;
 
 	i = 0;
 	while (cmd->argv[i] && ft_strncmp(cmd->argv[i], "<<", 3))
 		i++;
+	if (i == 0)
+	{
+		write_cat(cmd);
+		return ;
+	}
 	argv = ft_malloc(sizeof(char *) * (i + 1));
 	i = 0;
 	while (cmd->argv[i] && ft_strncmp(cmd->argv[i], "<<", 3))
@@ -29,20 +45,11 @@ void	exec_heredocs(t_data *shell, t_lst *cmd)
 		i++;
 	}
 	argv[i] = NULL;
-	pid = fork();
-	if (pid < 0)
-	{
-		perror("error : exec_heredocs");
-	}
-	else if (pid == 0)
-	{
-		execve(cmd->p_cmd, argv, shell->env);
-	}
-	else
-		wait (NULL);
+	free(cmd->argv);
+	cmd->argv = argv;
 }
 
-int	find_eof(char **argv)
+static int	find_eof(char **argv)
 {
 	int	i;
 
@@ -56,14 +63,14 @@ int	find_eof(char **argv)
 	return (i);
 }
 
-void	run_heredocs(t_data *shell, t_lst *cmd)
+static void	run_heredocs(t_lst *cmd)
 {
 	int		fd;
 	char	*buf;
 	int		i;
 
-	fd = open(cmd->tmpfile, O_TRUNC | O_CREAT | O_WRONLY, 0777);
 	buf = readline("heredoc> ");
+	fd = open(cmd->tmpfile, O_TRUNC | O_CREAT | O_WRONLY, 0777);
 	i = find_eof(cmd->argv);
 	while (1)
 	{
@@ -79,4 +86,10 @@ void	run_heredocs(t_data *shell, t_lst *cmd)
 	unlink(cmd->tmpfile);
 	dup2(cmd->pipefd[READ], STDIN_FILENO);
 	close(cmd->pipefd[READ]);
+}
+
+void	init_heredoc(t_lst *cmd)
+{
+	run_heredocs(cmd);
+	repars_heredocs(cmd);
 }

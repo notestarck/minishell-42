@@ -37,7 +37,6 @@ static char	*find_path(char **env_path, char *cmd)
 
 	while (*env_path != NULL)
 	{
-
 		dir = opendir(*env_path);
 		if (access(*env_path, R_OK))
 		{
@@ -89,6 +88,11 @@ int	find_cmd(t_data *shell)
 				if (valid_path(tmp->argv[0]))
 					return (0);
 				tmp->p_cmd = tmp->argv[0];
+			}
+			else if (ft_strchr(&tmp->argv[0][0], 60) && ft_strchr(&tmp->argv[0][1], 60))
+			{
+				tmp->p_cmd = find_path(shell->env_path, "cat");
+				printf("%s\n", tmp->p_cmd);
 			}
 			else
 			{
