@@ -127,10 +127,10 @@ void	remove_quotes(t_lst *cmd)
 
 void	parse_args(t_data *shell, t_lst *cmd)
 {
-	int		i;
-	int     j;
-	int     is_simple_quote;
-	int     is_double_quote;
+	int	i;
+	int	j;
+	int	is_simple_quote;
+	int	is_double_quote;
 
 	i = 0;
 	is_simple_quote = 0;
@@ -154,7 +154,7 @@ void	parse_args(t_data *shell, t_lst *cmd)
 				else
 					is_double_quote = 1;
 			}
-			if (cmd->argv[i][j] == '$' && !is_simple_quote)
+			if (cmd->argv[i][j] == '$' && cmd->argv[i][j + 1] != '\0' && !is_simple_quote)
 				j = insert_var(shell, &(cmd->argv[i]), j);
 			j++;
 		}

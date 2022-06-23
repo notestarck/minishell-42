@@ -42,7 +42,7 @@ static void	launch_shell(t_data *shell)
 	prompt = ft_str_appnd(prompt, env_get(shell, "NAME"), 1, 1);
 	prompt = ft_str_appnd(prompt, ": ", 1, 0);
 	prompt = ft_str_appnd(prompt, env_get(shell, "PWD"), 1, 1);
-	prompt = ft_str_appnd(prompt, " \e[31mminishell $> \e[30m", 1, 0);
+	prompt = ft_str_appnd(prompt, " minishell $> ", 1, 0);
 	shell->ret_prompt = readline(prompt);
 	free(prompt);
 	if (shell->ret_prompt && *shell->ret_prompt != '\0')

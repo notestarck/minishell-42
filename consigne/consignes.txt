@@ -63,13 +63,21 @@ Les wildcards * doivent fonctionner pour le répertoire courant.
 
 
 
-
-
-
-
 TRucs a faire:
 echo avec les redirections + " ne marchent pas
 heredoc avec le EOF colle a la redirection
 ◦ctrl-C affiche un nouveau prompt sur une nouvelle ligne.
 ◦ctrl-D quitte le shell.
 ◦ctrl-\ ne fait rien.
+A FAIRE - Utilisez la commande pwd, avec et sans argument.
+
+A FAIRE - Exécutez des commandes mais sans PATH (ls, wc, awk, etc...).
+A FAIRE - Retirez le $PATH et vérifiez si les commandes ne fonctionnent plus.
+A FAIRE - Mettez plusieurs répertoires à PATH (directory1:directory2) et vérifiez
+qu'ils sont bien évalués de gauche à droite.
+
+A FAIRE (echo TEST >> t >> t. t dois contenir 2 fois TEST) - Vérifiez si plusieurs instances de la même redirection échouent.
+
+A FAIRE - Entrez une commande, puis ctrl-C, et appuyez sur "Entrée".
+Le buffer devrait être vide et il ne devrait plus rien avoir à
+exécuter.
