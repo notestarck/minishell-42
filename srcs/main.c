@@ -31,6 +31,7 @@ static void	init_env(t_data *shell, char **env)
 		ft_strlcpy(shell->env[i], env[i], ft_strlen(env[i]) + 1);
 		i++;
 	}
+	shell->env[i] = NULL;
 }
 
 static void	launch_shell(t_data *shell)
