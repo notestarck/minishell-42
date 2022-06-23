@@ -6,7 +6,7 @@
 /*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 16:04:41 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/23 13:40:32 by estarck          ###   ########.fr       */
+/*   Updated: 2022/06/23 16:39:56 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ char	*ft_strcut(char *str, char tok)
 	return (&str[i]);
 }
 
-int	count_argv(t_lst *cmd, char *str)
+int	count_argv(t_data *shell, t_lst *cmd, char *str)
 {
 	int	i;
 	int	c;
