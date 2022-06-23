@@ -73,3 +73,27 @@ heredoc avec le EOF colle a la redirection
 ◦ctrl-C affiche un nouveau prompt sur une nouvelle ligne.
 ◦ctrl-D quitte le shell.
 ◦ctrl-\ ne fait rien.
+◦supprimer les espaces sur les chemins absolu
+- les tabs affichent le contenu du dossier au lieu de faire des tabs
+- un espace cause une segfault
+-/bin/ls -la -- error : execve: No such file or directory
+-echo -n Bonjour le retour n'affiche pas % et le prompt vient se coler a la suite
+-echo $?
+- ctrl-C dans un prompt vide devrait afficher une nouvelle ligne avec un
+nouveau prompt.
+- ctrl-\ dans un prompt vide ne devrait rien faire.
+- ctrl-D dans un prompt vide devrait quitter minishell. Ensuite,
+relancez-le.
+- ctrl-C dans un prompt après avoir écrit des choses devrait afficher une
+nouvelle ligne avec un nouveau prompt.
+- Également, le buffer devrait être vide. Appuyez sur "Entrée" afin de vous
+assurer que la ligne précédente a été exécutée.
+- ctrl-D dans un prompt après avoir écrit des choses ne devrait rien faire.
+- ctrl-\ dans un prompt après avoir écrit des choses ne devrait rien faire.
+- Essayez ctrl-C après avoir lancé une commande bloquante, comme cat ou grep
+sans argument.
+- Essayez ctrl-\ après avoir lancé une commande bloquante, comme cat ou grep
+sans argument.
+- Essayez ctrl-D après avoir lancé une commande bloquante, comme cat ou grep
+sans argument.
+-free a check
