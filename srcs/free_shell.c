@@ -6,7 +6,7 @@
 /*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 10:59:18 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/09 11:45:45 by estarck          ###   ########.fr       */
+/*   Updated: 2022/06/23 22:11:35 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ static void	free_dchar(char **str)
 	int	i;
 
 	i = 0;
+	if (str == NULL)
+		return ;
 	while (str[i])
 	{
 		free(str[i]);

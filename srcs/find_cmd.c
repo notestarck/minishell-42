@@ -19,8 +19,8 @@ static int	valid_path(char *av)
 
 	if (stat(av, &buf) == -1)
 	{
-		perror("error cmd");
-		return (1);
+		perror(strerror(ENOTDIR));
+		return (ENOTDIR);
 	}
 	else
 		return (0);
@@ -85,9 +85,10 @@ int	find_cmd(t_data *shell)
 		{
 			if (ft_strchr(tmp->argv[0], 47))
 			{
-				if (valid_path(tmp->argv[0]))
+				if (valid_path(tmp->argv[0])) //message d'erreur si le ptah n'est pas valide
 					return (0);
-				tmp->p_cmd = tmp->argv[0];
+				tmp->p_cmd = malloc(sizeof(char) * (ft_strlen(tmp->argv[0]) + 1));
+				ft_strlcpy(tmp->p_cmd, tmp->argv[0], ft_strlen(tmp->argv[0]) + 1);
 			}
 			else if (ft_strchr(&tmp->argv[0][0], 60) && ft_strchr(&tmp->argv[0][1], 60))
 			{

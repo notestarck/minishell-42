@@ -84,7 +84,6 @@ exécuter.
 ◦supprimer les espaces sur les chemins absolu
 - les tabs affichent le contenu du dossier au lieu de faire des tabs
 - un espace cause une segfault
--/bin/ls -la -- error : execve: No such file or directory
 -echo -n Bonjour le retour n'affiche pas % et le prompt vient se coler a la suite
 -echo $?
 - ctrl-C dans un prompt vide devrait afficher une nouvelle ligne avec un
@@ -105,3 +104,4 @@ sans argument.
 - Essayez ctrl-D après avoir lancé une commande bloquante, comme cat ou grep
 sans argument.
 -free a check
+gerer les bons codes erreur avec 

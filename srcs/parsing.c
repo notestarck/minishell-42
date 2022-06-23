@@ -6,7 +6,7 @@
 /*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:52:00 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/23 16:43:29 by estarck          ###   ########.fr       */
+/*   Updated: 2022/06/23 22:03:44 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ static void	split(t_data *shell, t_lst *cmd)
 
 	tmp = cmd;
 	str = ft_strcut(shell->ret_prompt, ' ');
+	if (*str == '\0')
+		cmd->error = 1;
 	while (*str != '\0')
 	{
 		init_arg(shell, tmp, str);
