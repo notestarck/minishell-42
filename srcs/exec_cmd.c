@@ -14,7 +14,6 @@
 
 static void	close_fd(t_data *shell)
 {
-	int		signal;
 	t_lst	*tmp;
 
 	tmp = shell->cmd;
@@ -27,7 +26,7 @@ static void	close_fd(t_data *shell)
 	tmp = shell->cmd;
 	while (tmp)
 	{
-		waitpid(-1, &signal, 0);
+		waitpid(-1, 0, 0);
 		if (tmp->built == EXIT)
 			quit_mini(2);
 		tmp = tmp->next;
