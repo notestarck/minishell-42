@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
+/*   By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 16:17:17 by reclaire          #+#    #+#             */
-/*   Updated: 2022/06/23 11:01:27 by estarck          ###   ########.fr       */
+/*   Updated: 2022/06/23 16:40:03 by reclaire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,12 +77,13 @@ void	exec_echo(t_lst *cmd)
 			break ;
 		i++;
 	}
-	echo_parse(cmd->argv[i], special_chars);
-	i++;
 	while (cmd->argv[i])
 	{
-		write(1, " ", 1);
+		if (cmd->argv[i][0] == '>')
+			break ;
 		echo_parse(cmd->argv[i], special_chars);
+		if (cmd->argv[i + 1])
+			write(1, " ", 1);
 		i++;
 	}
 	if (newline)

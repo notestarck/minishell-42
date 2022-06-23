@@ -174,6 +174,12 @@ static void	exec_cmd(t_data *shell, t_lst *cmd)
 		exec_path(shell, cmd);
 }
 
+int	ft_rand(t_data *shell)
+{
+	shell->seed = (shell->seed * 1103515245U + 12345U) & 0x7fffffffU;
+	return ((int)shell->seed);
+}
+
 void	run_cmd(t_data *shell)
 {
 	t_lst	*tmp;
@@ -188,7 +194,12 @@ void	run_cmd(t_data *shell)
 	while (tmp)
 	{
 		if (tmp->heredoc)
+		{
+			tmp->tmpfile = ft_strdup("/tmp/minishell-tmp-");
+			tmp->tmpfile = ft_str_appnd(tmp->tmpfile,
+					ft_itoa(ft_rand(shell)), 1, 1);
 			init_heredoc(tmp);
+		}
 		exec_cmd(shell, tmp);
 		tmp = tmp->next;
 	}

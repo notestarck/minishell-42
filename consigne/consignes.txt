@@ -56,3 +56,20 @@ Votre shell doit implémenter les builtins suivantes :
 http://aral.iut-rodez.fr/fr/sanchis/enseignement/bash/ch07s07.html
 
 Les wildcards * doivent fonctionner pour le répertoire courant.
+
+
+
+
+
+
+
+
+
+
+
+TRucs a faire:
+echo avec les redirections + " ne marchent pas
+heredoc avec le EOF colle a la redirection
+◦ctrl-C affiche un nouveau prompt sur une nouvelle ligne.
+◦ctrl-D quitte le shell.
+◦ctrl-\ ne fait rien.
