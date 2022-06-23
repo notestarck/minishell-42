@@ -42,6 +42,8 @@ void	fd_manager(t_data *shell, t_lst *cmd)
 		dup2(cmd->pipefd[WRITE], STDOUT_FILENO);
 	if (cmd->prev != NULL)
 		dup2(cmd->prev->pipefd[READ], STDIN_FILENO);
+	if (cmd->heredoc)
+		dup2(cmd->pipefd[READ], STDIN_FILENO);
 	while (tmp)
 	{
 		close(tmp->pipefd[READ]);
