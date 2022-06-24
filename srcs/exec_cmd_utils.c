@@ -6,7 +6,7 @@
 /*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 12:10:03 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/24 12:26:05 by estarck          ###   ########.fr       */
+/*   Updated: 2022/06/24 14:52:20 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,13 @@ int	insert_var(t_data *shell, char **arg, int start)
 	int		i;
 
 	i = 1;
+	if ((*arg)[start + i] == '?')
+	{
+		out = ft_itoa(shell->code_error);
+		free(*arg);
+		*arg = out;
+		return (2);
+	}
 	while ((*arg)[start + i] && ft_isalnum((*arg)[start + i]))
 		i++;
 	key = malloc(sizeof(char) * i);

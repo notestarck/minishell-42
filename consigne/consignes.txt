@@ -84,8 +84,6 @@ exécuter.
 ◦supprimer les espaces sur les chemins absolu
 - les tabs affichent le contenu du dossier au lieu de faire des tabs
 - un espace cause une segfault
--echo -n Bonjour le retour n'affiche pas % et le prompt vient se coler a la suite
--echo $?
 - ctrl-C dans un prompt vide devrait afficher une nouvelle ligne avec un
 nouveau prompt.
 - ctrl-\ dans un prompt vide ne devrait rien faire.
