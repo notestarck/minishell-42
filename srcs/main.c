@@ -67,13 +67,30 @@ static t_data	*init_shell(void)
 	return (shell);
 }
 
-void	quit_mini(int sig)
+void	quit_mini(int i)
 {
-	(void)sig;
 	ft_printf("\n");
 	clear_history();
 	ft_printf("Farewell\n");
-	exit(0);
+	exit(i);
+}
+
+void	sig(int sig)
+{
+	(void)sig;
+	if (sig == SIGINT)
+	{
+		ft_printf("\n");
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
+	}
+	else if (sig == SIGQUIT)
+	{
+		rl_on_new_line();
+		rl_redisplay();
+		ft_printf("  \b\b");
+	}
 }
 
 int	main(int argc, char **argv, char **env)
@@ -82,13 +99,18 @@ int	main(int argc, char **argv, char **env)
 
 	(void)argc;
 	(void)argv;
-	signal(2, quit_mini);
+	signal(SIGINT, sig);
+	signal(SIGQUIT, sig);
 	shell = init_shell();
 	if (shell->pid == 0)
 		init_env(shell, env);
 	while (42)
 	{
 		launch_shell(shell);
+		if (!shell->ret_prompt)
+		{
+			quit_mini(0);
+		}
 		shell->cmd = parse_prompt(shell);
 		check_syntax(shell);
 		if (*shell->ret_prompt != '\0')

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
+/*   By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 16:17:17 by reclaire          #+#    #+#             */
-/*   Updated: 2022/06/24 13:38:59 by estarck          ###   ########.fr       */
+/*   Updated: 2022/06/24 16:29:00 by reclaire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	exec_echo(t_lst *cmd)
 	}
 	while (cmd->argv[i])
 	{
-		if (cmd->argv[i][0] == '>')
+		if (cmd->argv[i][0] == '>' && cmd->sep != NONE)
 			break ;
 		echo_parse(cmd->argv[i], special_chars);
 		if (cmd->argv[i + 1])
