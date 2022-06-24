@@ -6,7 +6,7 @@
 /*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 12:25:02 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/24 12:25:11 by estarck          ###   ########.fr       */
+/*   Updated: 2022/06/24 16:11:50 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 static void	close_fd(t_data *shell)
 {
 	t_lst	*tmp;
+	int		signal;
 
 	tmp = shell->cmd;
 	while (tmp)
@@ -26,7 +27,8 @@ static void	close_fd(t_data *shell)
 	tmp = shell->cmd;
 	while (tmp)
 	{
-		waitpid(-1, 0, 0);
+		waitpid(-1, &signal, WUNTRACED);
+		shell->code_error = signal % 255;
 		if (tmp->built == EXIT)
 			quit_mini(2);
 		tmp = tmp->next;
@@ -63,7 +65,10 @@ static void	exec_path(t_data *shell, t_lst *cmd)
 	{
 		fd_manager(shell, cmd);
 		if (execve(cmd->p_cmd, cmd->argv, shell->env) == -1)
+		{
 			perror("error : execve");
+			exit (126);
+		}
 	}
 }
 
