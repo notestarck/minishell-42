@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
+/*   By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 11:39:52 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/24 12:28:00 by estarck          ###   ########.fr       */
+/*   Updated: 2022/06/24 15:17:14 by reclaire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ int	find_cmd(t_data *shell)
 {
 	t_lst	*tmp;
 
+	init_env_path(shell);
 	tmp = shell->cmd;
 	while (tmp)
 	{
@@ -94,10 +95,7 @@ int	find_cmd(t_data *shell)
 			}
 			else if (ft_strchr(&tmp->argv[0][0], 60) && \
 				ft_strchr(&tmp->argv[0][1], 60))
-			{
 				tmp->p_cmd = find_path(shell->env_path, "cat");
-				printf("%s\n", tmp->p_cmd);
-			}
 			else
 			{
 				tmp->p_cmd = find_path(shell->env_path, tmp->argv[0]);
