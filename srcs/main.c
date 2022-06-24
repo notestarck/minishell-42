@@ -77,7 +77,8 @@ void	quit_mini(int i)
 
 void	sig(int sig)
 {
-	(void)sig;
+	if (g_pid == 0)
+		return ;
 	if (sig == SIGINT)
 	{
 		ft_printf("\n");

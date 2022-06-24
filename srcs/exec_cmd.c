@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
+/*   By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 12:25:02 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/24 16:11:50 by estarck          ###   ########.fr       */
+/*   Updated: 2022/06/24 17:28:26 by reclaire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <curses.h>
+#include <term.h>
 
 static void	close_fd(t_data *shell)
 {
@@ -56,12 +58,10 @@ void	fd_manager(t_data *shell, t_lst *cmd)
 
 static void	exec_path(t_data *shell, t_lst *cmd)
 {
-	pid_t	pid;
-
-	pid = fork();
-	if (pid < 0)
+	g_pid = fork();
+	if (g_pid < 0)
 		perror ("fork");
-	if (pid == 0)
+	if (g_pid == 0)
 	{
 		fd_manager(shell, cmd);
 		if (execve(cmd->p_cmd, cmd->argv, shell->env) == -1)

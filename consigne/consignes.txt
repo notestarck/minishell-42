@@ -74,14 +74,6 @@ A FAIRE (echo TEST >> t >> t. t dois contenir 2 fois TEST) - Vérifiez si plusie
 
 - un espace + pipe cause segfault
 
-{
-- Essayez ctrl-C après avoir lancé une commande bloquante, comme cat ou grep
-sans argument.
-- Essayez ctrl-\ après avoir lancé une commande bloquante, comme cat ou grep
-sans argument.
-- Essayez ctrl-D après avoir lancé une commande bloquante, comme cat ou grep
-sans argument.
-} ---> AFFICHER LE PROMPT 2 FOIS ?
 
 -free a check
 -gerer les bons codes erreur et les verifier avec $?

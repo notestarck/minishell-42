@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
+/*   By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:35:23 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/24 12:31:30 by estarck          ###   ########.fr       */
+/*   Updated: 2022/06/24 17:28:53 by reclaire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,10 @@ typedef struct s_data
 	char	**env_path;
 	int		code_error;
 	int		seed;
+	int		test;
 }	t_data;
+
+static pid_t	g_pid;
 
 //Init
 void	init_env_path(t_data *shell);
