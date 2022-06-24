@@ -6,7 +6,7 @@
 /*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 16:38:18 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/23 11:24:38 by estarck          ###   ########.fr       */
+/*   Updated: 2022/06/24 12:29:22 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,22 @@ static char	*find_dir(t_lst *cmd)
 	return (NULL);
 }
 
+static void	exec_child(t_data *shell, t_lst *cmd, char **args, int fd)
+{
+	if (cmd->built == 9)
+	{
+		fd_manager2(shell, cmd, fd);
+		execve(cmd->p_cmd, args, shell->env);
+		perror("error : ");
+	}
+	else if (cmd->built != 9)
+	{
+		fd_manager2(shell, cmd, fd);
+		exec_blt(shell, cmd);
+		exit (0);
+	}
+}
+
 void	s_right(t_data *shell, t_lst *cmd)
 {
 	int		fd;
@@ -60,29 +76,14 @@ void	s_right(t_data *shell, t_lst *cmd)
 
 	filename = find_dir(cmd);
 	args = find_args(cmd);
-	fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC , 0777);
+	fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0777);
 	if (fd == -1)
-	{
-		perror ("error : open dir");
-	}
+		return (perror ("error : open dir"));
 	pid = fork();
 	if (pid < 0)
-	{
-		close (fd);
-		perror("error : fork s_right");
-	}
-	else if (pid == 0 && cmd->built == 9)
-	{
-		fd_manager2(shell, cmd, fd);
-		execve(cmd->p_cmd, args, shell->env);
-		perror("error : ");
-	}
-	else if (pid == 0 && cmd->built != 9)
-	{
-		fd_manager2(shell, cmd, fd);
-		exec_blt(shell, cmd);
-		exit (0);
-	}
+		return (close (fd), perror("error : fork s_right"));
+	else if (pid == 0)
+		exec_child(shell, cmd, args, fd);
 	else
 	{
 		waitpid(-1, 0, 0);

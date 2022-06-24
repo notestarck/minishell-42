@@ -6,7 +6,7 @@
 /*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 11:31:57 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/23 20:03:28 by estarck          ###   ########.fr       */
+/*   Updated: 2022/06/24 12:24:08 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,8 @@ void	builtin(t_data *shell, t_lst *cmd)
 		set_fork_builtin(shell, cmd);
 		return ;
 	}
-	else if (cmd->built == CD || cmd->built == EXIT || cmd->built == EXPORT || cmd->built == UNSET)
+	else if (cmd->built == CD || cmd->built == EXIT
+		|| cmd->built == EXPORT || cmd->built == UNSET)
 	{
 		exec_blt(shell, cmd);
 		return ;

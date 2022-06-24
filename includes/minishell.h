@@ -6,7 +6,7 @@
 /*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:35:23 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/23 21:25:51 by estarck          ###   ########.fr       */
+/*   Updated: 2022/06/24 12:31:30 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ typedef struct s_data
 	char	*builtins[8];
 	char	**env;
 	char	**env_path;
+	int		code_error;
 	int		seed;
 }	t_data;
 
@@ -116,6 +117,12 @@ void	init_heredoc(t_lst *cmd);
 void	s_left(t_data *shell, t_lst *cmd);
 void	s_right(t_data *shell, t_lst *cmd);
 void	d_right(t_data *shell, t_lst *cmd);
+
+//Exec cmd utils
+void	parse_args(t_data *shell, t_lst *cmd);
+int		ft_rand(t_data *shell);
+void	remove_quotes(t_lst *cmd);
+int		insert_var(t_data *shell, char **arg, int start);
 
 //Exec blt
 void	builtin(t_data *shell, t_lst *cmd);

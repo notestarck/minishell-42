@@ -6,7 +6,7 @@
 /*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 11:30:23 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/23 11:09:42 by estarck          ###   ########.fr       */
+/*   Updated: 2022/06/24 12:29:41 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,13 +70,17 @@ static void	check_sep(t_data *shell)
 				cmd->sep = S_LEFT;
 			else if (cmd->argv[i][0] == '>' && cmd->argv[i][1] == '\0')
 				cmd->sep = S_RIGHT;
-			else if (cmd->argv[i][0] == '<' && cmd->argv[i][1] == '<' && cmd->argv[i][2] == '\0')
+			else if (cmd->argv[i][0] == '<' && cmd->argv[i][1]
+				== '<' && cmd->argv[i][2] == '\0')
 				cmd->heredoc = D_LEFT;
-			else if (cmd->argv[i][0] == '>' && cmd->argv[i][1] == '>' && cmd->argv[i][2] == '\0')
+			else if (cmd->argv[i][0] == '>' && cmd->argv[i][1]
+				== '>' && cmd->argv[i][2] == '\0')
 				cmd->sep = D_RIGHT;
-			else if (cmd->argv[i][0] == '&' && cmd->argv[i][1] == '&' && cmd->argv[i][2] == '\0')
+			else if (cmd->argv[i][0] == '&' && cmd->argv[i][1]
+				== '&' && cmd->argv[i][2] == '\0')
 				cmd->sep = AND;
-			else if (cmd->argv[i][0] == '|' && cmd->argv[i][1] == '|' && cmd->argv[i][2] == '\0')
+			else if (cmd->argv[i][0] == '|' && cmd->argv[i][1]
+				== '|' && cmd->argv[i][2] == '\0')
 				cmd->sep = OR;
 			else if (cmd->argv[i][0] == '*')
 				cmd->sep = WLCRD;

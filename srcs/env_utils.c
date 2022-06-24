@@ -26,6 +26,8 @@ char	*env_get(t_data *shell, char *key)
 		i++;
 	}
 	out = malloc(sizeof(char));
+	if (out == NULL)
+		return (perror("error : malloc"), NULL);
 	out[0] = '\0';
 	return (out);
 }
@@ -48,16 +50,11 @@ void	env_del(t_data *shell, char *key)
 	{
 		curr = ft_substr(shell->env[j], 0, ft_strlen(key));
 		if (!ft_strncmp(curr, key, ft_strlen(key) + 1))
-		{
-			free(shell->env[j]);
-			j++;
-		}
+			free(shell->env[j++]);
 		else
 		{
-			out[i] = ft_strdup(shell->env[j]);
-			free(shell->env[j]);
-			i++;
-			j++;
+			out[i++] = ft_strdup(shell->env[j]);
+			free(shell->env[j++]);
 		}
 	}
 	out[i] = NULL;

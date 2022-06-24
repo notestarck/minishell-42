@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/21 10:50:27 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/21 11:57:36by estarck          ###   ########.fr       */
+/*   Created: 2022/06/24 12:25:02 by estarck           #+#    #+#             */
+/*   Updated: 2022/06/24 12:25:11 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,101 +67,6 @@ static void	exec_path(t_data *shell, t_lst *cmd)
 	}
 }
 
-int	insert_var(t_data *shell, char **arg, int start)
-{
-	char	*key;
-	char	*out;
-	char	*value;
-	int		i;
-
-	i = 1;
-	while ((*arg)[start + i] && ft_isalnum((*arg)[start + i]))
-		i++;
-	key = malloc(sizeof(char) * i);
-	ft_strlcpy(key, (*arg) + start + 1, i);
-	value = env_get(shell, key);
-	out = ft_substr(*arg, 0, start);
-	out = ft_str_appnd(out, value, 1, 1);
-	out = ft_str_appnd(out, *arg + start + i, 1, 0);
-	free(*arg);
-	*arg = out;
-	return (start + i - 1);
-}
-
-void	remove_quotes(t_lst *cmd)
-{
-	int		i;
-	int		j;
-	int		count;
-	char	*str;
-
-	i = 0;
-	while (cmd->argv[i])
-	{
-		j = 0;
-		count = 0;
-		while (cmd->argv[i][j])
-		{
-			if (cmd->argv[i][j] == '\'' || cmd->argv[i][j] == '\"')
-				count++;
-			j++;
-		}
-		str = ft_malloc(sizeof(char) * (ft_strlen(cmd->argv[i]) - count + 1));
-		j = 0;
-		count = 0;
-		while (cmd->argv[i][j])
-		{
-			if (cmd->argv[i][j] != '\'' && cmd->argv[i][j] != '\"')
-			{
-				str[count] = cmd->argv[i][j];
-				count++;
-			}
-			j++;
-		}
-		str[count] = '\0';
-		free(cmd->argv[i]);
-		cmd->argv[i] = str;
-		i++;
-	}
-}
-
-void	parse_args(t_data *shell, t_lst *cmd)
-{
-	int	i;
-	int	j;
-	int	is_simple_quote;
-	int	is_double_quote;
-
-	i = 0;
-	is_simple_quote = 0;
-	is_double_quote = 0;
-	while (cmd->argv[i])
-	{
-		j = 0;
-		while (cmd->argv[i][j])
-		{
-			if (cmd->argv[i][j] == '\'')
-			{
-				if (is_simple_quote)
-					is_simple_quote = 0;
-				else
-					is_simple_quote = 1;
-			}
-			if (cmd->argv[i][j] == '\"')
-			{
-				if (is_double_quote)
-					is_double_quote = 0;
-				else
-					is_double_quote = 1;
-			}
-			if (cmd->argv[i][j] == '$' && cmd->argv[i][j + 1] != '\0' && !is_simple_quote)
-				j = insert_var(shell, &(cmd->argv[i]), j);
-			j++;
-		}
-		i++;
-	}
-}
-
 static void	exec_cmd(t_data *shell, t_lst *cmd)
 {
 	parse_args(shell, cmd);
@@ -172,12 +77,6 @@ static void	exec_cmd(t_data *shell, t_lst *cmd)
 		run_op(shell, cmd);
 	else
 		exec_path(shell, cmd);
-}
-
-int	ft_rand(t_data *shell)
-{
-	shell->seed = (shell->seed * 1103515245U + 12345U) & 0x7fffffffU;
-	return ((int)shell->seed);
 }
 
 void	run_cmd(t_data *shell)

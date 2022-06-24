@@ -104,4 +104,5 @@ sans argument.
 - Essayez ctrl-D après avoir lancé une commande bloquante, comme cat ou grep
 sans argument.
 -free a check
-gerer les bons codes erreur avec 
+-gerer les bons codes erreur et les verifier avec $?
+-couper la fonction echo pour la norme

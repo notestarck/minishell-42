@@ -6,7 +6,7 @@
 /*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 12:41:51 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/23 11:23:25 by estarck          ###   ########.fr       */
+/*   Updated: 2022/06/24 12:29:10 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,25 +62,20 @@ void	s_left(t_data *shell, t_lst *cmd)
 	args = find_args(cmd);
 	fd = open(filename, O_RDONLY);
 	if (fd == -1)
-	{
-		perror ("error : open dir");
-	}
+		return (perror ("error : open dir"));
 	pid = fork();
 	if (pid < 0)
-	{
-		close (fd);
-		perror("error : fork s_left");
-	}
+		return (close (fd), perror("error : fork s_left"));
 	else if (pid == 0)
 	{
 		dup2(fd, STDIN_FILENO);
 		execve(cmd->p_cmd, args, shell->env);
-		perror("error : ");
+		perror("minishell");
 	}
 	else
 	{
 		wait(NULL);
 		close(fd);
 	}
-	free(args); // et le reste a faire
+	free(args);
 }

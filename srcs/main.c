@@ -21,7 +21,7 @@ static void	init_env(t_data *shell, char **env)
 	(void)shell;
 	while (env[i])
 		i++;
-	shell->env = malloc(sizeof(char *) * (i + 1)); //penser a free
+	shell->env = malloc(sizeof(char *) * (i + 1));
 	if (shell->env == NULL)
 		perror("error : malloc env");
 	i = 0;
@@ -53,14 +53,14 @@ static t_data	*init_shell(void)
 {
 	t_data	*shell;
 
-	shell = malloc(sizeof(t_data)); //ret erreur
+	shell = malloc(sizeof(t_data));
 	shell->builtins[0] = "echo";
 	shell->builtins[1] = "cd";
 	shell->builtins[2] = "pwd";
 	shell->builtins[3] = "export";
 	shell->builtins[4] = "unset";
 	shell->builtins[5] = "env";
-	shell->builtins[6] = "exit"; 
+	shell->builtins[6] = "exit";
 	shell->builtins[7] = NULL;
 	shell->pid = 0;
 	shell->seed = 87634;

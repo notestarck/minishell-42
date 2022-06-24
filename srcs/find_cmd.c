@@ -1,26 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   find_exec.c                                        :+:      :+:    :+:   */
+/*   find_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 11:39:52 by estarck           #+#    #+#             */
-/*   Updated: 2022/05/30 09:39:03y estarck          ###   ########.fr       */
+/*   Updated: 2022/06/24 12:28:00 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 //verifie si le path est valide
-static int	valid_path(char *av)
+static int	valid_path(t_data *shell, char *av)
 {
 	struct stat	buf;
 
 	if (stat(av, &buf) == -1)
 	{
-		perror(strerror(ENOTDIR));
-		return (ENOTDIR);
+		perror("minishell");
+		shell->code_error = 127;
+		return (127);
 	}
 	else
 		return (0);
@@ -66,7 +67,6 @@ static char	*find_path(char **env_path, char *cmd)
 			}
 			dp = readdir(dir);
 		}
-		//free(dp);
 		closedir(dir);
 		env_path++;
 	}
@@ -85,19 +85,22 @@ int	find_cmd(t_data *shell)
 		{
 			if (ft_strchr(tmp->argv[0], 47))
 			{
-				if (valid_path(tmp->argv[0])) //message d'erreur si le ptah n'est pas valide
+				if (valid_path(shell, tmp->argv[0]))
 					return (0);
-				tmp->p_cmd = malloc(sizeof(char) * (ft_strlen(tmp->argv[0]) + 1));
-				ft_strlcpy(tmp->p_cmd, tmp->argv[0], ft_strlen(tmp->argv[0]) + 1);
+				tmp->p_cmd = malloc(sizeof(char) * \
+					(ft_strlen(tmp->argv[0]) + 1));
+				ft_strlcpy(tmp->p_cmd, tmp->argv[0], \
+					ft_strlen(tmp->argv[0]) + 1);
 			}
-			else if (ft_strchr(&tmp->argv[0][0], 60) && ft_strchr(&tmp->argv[0][1], 60))
+			else if (ft_strchr(&tmp->argv[0][0], 60) && \
+				ft_strchr(&tmp->argv[0][1], 60))
 			{
 				tmp->p_cmd = find_path(shell->env_path, "cat");
 				printf("%s\n", tmp->p_cmd);
 			}
 			else
 			{
-				tmp->p_cmd = find_path(shell->env_path, tmp->argv[0]); // Penser a free
+				tmp->p_cmd = find_path(shell->env_path, tmp->argv[0]);
 				if (tmp->p_cmd == NULL)
 					return (0);
 			}
