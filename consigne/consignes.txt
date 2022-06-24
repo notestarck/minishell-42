@@ -76,5 +76,4 @@ A FAIRE (echo TEST >> t >> t. t dois contenir 2 fois TEST) - Vérifiez si plusie
 
 
 -free a check
--gerer les bons codes erreur et les verifier avec $?
 -couper la fonction echo pour la norme
