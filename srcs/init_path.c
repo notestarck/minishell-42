@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_path.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
+/*   By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 11:15:33 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/09 11:29:29 by estarck          ###   ########.fr       */
+/*   Updated: 2022/06/24 15:15:25 by reclaire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,9 @@ void	init_env_path(t_data *shell)
 {
 	char	*envp;
 
-	envp = getenv("PATH");
-	shell->env_path = ft_split(ft_strchr(envp, '/'), ':');
+	envp = env_get(shell, "PATH");
+	if (!*envp)
+		shell->env_path = ft_split(ft_strdup("\0"), ':');
+	else
+		shell->env_path = ft_split(ft_strchr(envp, '/'), ':');
 }
