@@ -70,7 +70,6 @@ heredoc avec le EOF colle a la redirection
 A FAIRE - Mettez plusieurs répertoires à PATH (directory1:directory2) et vérifiez
 qu'ils sont bien évalués de gauche à droite.
 
-A FAIRE (echo TEST >> t >> t. t dois contenir 2 fois TEST) - Vérifiez si plusieurs instances de la même redirection échouent.
 
 - un espace + pipe cause segfault
 
