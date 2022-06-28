@@ -116,6 +116,7 @@ int	insert_var(t_data *shell, char **arg, int start)
 	out = ft_substr(*arg, 0, start);
 	out = ft_str_appnd(out, value, 1, 1);
 	out = ft_str_appnd(out, *arg + start + i, 1, 0);
+	free(key);
 	free(*arg);
 	*arg = out;
 	return (start + i - 1);

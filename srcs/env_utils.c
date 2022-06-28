@@ -108,6 +108,7 @@ void	env_set(t_data *shell, char *key, char *value)
 			free(shell->env[i]);
 			shell->env[i] = ft_strjoin(tmp, value);
 			free(tmp);
+			free(curr);
 			return ;
 		}
 		free(curr);

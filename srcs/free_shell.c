@@ -35,6 +35,8 @@ void	free_cmd(t_lst *cmd)
 	while (tmp)
 	{
 		free_dchar(cmd->argv);
+		if (tmp->p_cmd);
+			free(tmp->p_cmd);
 		cmd = cmd->next;
 		free(tmp);
 		tmp = cmd;

@@ -18,6 +18,9 @@ void	*ft_malloc(size_t size)
 
 	out = malloc(size);
 	if (!out)
+	{
+		ft_printf("error: malloc\n");
 		exit(1);
+	}
 	return (out);
 }

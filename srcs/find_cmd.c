@@ -63,6 +63,7 @@ static char	*find_path(char **env_path, char *cmd)
 				tmp = ft_strjoin(*env_path, "/");
 				out = ft_strjoin(tmp, cmd);
 				free(tmp);
+				free(path);
 				return (out);
 			}
 			dp = readdir(dir);

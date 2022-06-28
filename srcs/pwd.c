@@ -16,6 +16,7 @@ void	exec_pwd(t_data *shell, t_lst *cmd)
 {
 	int	i;
 
+	i = 0;
 	while (cmd->argv[i])
 		i++;
 	if (i != 1)

@@ -26,10 +26,11 @@ t_lst	*add_cmd(t_lst *cmd)
 	new->sep = -1;
 	new->tmpfile = "okkkkkk";
 	new->heredoc = 0;
-	cmd->next = new;
-	new->prev = cmd;
 	new->next = NULL;
 	new->argv = NULL;
+	new->p_cmd = NULL;
+	new->prev = cmd;
+	cmd->next = new;
 	return (new);
 }
 
@@ -48,6 +49,7 @@ t_lst	*new_cmd(void)
 	new->next = NULL;
 	new->prev = NULL;
 	new->argv = NULL;
+	new->p_cmd = NULL;
 	return (new);
 }
 

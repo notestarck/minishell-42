@@ -64,14 +64,31 @@ static t_data	*init_shell(void)
 	shell->builtins[7] = NULL;
 	shell->pid = 0;
 	shell->seed = 87634;
+	shell->env_path = NULL;
 	return (shell);
 }
 
-void	quit_mini(int i)
+void	free_all(t_data *shell)
 {
-	ft_printf("\n");
+	int	n;
+
 	clear_history();
-	ft_printf("Farewell\n");
+	n = -1;
+	while(shell->env[++n])
+		free(shell->env[n]);
+	free(shell->env);
+	n = -1;
+	while(shell->env_path[++n])
+		free(shell->env_path[n]);
+	free(shell->env_path);
+	free(shell);
+}
+
+void	quit_mini(int i, t_data *shell)
+{
+	free_all(shell);
+	ft_printf("\n");
+	ft_printf("Farewell %d\n");
 	exit(i);
 }
 
@@ -110,9 +127,7 @@ int	main(int argc, char **argv, char **env)
 	{
 		launch_shell(shell);
 		if (!shell->ret_prompt)
-		{
-			quit_mini(0);
-		}
+			quit_mini(0, shell);
 		shell->cmd = parse_prompt(shell);
 		check_syntax(shell);
 		if (*shell->ret_prompt != '\0')

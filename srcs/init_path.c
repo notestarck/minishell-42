@@ -16,10 +16,22 @@
 void	init_env_path(t_data *shell)
 {
 	char	*envp;
+	int		n;
 
 	envp = env_get(shell, "PATH");
+	if (shell->env_path)
+	{
+		n = -1;
+		while (shell->env_path[++n])
+			free(shell->env_path[n]);
+		free(shell->env_path);
+	}
 	if (!*envp)
-		shell->env_path = ft_split(ft_strdup("\0"), ':');
+	{
+		envp = ft_strdup("\0");
+		shell->env_path = ft_split(envp, ':');
+	}
 	else
 		shell->env_path = ft_split(ft_strchr(envp, '/'), ':');
+	free(envp);
 }

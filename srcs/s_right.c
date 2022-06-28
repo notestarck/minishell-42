@@ -22,14 +22,10 @@ static char	**find_args(t_lst *cmd)
 	j = 0;
 	while (*cmd->argv[i] != '>')
 		i++;
-	ret = malloc(sizeof(char *) * i + 1);
-	if (ret == NULL)
-		perror("error : malloc find_args");
+	ret = ft_malloc(sizeof(char *) * (i + 1));
 	while (j < i)
 	{
-		ret[j] = malloc(sizeof(char) * ft_strlen(cmd->argv[j]) + 1);
-		if (ret[j] == NULL)
-			perror("error: malloc");
+		ret[j] = ft_malloc(sizeof(char) * ft_strlen(cmd->argv[j]) + 1);
 		ft_strlcpy(ret[j], cmd->argv[j], ft_strlen(cmd->argv[j]) + 1);
 		j++;
 	}
@@ -89,5 +85,8 @@ void	s_right(t_data *shell, t_lst *cmd)
 		waitpid(-1, 0, 0);
 		close(fd);
 	}
+	fd = -1;
+	while (args[++fd])
+		free(args[fd]);
 	free(args);
 }
