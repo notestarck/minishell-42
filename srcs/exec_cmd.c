@@ -11,8 +11,6 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include <curses.h>
-#include <term.h>
 
 static void	close_fd(t_data *shell)
 {
@@ -32,7 +30,7 @@ static void	close_fd(t_data *shell)
 		waitpid(-1, &signal, WUNTRACED);
 		shell->code_error = signal % 255;
 		if (tmp->built == EXIT)
-			quit_mini(2);
+			quit_mini(2, shell);
 		tmp = tmp->next;
 	}
 }
@@ -103,6 +101,7 @@ void	run_cmd(t_data *shell)
 			tmp->tmpfile = ft_str_appnd(tmp->tmpfile,
 					ft_itoa(ft_rand(shell)), 1, 1);
 			init_heredoc(tmp);
+			free(tmp->tmpfile);
 		}
 		exec_cmd(shell, tmp);
 		tmp = tmp->next;

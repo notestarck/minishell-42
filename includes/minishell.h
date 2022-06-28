@@ -152,6 +152,6 @@ void	env_new(t_data *shell, char *key, char *value);
 void	env_del(t_data *shell, char *key);
 
 //Quit
-void	quit_mini(int sig);
+void	quit_mini(int sig, t_data *shell);
 
 #endif
