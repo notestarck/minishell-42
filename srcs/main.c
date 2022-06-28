@@ -88,6 +88,7 @@ void	sig(int sig)
 	}
 	else if (sig == SIGQUIT)
 	{
+		printf("Bonjour\n");
 		rl_on_new_line();
 		rl_redisplay();
 		ft_printf("  \b\b");
