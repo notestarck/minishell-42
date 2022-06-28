@@ -80,10 +80,10 @@ void	d_right(t_data *shell, t_lst *cmd)
 	fd = open(filename, O_WRONLY | O_APPEND | O_CREAT, 0777);
 	if (fd == -1)
 		return (perror ("error : open dir"));
-	pid = fork();
-	if (pid < 0)
+	g_pid = fork();
+	if (g_pid < 0)
 		return (close (fd), perror("error : fork d_right"));
-	else if (pid == 0)
+	else if (g_pid == 0)
 		exec_child(shell, cmd, args, fd);
 	else
 	{

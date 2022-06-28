@@ -63,10 +63,10 @@ void	s_left(t_data *shell, t_lst *cmd)
 	fd = open(filename, O_RDONLY);
 	if (fd == -1)
 		return (perror ("error : open dir"));
-	pid = fork();
-	if (pid < 0)
+	g_pid = fork();
+	if (g_pid < 0)
 		return (close (fd), perror("error : fork s_left"));
-	else if (pid == 0)
+	else if (g_pid == 0)
 	{
 		dup2(fd, STDIN_FILENO);
 		execve(cmd->p_cmd, args, shell->env);

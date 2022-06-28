@@ -80,7 +80,6 @@ typedef struct s_lst
 
 typedef struct s_data
 {
-	pid_t	pid;
 	char	*ret_prompt;
 	t_lst	*cmd;
 	int		nbr_cmd;
