@@ -13,6 +13,8 @@
 #include "minishell.h"
 #include <signal.h>
 
+int	g_pid = 0;
+
 static void	init_env(t_data *shell, char **env)
 {
 	int	i;
@@ -62,7 +64,6 @@ static t_data	*init_shell(void)
 	shell->builtins[5] = "env";
 	shell->builtins[6] = "exit";
 	shell->builtins[7] = NULL;
-	shell->pid = 0;
 	shell->seed = 87634;
 	shell->env_path = NULL;
 	return (shell);
@@ -94,9 +95,9 @@ void	quit_mini(int i, t_data *shell)
 
 void	sig(int sig)
 {
-	if (g_pid == 0)
+	if (g_pid)
 		return ;
-	if (sig == SIGINT)
+	else if (sig == SIGINT)
 	{
 		ft_printf("\n");
 		rl_on_new_line();
@@ -118,11 +119,11 @@ int	main(int argc, char **argv, char **env)
 
 	(void)argc;
 	(void)argv;
+	g_pid = 0;
 	signal(SIGINT, sig);
 	signal(SIGQUIT, sig);
 	shell = init_shell();
-	if (shell->pid == 0)
-		init_env(shell, env);
+	init_env(shell, env);
 	while (42)
 	{
 		launch_shell(shell);
