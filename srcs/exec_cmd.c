@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+        */
+/*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 12:25:02 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/24 17:28:26 by reclaire         ###   ########.fr       */
+/*   Updated: 2022/06/28 18:10:04 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ static void	close_fd(t_data *shell)
 	while (tmp)
 	{
 		waitpid(-1, &signal, WUNTRACED);
+		g_pid = 0;
 		shell->code_error = signal % 255;
 		if (tmp->built == EXIT)
 			quit_mini(2, shell);
@@ -63,10 +64,8 @@ static void	exec_path(t_data *shell, t_lst *cmd)
 	{
 		fd_manager(shell, cmd);
 		if (execve(cmd->p_cmd, cmd->argv, shell->env) == -1)
-		{
 			perror("error : execve");
-			exit (126);
-		}
+		exit (126);
 	}
 }
 

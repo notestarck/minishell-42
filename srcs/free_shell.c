@@ -6,7 +6,7 @@
 /*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 10:59:18 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/24 12:16:14 by estarck          ###   ########.fr       */
+/*   Updated: 2022/06/28 17:47:59 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	free_cmd(t_lst *cmd)
 	while (tmp)
 	{
 		free_dchar(cmd->argv);
-		if (tmp->p_cmd);
+		if (tmp->p_cmd)
 			free(tmp->p_cmd);
 		cmd = cmd->next;
 		free(tmp);
