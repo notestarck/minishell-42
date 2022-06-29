@@ -6,7 +6,7 @@
 /*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 11:30:23 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/28 21:15:41 by estarck          ###   ########.fr       */
+/*   Updated: 2022/06/29 16:39:16 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,11 @@ int	check_error(t_lst *cmd)
 	{
 		if (tmp->error == 1)
 			return (1);
+		if (tmp->er_quote == 1)
+		{
+			ft_printf("error : quote\n");
+			return (1);
+		}
 		if (*tmp->argv == NULL)
 			return (1);
 		tmp = tmp->next;
@@ -51,7 +56,7 @@ int	check_quote(t_lst *cmd, char *str)
 			i++;
 	}
 	if (s_quote || d_quote)
-		cmd->error = 1;
+		cmd->er_quote = 1;
 	return (i);
 }
 
