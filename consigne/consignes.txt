@@ -69,8 +69,8 @@ TRucs a faire:
 
 Nouvelle correction
 
--gerer le \>
 -cd ne fonctionne pas avec un ' ' dans le nom du fichier
+-gerer le \>
 -on ne gere pas les \n, \t, \v...
 -message erreur si les quotes sont pas bien ferme avec code erreur
 -exit doit fermer dans tous les cas meme avec exit > sans message d'erreur.

@@ -79,9 +79,12 @@ void	free_all(t_data *shell)
 		free(shell->env[n]);
 	free(shell->env);
 	n = -1;
-	while(shell->env_path[++n])
-		free(shell->env_path[n]);
-	free(shell->env_path);
+	if (shell->env_path)
+	{
+		while(shell->env_path[++n])
+			free(shell->env_path[n]);
+		free(shell->env_path);
+	}
 	free(shell);
 }
 
@@ -89,7 +92,7 @@ void	quit_mini(int i, t_data *shell)
 {
 	free_all(shell);
 	ft_printf("\n");
-	ft_printf("Farewell %d\n");
+	ft_printf("Farewell\n");
 	exit(i);
 }
 
@@ -106,7 +109,6 @@ void	sig(int sig)
 	}
 	else if (sig == SIGQUIT)
 	{
-		printf("Bonjour\n"); //POURQUOI???
 		rl_on_new_line();
 		rl_redisplay();
 		ft_printf("  \b\b");

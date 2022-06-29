@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
+/*   By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 12:10:03 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/24 14:52:20 by estarck          ###   ########.fr       */
+/*   Updated: 2022/06/29 16:16:23 by reclaire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	parse_args(t_data *shell, t_lst *cmd)
 			}
 			if (cmd->argv[i][j] == '$' && cmd->argv[i][j + 1] != '\0'
 				&& !is_simple_quote)
-				j = insert_var(shell, &(cmd->argv[i]), j);
+				j += insert_var(shell, &(cmd->argv[i]), j);
 			j++;
 		}
 		i++;
@@ -103,10 +103,13 @@ int	insert_var(t_data *shell, char **arg, int start)
 	i = 1;
 	if ((*arg)[start + i] == '?')
 	{
-		out = ft_itoa(shell->code_error);
+		value = ft_itoa(shell->code_error);
+		out = ft_substr(*arg, 0, start);
+		out = ft_str_appnd(out, value, 1, 1);
+		out = ft_str_appnd(out, *arg + start + i + 1, 1, 0);
 		free(*arg);
 		*arg = out;
-		return (2);
+		return (1);
 	}
 	while ((*arg)[start + i] && ft_isalnum((*arg)[start + i]))
 		i++;
@@ -119,5 +122,5 @@ int	insert_var(t_data *shell, char **arg, int start)
 	free(key);
 	free(*arg);
 	*arg = out;
-	return (start + i - 1);
+	return (i - 1);
 }
