@@ -6,7 +6,7 @@
 /*   By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:35:23 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/28 21:23:38 by reclaire         ###   ########.fr       */
+/*   Updated: 2022/06/29 15:48:57 by reclaire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ int		find_cmd(t_data *shell);
 t_lst	*add_cmd(t_lst *cmd);
 t_lst	*new_cmd(void);
 char	*ft_strcut(char *str, char tok);
-int		count_argv(t_data *shell, t_lst *cmd, char *str);
+int		count_argv(t_lst *cmd, char *str);
 
 //Exec cmd
 void	run_cmd(t_data *shell);
