@@ -72,3 +72,18 @@ qu'ils sont bien évalués de gauche à droite.
 
 - un espace + pipe cause segfault
 -couper la fonction echo pour la norme
+
+
+
+
+
+
+Regles pour le parser
+
+-passer tout les whitespaces entre les arguments
+
+-decouper:
+	1: commande
+	2: arguments
+	3: separateurs (pipe, redirections)
+

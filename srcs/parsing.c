@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
+/*   By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:52:00 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/28 18:45:37 by estarck          ###   ########.fr       */
+/*   Updated: 2022/06/28 21:23:48 by reclaire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ static void	split(t_data *shell, t_lst *cmd)
 		str = cpy_arg(tmp, str) + str;
 		if (*str != '\0')
 		{
-			shell->nbr_cmd = shell->nbr_cmd + 1;
 			tmp = add_cmd(cmd);
 			str = ft_strcut(str, ' ');
 		}
@@ -89,7 +88,5 @@ t_lst	*parse_prompt(t_data *shell)
 	t_lst	*cmd;
 
 	cmd = new_cmd();
-	shell->nbr_cmd = 1;
-	split(shell, cmd);
 	return (cmd);
 }
