@@ -6,7 +6,7 @@
 /*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:35:23 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/29 16:34:33 by estarck          ###   ########.fr       */
+/*   Updated: 2022/06/29 16:43:05 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,6 @@ void	fd_manager(t_data *shell, t_lst *cmd);
 void	run_op(t_data *shell, t_lst *cmd);
 void	fd_manager2(t_data *shell, t_lst *cmd, int fd);
 void	init_heredoc(t_lst *cmd);
-//void	fd_manager3(t_data *shell, t_lst *cmd, int fd);
 void	s_left(t_data *shell, t_lst *cmd);
 void	s_right(t_data *shell, t_lst *cmd);
 void	d_right(t_data *shell, t_lst *cmd);
@@ -141,7 +140,7 @@ void	exec_echo(t_lst *cmd);
 void	free_cmd(t_lst *cmd);
 
 //syntax error
-int		check_error(t_lst *cmd);
+int		check_error(t_data *shell, t_lst *cmd);
 int		check_quote(t_lst *cmd, char *str);
 void	check_syntax(t_data *shell);
 

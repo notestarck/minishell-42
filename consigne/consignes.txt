@@ -72,8 +72,7 @@ Nouvelle correction
 -gerer le \>
 -cd ne fonctionne pas avec un ' ' dans le nom du fichier
 -on ne gere pas les \n, \t, \v...
--message erreur si les quotes sont pas bien ferme avec code erreur
--exit doit fermer dans tous les cas meme avec exit > sans message d'erreur.
+-exit doit fermer dans tous les cas, peu importe les arguments et meme avec exit > sans message d'erreur.
 -cd ne renvoit pas le bon code erreur
 -ctrl-\ affiche une nouvelle ligne au lieu de ne rien faire et l'affiche avec son contenu
 -ctrl-\ avec une commande bloquante comme cat affiche une nouvelle ligne au lieu de ne rien faire
