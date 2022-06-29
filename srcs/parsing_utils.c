@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
+/*   By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 16:04:41 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/29 14:09:03 by estarck          ###   ########.fr       */
+/*   Updated: 2022/06/29 17:21:12 by reclaire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,23 +70,23 @@ int	count_argv(t_lst *cmd, char *str)
 
 	i = 0;
 	c = 0;
-	while (str[i] != '|' && str[i])
+	while (str[i])
 	{
-		while ((str[i] == 32 || (str[i] >= 9 && str[i] <= 13)) && str[i])
+		while ((str[i] == '\\' || str[i] == 32 || (str[i] >= 9 && str[i] <= 13)) && str[i])
 			i++;
-		while ((str[i] != 32 && !(str[i] >= 9 && str[i] <= 13)) && str[i] != '|' && str[i])
+		while ((str[i] != 32 && !(str[i] >= 9 && str[i] <= 13)) && str[i])
 		{
 			if (str[i] == '\'' || str[i] == '"')
 			{
 				c++;
 				i = check_quote(cmd, &str[i]) + i + 1;
 			}
-			else if ((str[i] == '>' || str[i] == '<') && str[i + 1] != '>' && str[i + 1] != '<' && str[i - 1] != '\\' && str[i])
+			else if ((str[i] == '>' || str[i] == '<') && str[i + 1] != '>' && str[i + 1] != '<' && str[i])
 			{
 				i++;
 				c++;
 			}
-			else if ((str[i] == '>' || str[i] == '<') && (str[i + 1] == '>' || str[i + 1] == '<') && str[i - 1] != '\\' && str[i])
+			else if (((str[i] == '>' && str[i + 1] == '>') || (str[i] == '<' && str[i + 1] == '<')) && str[i])
 			{
 				i += 2;
 				c++;
@@ -111,7 +111,5 @@ int	count_argv(t_lst *cmd, char *str)
 			}
 		}
 	}
-	if (str[i] == '|')
-		i++;
 	return (c);
 }
