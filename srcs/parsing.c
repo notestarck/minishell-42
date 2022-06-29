@@ -6,7 +6,7 @@
 /*   By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:52:00 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/29 15:48:55 by reclaire         ###   ########.fr       */
+/*   Updated: 2022/06/29 15:54:11 by reclaire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ static void	split(t_data *shell, t_lst *cmd)
 		str = cpy_arg(tmp, str) + str;
 		if (*str != '\0')
 		{
+			shell->nbr_cmd = shell->nbr_cmd + 1;
 			tmp = add_cmd(cmd);
 			str = ft_strcut(str, ' ');
 		}
@@ -107,5 +108,7 @@ t_lst	*parse_prompt(t_data *shell)
 	t_lst	*cmd;
 
 	cmd = new_cmd();
+	shell->nbr_cmd = 1;
+	split(shell, cmd);
 	return (cmd);
 }

@@ -6,7 +6,7 @@
 /*   By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:35:23 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/29 15:48:57 by reclaire         ###   ########.fr       */
+/*   Updated: 2022/06/29 15:54:24 by reclaire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ typedef struct s_data
 {
 	char	*ret_prompt;
 	t_lst	*cmd;
+	int		nbr_cmd;
 	char	*builtins[8];
 	char	**env;
 	char	**env_path;
