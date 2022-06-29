@@ -6,7 +6,7 @@
 /*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:35:23 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/28 18:13:04 by estarck          ###   ########.fr       */
+/*   Updated: 2022/06/29 12:09:38 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ int		find_cmd(t_data *shell);
 t_lst	*add_cmd(t_lst *cmd);
 t_lst	*new_cmd(void);
 char	*ft_strcut(char *str, char tok);
-int		count_argv(t_data *shell, t_lst *cmd, char *str);
+int		count_argv(t_lst *cmd, char *str);
 
 //Exec cmd
 void	run_cmd(t_data *shell);

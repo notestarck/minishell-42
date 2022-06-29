@@ -71,7 +71,6 @@ static void	exec_child(t_data *shell, t_lst *cmd, char **args, int fd)
 void	d_right(t_data *shell, t_lst *cmd)
 {
 	int		fd;
-	pid_t	pid;
 	char	*filename;
 	char	**args;
 

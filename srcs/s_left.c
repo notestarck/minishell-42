@@ -6,7 +6,7 @@
 /*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 12:41:51 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/24 12:29:10 by estarck          ###   ########.fr       */
+/*   Updated: 2022/06/28 18:54:04 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ static char	*find_dir(t_lst *cmd)
 void	s_left(t_data *shell, t_lst *cmd)
 {
 	int		fd;
-	pid_t	pid;
 	char	*filename;
 	char	**args;
 

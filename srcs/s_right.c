@@ -6,7 +6,7 @@
 /*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 16:38:18 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/24 12:29:22 by estarck          ###   ########.fr       */
+/*   Updated: 2022/06/28 18:54:01 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ static void	exec_child(t_data *shell, t_lst *cmd, char **args, int fd)
 void	s_right(t_data *shell, t_lst *cmd)
 {
 	int		fd;
-	pid_t	pid;
 	char	*filename;
 	char	**args;
 

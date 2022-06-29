@@ -1,1 +1,11 @@
-0
+total 304
+-rw-r--r--    1 estarck  2021_mulhouse   1640 29 jui 12:08 Makefile
+drwxr-xr-x    7 estarck  2021_mulhouse    238 28 jui 18:46 consigne
+drwxr-xr-x    3 estarck  2021_mulhouse    102 28 jui 17:41 includes
+drwxr-xr-x  137 estarck  2021_mulhouse   4658 29 jui 14:07 libft
+-rw-r--r--    1 estarck  2021_mulhouse  70168 29 jui 14:07 libft.a
+-rwxr-xr-x    1 estarck  2021_mulhouse  70792 29 jui 14:09 minishell
+drwxr-xr-x   48 estarck  2021_mulhouse   1632 29 jui 14:09 srcs
+-rwxr-xr-x    1 estarck  2021_mulhouse      0 29 jui 15:10 test.txt
+-rw-r--r--    1 estarck  2021_mulhouse    102 28 jui 17:41 valgrind-suprr
+       1       9      64
