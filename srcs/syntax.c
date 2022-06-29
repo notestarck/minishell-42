@@ -6,13 +6,13 @@
 /*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 11:30:23 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/28 21:15:41 by estarck          ###   ########.fr       */
+/*   Updated: 2022/06/29 16:42:24 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	check_error(t_lst *cmd)
+int	check_error(t_data *shell, t_lst *cmd)
 {
 	t_lst	*tmp;
 
@@ -20,9 +20,21 @@ int	check_error(t_lst *cmd)
 	while (tmp)
 	{
 		if (tmp->error == 1)
+		{
+			shell->code_error = 1;
 			return (1);
+		}
+		if (tmp->er_quote == 1)
+		{
+			ft_printf("error : quote\n");
+			shell->code_error = 1;
+			return (1);
+		}
 		if (*tmp->argv == NULL)
+		{
+			shell->code_error = 1;
 			return (1);
+		}
 		tmp = tmp->next;
 	}
 	return (0);
@@ -51,7 +63,7 @@ int	check_quote(t_lst *cmd, char *str)
 			i++;
 	}
 	if (s_quote || d_quote)
-		cmd->error = 1;
+		cmd->er_quote = 1;
 	return (i);
 }
 

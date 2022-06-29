@@ -6,7 +6,7 @@
 /*   By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 16:04:41 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/29 17:21:12 by reclaire         ###   ########.fr       */
+/*   Updated: 2022/06/29 19:52:04 by reclaire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ t_lst	*add_cmd(t_lst *cmd)
 	while (cmd->next != NULL)
 		cmd = cmd->next;
 	new->error = 0;
+	new->er_quote = 0;
 	new->built = -1;
 	new->sep = -1;
 	new->tmpfile = "okkkkkk";
@@ -42,6 +43,7 @@ t_lst	*new_cmd(void)
 	if (new == NULL)
 		perror("error : malloc");
 	new->error = 0;
+	new->er_quote = 0;
 	new->built = -1;
 	new->sep = -1;
 	new->tmpfile = "okkkkkk";

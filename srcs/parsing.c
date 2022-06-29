@@ -6,7 +6,7 @@
 /*   By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:52:00 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/29 19:33:51 by reclaire         ###   ########.fr       */
+/*   Updated: 2022/06/29 19:52:08 by reclaire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -255,4 +255,5 @@ t_lst	*parse_prompt(t_data *shell)
 	ft_printf("STR=%s\n", shell->ret_prompt);
 	split(shell, cmd);
 	return (cmd);
+	//ok
 }

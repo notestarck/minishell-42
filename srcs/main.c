@@ -135,7 +135,7 @@ int	main(int argc, char **argv, char **env)
 		check_syntax(shell);
 		if (*shell->ret_prompt != '\0')
 		{
-			if (!check_error(shell->cmd))
+			if (!check_error(shell, shell->cmd))
 			{
 				if (find_cmd(shell))
 					run_cmd(shell);
