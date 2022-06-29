@@ -12,13 +12,14 @@
 
 #include "libft.h"
 
-int	ft_lstremoveif(t_list **lst, void (*del)(void *), int (*f)(), void *ref)
+void	ft_lstremoveif(t_list **lst, void (*del)(void *), int (*f)(), void *ref)
 {
 	t_list	*prev;
 	t_list	*curr;
+	t_list	*next;
 
 	if (!f || !lst || !(*lst))
-		return (-1);
+		return ;
 	curr = (*lst);
 	prev = NULL;
 	while (curr)
@@ -29,11 +30,12 @@ int	ft_lstremoveif(t_list **lst, void (*del)(void *), int (*f)(), void *ref)
 				(*lst) = curr->next;
 			else
 				prev->next = curr->next;
+			next = curr->next;
 			ft_lstdelone(curr, del);
-			return (1);
+			curr = next;
+			continue ;
 		}
 		prev = curr;
 		curr = curr->next;
 	}
-	return (0);
 }

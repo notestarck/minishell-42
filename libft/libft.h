@@ -45,7 +45,7 @@ float	ft_fabs(float n);
 
 int		ft_wrap(int min, int max, int n);
 
-int		ft_lstremoveif(t_list **lst, void (*del)(void *),
+void	ft_lstremoveif(t_list **lst, void (*del)(void *),
 			int (*f)(), void *ref);
 
 //Check if character is digit or alpha.

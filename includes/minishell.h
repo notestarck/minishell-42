@@ -52,17 +52,25 @@ enum e_built
 	CMD = 9
 };
 
-enum e_sep
+typedef enum e_type
 {
 	NONE = -1,
+	ARG,
 	S_RIGHT,
 	S_LEFT,
 	D_RIGHT,
 	D_LEFT,
+	PIPE,
 	AND,
-	OR ,
+	OR,
 	WLCRD
-};
+}	t_type;
+
+typedef struct s_arg
+{
+	t_type	type;
+	char	*str;
+}	t_arg;
 
 typedef struct s_lst
 {
@@ -83,6 +91,7 @@ typedef struct s_data
 {
 	char	*ret_prompt;
 	t_lst	*cmd;
+	t_list	*cmd_list;
 	int		nbr_cmd;
 	char	*builtins[8];
 	char	**env;

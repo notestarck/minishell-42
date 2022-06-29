@@ -17,8 +17,8 @@ OBJS		=	${SRCS:.c=.o}
 
 INCLUDES  	=	-I./includes -I./libft -I/Users/$(USER)/.brew/opt/readline/include
 CC			=	gcc
-CFLAGS		:=	-Wall -Wextra -Werror -O3 
-#CFLAGS		:=	-g
+#CFLAGS		:=	-Wall -Wextra -Werror -O3 
+CFLAGS		:=	-g
 ifdef MOREFLAGS
 CFLAGS		:=	$(CFLAGS) $(MOREFLAGS)
 endif
