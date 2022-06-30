@@ -66,6 +66,7 @@ static t_data	*init_shell(void)
 	shell->builtins[7] = NULL;
 	shell->seed = 87634;
 	shell->env_path = NULL;
+	shell->code_error = 0;
 	return (shell);
 }
 
