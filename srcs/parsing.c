@@ -81,20 +81,6 @@ static void	split(t_data *shell)
 {
 	init_cmd(shell);
 	cpy_cmd(shell);
-
-	//t_lst *cmd = shell->cmd;
-	//while (cmd)
-	//{
-	//	int i = 0;
-	//	while (cmd->argv[i])
-	//	{
-	//		ft_printf("			%s %d\n", cmd->argv[i]->str, cmd->argv[i]->type);
-	//		i++;
-	//	}
-	//	ft_printf("\n");
-	//	cmd = cmd->next;
-	//}
-
 }
 
 void	append_char(char **str, char c)
@@ -109,33 +95,28 @@ void	append_char(char **str, char c)
 
 void	push(t_list **args, char **str, t_type type, t_list **s_quotes, t_list **d_quotes)
 {
-	int		start;
-	int		end;
+	char	*new;
 	int		i;
 	t_arg	*arg;
 
 	if (*str == NULL)
 		return ;
 	arg = ft_malloc(sizeof(t_arg));
-	start = 0;
-	while ((*str)[start] == 32 || ((*str)[start] >= 9 && (*str)[start] <= 13))
-		start++;
-	end = ft_strlen((*str));
-	while ((*str)[end] == 32 || ((*str)[end] >= 9 && (*str)[end] <= 13))
-		end--;
-	arg->str = ft_malloc(sizeof(char) * (end - start));
-	i = 0;
-	while (i + start < end)
-	{
-		arg->str[i] = (*str)[i + start];
-		i++;
-	}
-	arg->str[i] = '\0';
-	free(*str);
-	*str = NULL;
+	arg->str = *str;
 	arg->type = type;
 	arg->d_quotes = *d_quotes;
 	arg->s_quotes = *s_quotes;
+	new = ft_strdup("");
+	i = 0;
+	while ((*str)[i])
+	{
+		if (!((*str)[i] == 32 || ((*str)[i] >= 9 && (*str)[i] <= 13)) || is_in_quotes(i, arg))
+			append_char(&new, (*str)[i]);
+		i++;
+	}
+	arg->str = new;
+	free(*str);
+	*str = NULL;
 	*s_quotes = NULL;
 	*d_quotes = NULL;
 	ft_lstadd_back(args, ft_lstnew(arg));
@@ -228,6 +209,15 @@ int	pre_process(t_data *shell)
 				d_quote_escape = 1;
 				i++;
 				continue ;
+			}
+			if (d_quote_escape)
+			{
+				int *n = ft_malloc(sizeof(int));
+				*n = ft_strlen(new);
+				ft_lstadd_back(&lst_s_quotes, ft_lstnew(n));
+				n = ft_malloc(sizeof(int));
+				*n = ft_strlen(new);
+				ft_lstadd_back(&lst_s_quotes, ft_lstnew(n));
 			}
 			d_quote_escape = 0;
 			append_char(&new, str[i]);

@@ -6,7 +6,7 @@
 /*   By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 11:11:55 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/30 18:27:37 by reclaire         ###   ########.fr       */
+/*   Updated: 2022/06/30 22:28:29 by reclaire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,12 @@ void	exec_cd(t_data *shell, t_lst *cmd)
 	tmp = env_get(shell, "PWD");
 	env_set(shell, "OLDPWD", tmp);
 	free(tmp);
-	chdir(tmp2);
+	if (chdir(tmp2) == -1)
+	{
+		perror("cd");
+		shell->code_error = errno;
+		return ;
+	}
 	getcwd(new, PATH_MAX);
 	env_set(shell, "PWD", new);
 	return ;

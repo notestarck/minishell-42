@@ -6,7 +6,7 @@
 /*   By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 12:25:02 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/30 22:10:15 by reclaire         ###   ########.fr       */
+/*   Updated: 2022/06/30 22:24:48 by reclaire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ static void	close_fd(t_data *shell)
 	{
 		waitpid(-1, &signal, WUNTRACED);
 		g_pid = 0;
-		shell->code_error = signal % 255;
+		if (tmp->built == 9)
+			shell->code_error = signal % 255;
 		if (tmp->built == EXIT)
 		{
 			if (tmp->argv[1] != NULL)

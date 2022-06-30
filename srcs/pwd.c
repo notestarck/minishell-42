@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
+/*   By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 13:13:48 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/24 12:28:51 by estarck          ###   ########.fr       */
+/*   Updated: 2022/06/30 22:58:00 by reclaire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,13 @@ void	exec_pwd(t_data *shell, t_lst *cmd)
 	int	i;
 
 	i = 0;
-	while (cmd->argv[i])
-		i++;
-	if (i != 1)
-	{
-		ft_printf("pwd: too many arguments\n");
-		return ;
-	}
+	//while (cmd->argv[i])
+	//	i++;
+	//if (i != 1)
+	//{
+	//	ft_printf("pwd: too many arguments\n");
+	//	return ;
+	//}
 	while (shell->env[i])
 	{
 		if (!ft_strncmp(shell->env[i], "PWD", 3))

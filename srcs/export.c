@@ -6,7 +6,7 @@
 /*   By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 16:00:51 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/30 17:44:12 by reclaire         ###   ########.fr       */
+/*   Updated: 2022/06/30 22:54:49 by reclaire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ void	exec_export(t_data *shell, t_lst *cmd)
 	int		i;
 	char	**tmp;
 
+	if (cmd->argv[1] == NULL || !ft_strchr(cmd->argv[1]->str, '='))
+		return ;
 	i = 0;
 	tmp = ft_split(cmd->argv[1]->str, '=');
 	while (cmd->argv[1]->str[i])
