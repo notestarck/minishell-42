@@ -22,6 +22,9 @@
 		"errno.h": "c",
 		"__errc": "c",
 		"valgrind-suprr": "c",
-		"sstream": "c"
+		"sstream": "c",
+		"locale": "c",
+		"__locale": "c",
+		"ios": "c"
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 12:25:02 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/30 18:22:13 by reclaire         ###   ########.fr       */
+/*   Updated: 2022/06/30 20:07:54 by reclaire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,14 +82,6 @@ static void	exec_path(t_data *shell, t_lst *cmd)
 	if (g_pid == 0)
 	{
 		fd_manager(shell, cmd);
-		//char **p = t_arg_to_char(cmd->argv);
-		//int i = 0;
-		//while (p[i])
-		//{
-		//	ft_printf("		%s\n", p[i]);
-		//	i++;
-		//}
-		//ft_printf("%s\n", cmd->p_cmd);
 		if (execve(cmd->p_cmd, t_arg_to_char(cmd->argv), shell->env) == -1)
 			perror("error : execve");
 		exit (126);
@@ -99,7 +91,6 @@ static void	exec_path(t_data *shell, t_lst *cmd)
 static void	exec_cmd(t_data *shell, t_lst *cmd)
 {
 	parse_args(shell, cmd);
-	//remove_quotes(cmd);
 	if (cmd->built != 9 && cmd->sep == -1)
 		builtin(shell, cmd);
 	else if (cmd->sep != -1)
@@ -128,6 +119,7 @@ void	run_cmd(t_data *shell)
 					ft_itoa(ft_rand(shell)), 1, 1);
 			init_heredoc(tmp);
 			free(tmp->tmpfile);
+			tmp->sep = -1;
 		}
 		exec_cmd(shell, tmp);
 		tmp = tmp->next;

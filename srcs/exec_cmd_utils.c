@@ -6,7 +6,7 @@
 /*   By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 12:10:03 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/30 17:34:27 by reclaire         ###   ########.fr       */
+/*   Updated: 2022/06/30 20:09:00 by reclaire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,7 @@ void	parse_args(t_data *shell, t_lst *cmd)
 		{
 			if (cmd->argv[i]->str[j] == '$' && cmd->argv[i]->str[j + 1] != '\0'
 				&& is_in_quotes(j, cmd->argv[i]) != 1)
-				ft_printf("REPLACE VAR\n");
-				//j += insert_var(shell, &(cmd->argv[i]), j);
+				j += insert_var(shell, &(cmd->argv[i]->str), j);
 			j++;
 		}
 		i++;

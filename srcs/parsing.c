@@ -28,7 +28,7 @@ static void	cpy_cmd(t_data *shell)
 			cmd->argv[i] = tmp->content;
 			if (ft_isrange((int)(cmd->argv[i]->type), 0, 3))
 			{
-				if (cmd->sep != -1)
+				if (cmd->sep != -1 && cmd->sep != D_LEFT)
 				{
 					perror("Double redirection");
 					shell->code_error = 1;

@@ -48,8 +48,8 @@ void	env_del(t_data *shell, char *key)
 	j = 0;
 	while (i < size && j < size)
 	{
-		curr = ft_substr(shell->env[j], 0, ft_strlen(key));
-		if (!ft_strncmp(shell->env[j], key, ft_strlen(key) + 1))
+		curr = ft_substr(shell->env[j], 0, ft_strchr(shell->env[j], '=') - (shell->env[i]));
+		if (!ft_strncmp(curr, key, ft_strlen(curr)))
 			free(shell->env[j++]);
 		else
 		{
