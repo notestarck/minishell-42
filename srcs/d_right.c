@@ -20,17 +20,17 @@ static char	**find_args(t_lst *cmd)
 
 	i = 0;
 	j = 0;
-	while (*cmd->argv[i] != '>')
+	while (*(cmd->argv[i]->str) != '>')
 		i++;
 	ret = malloc(sizeof(char *) * i + 1);
 	if (ret == NULL)
 		return (perror("error : malloc find_args"), NULL);
 	while (j < i)
 	{
-		ret[j] = malloc(sizeof(char) * ft_strlen(cmd->argv[j]) + 1);
+		ret[j] = malloc(sizeof(char) * ft_strlen(cmd->argv[j]->str) + 1);
 		if (ret[j] == NULL)
 			return (perror("error : malloc"), NULL);
-		ft_strlcpy(ret[j], cmd->argv[j], ft_strlen(cmd->argv[j]) + 1);
+		ft_strlcpy(ret[j], cmd->argv[j]->str, ft_strlen(cmd->argv[j]->str) + 1);
 		j++;
 	}
 	ret[j] = NULL;
@@ -44,8 +44,8 @@ static char	*find_dir(t_lst *cmd)
 	i = 0;
 	while (cmd->argv[i])
 	{
-		if (*cmd->argv[i] == '>')
-			return (cmd->argv[i + 1]);
+		if (*(cmd->argv[i]->str) == '>')
+			return (cmd->argv[i + 1]->str);
 		i++;
 	}
 	return (NULL);

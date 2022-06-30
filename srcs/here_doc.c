@@ -6,7 +6,7 @@
 /*   By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 17:33:56 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/23 16:46:24 by reclaire         ###   ########.fr       */
+/*   Updated: 2022/06/30 17:49:55 by reclaire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,30 +14,31 @@
 
 static void	write_cat(t_lst *cmd)
 {
-	char	**argv;
+	t_arg	**argv;
 
-	argv = malloc(sizeof(char *) * 2);
-	argv[0] = ft_strdup("cat");
+	argv = malloc(sizeof(t_arg *) * 2);
+	argv[0] = ft_malloc(sizeof(t_arg));
+	argv[0]->str = ft_strdup("cat");
 	argv[1] = NULL;
 	cmd->argv = argv;
 }
 
 static void	repars_heredocs(t_lst *cmd)
 {
-	char	**argv;
+	t_arg	**argv;
 	int		i;
 
 	i = 0;
-	while (cmd->argv[i] && ft_strncmp(cmd->argv[i], "<<", 3))
+	while (cmd->argv[i] && ft_strncmp(cmd->argv[i]->str, "<<", 3))
 		i++;
 	if (i == 0)
 	{
 		write_cat(cmd);
 		return ;
 	}
-	argv = ft_malloc(sizeof(char *) * (i + 1));
+	argv = ft_malloc(sizeof(t_arg *) * (i + 1));
 	i = 0;
-	while (cmd->argv[i] && ft_strncmp(cmd->argv[i], "<<", 3))
+	while (cmd->argv[i] && ft_strncmp(cmd->argv[i]->str, "<<", 3))
 	{
 		argv[i] = cmd->argv[i];
 		i++;
@@ -47,14 +48,14 @@ static void	repars_heredocs(t_lst *cmd)
 	cmd->argv = argv;
 }
 
-static int	find_eof(char **argv)
+static int	find_eof(t_arg **argv)
 {
 	int	i;
 
 	i = 0;
 	while (argv[i])
 	{
-		if (!ft_strcmp("<<", &argv[i][0]))
+		if (!ft_strcmp("<<", argv[i]->str))
 			break ;
 		i++;
 	}
@@ -72,7 +73,7 @@ static void	run_heredocs(t_lst *cmd)
 	i = find_eof(cmd->argv);
 	while (42)
 	{
-		if (ft_strcmp(buf, cmd->argv[i + 1]) == 0)
+		if (ft_strcmp(buf, cmd->argv[i + 1]->str) == 0)
 			break ;
 		write(fd, buf, ft_strlen(buf));
 		write(fd, "\n", 1);

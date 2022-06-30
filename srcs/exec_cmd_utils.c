@@ -6,7 +6,7 @@
 /*   By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 12:10:03 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/29 16:16:23 by reclaire         ###   ########.fr       */
+/*   Updated: 2022/06/30 17:34:27 by reclaire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,34 +22,17 @@ void	parse_args(t_data *shell, t_lst *cmd)
 {
 	int	i;
 	int	j;
-	int	is_simple_quote;
-	int	is_double_quote;
 
 	i = 0;
-	is_simple_quote = 0;
-	is_double_quote = 0;
 	while (cmd->argv[i])
 	{
 		j = 0;
-		while (cmd->argv[i][j])
+		while (cmd->argv[i]->str[j])
 		{
-			if (cmd->argv[i][j] == '\'')
-			{
-				if (is_simple_quote)
-					is_simple_quote = 0;
-				else
-					is_simple_quote = 1;
-			}
-			if (cmd->argv[i][j] == '\"')
-			{
-				if (is_double_quote)
-					is_double_quote = 0;
-				else
-					is_double_quote = 1;
-			}
-			if (cmd->argv[i][j] == '$' && cmd->argv[i][j + 1] != '\0'
-				&& !is_simple_quote)
-				j += insert_var(shell, &(cmd->argv[i]), j);
+			if (cmd->argv[i]->str[j] == '$' && cmd->argv[i]->str[j + 1] != '\0'
+				&& is_in_quotes(j, cmd->argv[i]) != 1)
+				ft_printf("REPLACE VAR\n");
+				//j += insert_var(shell, &(cmd->argv[i]), j);
 			j++;
 		}
 		i++;
@@ -68,27 +51,27 @@ void	remove_quotes(t_lst *cmd)
 	{
 		j = 0;
 		count = 0;
-		while (cmd->argv[i][j])
+		while (cmd->argv[i]->str[j])
 		{
-			if (cmd->argv[i][j] == '\'' || cmd->argv[i][j] == '\"')
+			if (cmd->argv[i]->str[j] == '\'' || cmd->argv[i]->str[j] == '\"')
 				count++;
 			j++;
 		}
-		str = ft_malloc(sizeof(char) * (ft_strlen(cmd->argv[i]) - count + 1));
+		str = ft_malloc(sizeof(char) * (ft_strlen(cmd->argv[i]->str) - count + 1));
 		j = 0;
 		count = 0;
-		while (cmd->argv[i][j])
+		while (cmd->argv[i]->str[j])
 		{
-			if (cmd->argv[i][j] != '\'' && cmd->argv[i][j] != '\"')
+			if (cmd->argv[i]->str[j] != '\'' && cmd->argv[i]->str[j] != '\"')
 			{
-				str[count] = cmd->argv[i][j];
+				str[count] = cmd->argv[i]->str[j];
 				count++;
 			}
 			j++;
 		}
 		str[count] = '\0';
 		free(cmd->argv[i]);
-		cmd->argv[i] = str;
+		cmd->argv[i]->str = str;
 		i++;
 	}
 }

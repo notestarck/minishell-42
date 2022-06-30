@@ -3,30 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   s_right.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
+/*   By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 16:38:18 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/28 18:54:01 by estarck          ###   ########.fr       */
+/*   Updated: 2022/06/30 17:55:01 by reclaire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char	**find_args(t_lst *cmd)
+static t_arg	**find_args(t_lst *cmd)
 {
 	int		i;
 	int		j;
-	char	**ret;
+	t_arg	**ret;
 
 	i = 0;
 	j = 0;
-	while (*cmd->argv[i] != '>')
+	while (*(cmd->argv[i]->str) != '>')
 		i++;
-	ret = ft_malloc(sizeof(char *) * (i + 1));
+	ret = ft_malloc(sizeof(t_arg *) * (i + 1));
 	while (j < i)
 	{
-		ret[j] = ft_malloc(sizeof(char) * ft_strlen(cmd->argv[j]) + 1);
-		ft_strlcpy(ret[j], cmd->argv[j], ft_strlen(cmd->argv[j]) + 1);
+		ret[j] = cmd->argv[i];
 		j++;
 	}
 	ret[j] = NULL;
@@ -40,8 +39,8 @@ static char	*find_dir(t_lst *cmd)
 	i = 0;
 	while (cmd->argv[i])
 	{
-		if (*cmd->argv[i] == '>')
-			return (cmd->argv[i + 1]);
+		if (*(cmd->argv[i]->str) == '>')
+			return (cmd->argv[i + 1]->str);
 		i++;
 	}
 	return (NULL);
@@ -67,7 +66,7 @@ void	s_right(t_data *shell, t_lst *cmd)
 {
 	int		fd;
 	char	*filename;
-	char	**args;
+	t_arg	**args;
 
 	filename = find_dir(cmd);
 	args = find_args(cmd);
@@ -78,14 +77,14 @@ void	s_right(t_data *shell, t_lst *cmd)
 	if (g_pid < 0)
 		return (close (fd), perror("error : fork s_right"));
 	else if (g_pid == 0)
-		exec_child(shell, cmd, args, fd);
+		exec_child(shell, cmd, t_arg_to_char(args), fd);
 	else
 	{
 		waitpid(-1, 0, 0);
 		close(fd);
 	}
-	fd = -1;
-	while (args[++fd])
-		free(args[fd]);
-	free(args);
+	//fd = -1;
+	//while (args[++fd])
+	//	free(args[fd]);
+	//free(args);
 }

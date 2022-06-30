@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
+/*   By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 16:00:51 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/15 17:43:05 by estarck          ###   ########.fr       */
+/*   Updated: 2022/06/30 17:44:12 by reclaire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,15 +31,15 @@ void	exec_export(t_data *shell, t_lst *cmd)
 	char	**tmp;
 
 	i = 0;
-	tmp = ft_split(cmd->argv[1], '=');
-	while (cmd->argv[1][i])
+	tmp = ft_split(cmd->argv[1]->str, '=');
+	while (cmd->argv[1]->str[i])
 	{
-		if (!ft_strncmp(&cmd->argv[1][i], "=", 1))
+		if (!ft_strncmp(&cmd->argv[1]->str[i], "=", 1))
 		{
 			break ;
 		}
 		i++;
 	}
-	env_set(shell, tmp[0], &cmd->argv[1][i + 1]);
+	env_set(shell, tmp[0], &cmd->argv[1]->str[i + 1]);
 	free_tmp(tmp);
 }

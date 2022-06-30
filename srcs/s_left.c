@@ -3,34 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   s_left.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
+/*   By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 12:41:51 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/28 18:54:04 by estarck          ###   ########.fr       */
+/*   Updated: 2022/06/30 17:56:54 by reclaire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char	**find_args(t_lst *cmd)
+static t_arg	**find_args(t_lst *cmd)
 {
 	int		i;
 	int		j;
-	char	**ret;
+	t_arg	**ret;
 
 	i = 0;
 	j = 0;
-	while (*cmd->argv[i] != '<')
+	while (*(cmd->argv[i]->str) != '<')
 		i++;
-	ret = malloc(sizeof(char *) * i + 1);
-	if (ret == NULL)
-		perror("error : malloc find_args");
+	ret = ft_malloc(sizeof(t_arg *) * (i + 1));
 	while (j < i)
 	{
-		ret[j] = malloc(sizeof(char) * ft_strlen(cmd->argv[j]) + 1);
-		if (ret[j] == NULL)
-			perror("error: malloc");
-		ft_strlcpy(ret[j], cmd->argv[j], ft_strlen(cmd->argv[j]) + 1);
+		ret[j] = cmd->argv[i];
 		j++;
 	}
 	ret[j] = NULL;
@@ -44,8 +39,8 @@ static char	*find_dir(t_lst *cmd)
 	i = 0;
 	while (cmd->argv[i])
 	{
-		if (*cmd->argv[i] == '<')
-			return (cmd->argv[i + 1]);
+		if (*(cmd->argv[i]->str) == '<')
+			return (cmd->argv[i + 1]->str);
 		i++;
 	}
 	return (NULL);
@@ -55,7 +50,7 @@ void	s_left(t_data *shell, t_lst *cmd)
 {
 	int		fd;
 	char	*filename;
-	char	**args;
+	t_arg	**args;
 
 	filename = find_dir(cmd);
 	args = find_args(cmd);
@@ -68,7 +63,7 @@ void	s_left(t_data *shell, t_lst *cmd)
 	else if (g_pid == 0)
 	{
 		dup2(fd, STDIN_FILENO);
-		execve(cmd->p_cmd, args, shell->env);
+		execve(cmd->p_cmd, t_arg_to_char(args), shell->env);
 		perror("minishell");
 	}
 	else

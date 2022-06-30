@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
+/*   By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 16:17:17 by reclaire          #+#    #+#             */
-/*   Updated: 2022/06/30 15:29:51 by estarck          ###   ########.fr       */
+/*   Updated: 2022/06/30 17:39:20 by reclaire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,30 +58,30 @@ void	exec_echo(t_lst *cmd)
 	i = 1;
 	while (cmd->argv[i])
 	{
-		if (cmd->argv[i][0] != '-')
+		if (cmd->argv[i]->str[0] != '-')
 			break ;
 		j = 1;
-		while (cmd->argv[i][j])
+		while (cmd->argv[i]->str[j])
 		{
-			if (cmd->argv[i][j] == 'n')
+			if (cmd->argv[i]->str[j] == 'n')
 				newline = 0;
-			else if (cmd->argv[i][j] == 'e')
+			else if (cmd->argv[i]->str[j] == 'e')
 				special_chars = 1;
-			else if (cmd->argv[i][j] == 'E')
+			else if (cmd->argv[i]->str[j] == 'E')
 				special_chars = 0;
 			else
 				break ;
 			j++;
 		}
-		if (cmd->argv[i][j] != '\0')
+		if (cmd->argv[i]->str[j] != '\0')
 			break ;
 		i++;
 	}
 	while (cmd->argv[i])
 	{
-		if (cmd->argv[i][0] == '>' && cmd->sep != ARG)
+		if (cmd->argv[i]->str[0] == '>' && cmd->sep != ARG)
 			break ;
-		echo_parse(cmd->argv[i], special_chars);
+		echo_parse(cmd->argv[i]->str, special_chars);
 		if (cmd->argv[i + 1])
 			write(1, " ", 1);
 		i++;

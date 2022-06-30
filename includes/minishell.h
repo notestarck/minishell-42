@@ -6,7 +6,7 @@
 /*   By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:35:23 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/30 15:40:49 by reclaire         ###   ########.fr       */
+/*   Updated: 2022/06/30 17:44:48 by reclaire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,6 @@ enum e_built
 
 typedef enum e_type
 {
-	ARG_DQ = -3,
-	ARG_SQ = -2,
 	ARG = -1,
 	S_RIGHT,
 	S_LEFT,
@@ -71,12 +69,14 @@ typedef struct s_arg
 {
 	t_type	type;
 	char	*str;
+	t_list	*s_quotes;
+	t_list	*d_quotes;
 }	t_arg;
 
 typedef struct s_lst
 {
 	char			*p_cmd;
-	char			**argv;
+	t_arg			**argv;
 	char			*tmpfile;
 	int				built;
 	int				sep;
@@ -117,10 +117,12 @@ t_lst	*add_cmd(t_lst *cmd);
 t_lst	*new_cmd(void);
 char	*ft_strcut(char *str, char tok);
 int		count_argv(t_lst *cmd, char *str);
+int		is_in_quotes(int i, t_arg *arg);
 
 //Exec cmd
 void	run_cmd(t_data *shell);
 void	fd_manager(t_data *shell, t_lst *cmd);
+char	**t_arg_to_char(t_arg **cmd);
 
 //Exec op
 void	run_op(t_data *shell, t_lst *cmd);

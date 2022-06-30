@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
+/*   By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 11:11:55 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/24 10:31:25 by estarck          ###   ########.fr       */
+/*   Updated: 2022/06/30 17:36:49 by reclaire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,13 @@ void	exec_cd(t_data *shell, t_lst *cmd)
 
 	if (cmd->next != NULL)
 		return ;
-	if (cmd->argv[1] == NULL || !ft_strncmp(cmd->argv[1], "--", 2)
-		|| !ft_strncmp(cmd->argv[1], "~", 1))
+	if (cmd->argv[1]->str == NULL || !ft_strncmp(cmd->argv[1]->str, "--", 2)
+		|| !ft_strncmp(cmd->argv[1]->str, "~", 1))
 		tmp2 = env_get(shell, "HOME");
-	else if (!ft_strncmp(cmd->argv[1], "-", 1))
+	else if (!ft_strncmp(cmd->argv[1]->str, "-", 1))
 		tmp2 = env_get(shell, "OLDPWD");
 	else
-		tmp2 = cmd->argv[1];
+		tmp2 = cmd->argv[1]->str;
 	tmp = env_get(shell, "PWD");
 	env_set(shell, "OLDPWD", tmp);
 	free(tmp);

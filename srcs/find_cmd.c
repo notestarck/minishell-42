@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
+/*   By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 11:39:52 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/30 15:03:11 by estarck          ###   ########.fr       */
+/*   Updated: 2022/06/30 17:57:27 by reclaire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,21 +85,21 @@ int	find_cmd(t_data *shell)
 	{
 		if (init_blt(shell, tmp) == -1)
 		{
-			if (ft_strchr(tmp->argv[0], 47))
+			if (ft_strchr(tmp->argv[0]->str, 47))
 			{
-				if (valid_path(shell, tmp->argv[0]))
+				if (valid_path(shell, tmp->argv[0]->str))
 					return (0);
 				tmp->p_cmd = malloc(sizeof(char) * \
-					(ft_strlen(tmp->argv[0]) + 1));
-				ft_strlcpy(tmp->p_cmd, tmp->argv[0], \
-					ft_strlen(tmp->argv[0]) + 1);
+					(ft_strlen(tmp->argv[0]->str) + 1));
+				ft_strlcpy(tmp->p_cmd, tmp->argv[0]->str, \
+					ft_strlen(tmp->argv[0]->str) + 1);
 			}
-			else if (ft_strchr(&tmp->argv[0][0], 60) && \
-				ft_strchr(&tmp->argv[0][1], 60))
+			else if (ft_strchr(&tmp->argv[0]->str[0], 60) && \
+				ft_strchr(&tmp->argv[0]->str[1], 60))
 				tmp->p_cmd = find_path(shell->env_path, "cat");
 			else
 			{
-				tmp->p_cmd = find_path(shell->env_path, tmp->argv[0]);
+				tmp->p_cmd = find_path(shell->env_path, tmp->argv[0]->str);
 				if (tmp->p_cmd == NULL)
 					return (0);
 			}

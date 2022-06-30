@@ -6,11 +6,33 @@
 /*   By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 16:04:41 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/29 19:52:04 by reclaire         ###   ########.fr       */
+/*   Updated: 2022/06/30 16:04:38 by reclaire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+
+int	is_in_quotes(int i, t_arg *arg)
+{
+	t_list	*lst1;
+	t_list	*lst2;
+
+	lst1 = arg->s_quotes;
+	lst2 = arg->d_quotes;
+	while (lst1)
+	{
+		if (*((int *)lst1->content) <= i <= *((int *)lst1->next->content))
+			return (1);
+		lst1 = lst1->next->next;
+	}
+	while (lst2)
+	{
+		if (*((int *)lst2->content) <= i <= *((int *)lst2->next->content))
+			return (2);
+		lst2 = lst2->next->next;
+	}
+	return (0);
+}
 
 t_lst	*add_cmd(t_lst *cmd)
 {
@@ -25,7 +47,6 @@ t_lst	*add_cmd(t_lst *cmd)
 	new->er_quote = 0;
 	new->built = -1;
 	new->sep = -1;
-	new->tmpfile = "okkkkkk";
 	new->heredoc = 0;
 	new->next = NULL;
 	new->argv = NULL;
@@ -46,7 +67,6 @@ t_lst	*new_cmd(void)
 	new->er_quote = 0;
 	new->built = -1;
 	new->sep = -1;
-	new->tmpfile = "okkkkkk";
 	new->heredoc = 0;
 	new->next = NULL;
 	new->prev = NULL;
