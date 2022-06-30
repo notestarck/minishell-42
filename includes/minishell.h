@@ -6,7 +6,7 @@
 /*   By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:35:23 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/30 21:53:15 by reclaire         ###   ########.fr       */
+/*   Updated: 2022/06/30 22:08:30 by reclaire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 # include <errno.h>
 # include "libft.h"
 
+# define ANY_ERROR 1
 # define COMMAND_NOT_FOUND 127
 # define EXIT_ERROR_ARG 255
 # define INPUT_ERROR 256

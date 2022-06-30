@@ -6,7 +6,7 @@
 /*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 12:25:02 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/30 22:02:56 by estarck          ###   ########.fr       */
+/*   Updated: 2022/06/30 22:13:10 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,24 +32,27 @@ static void	close_fd(t_data *shell)
 		shell->code_error = signal % 255;
 		if (tmp->built == EXIT)
 		{
-			if (tmp->next == NULL && tmp->prev == NULL)
+			if (tmp->argv[1] != NULL)
 			{
-				if (tmp->argv == NULL)
+				if (tmp->argv[2] != NULL)
 				{
-					if (ft_str_isdigit(tmp->argv[0]->str))
-					{
-						shell->code_error = ft_atoi(tmp->argv[0]->str);
-					}
-					else
-					{
-						ft_printf("exit: numerical argument required\n");
-						shell->code_error = EXIT_ERROR_ARG;
-					}
+					ft_printf("exit: too many arguments\n");
+					shell->code_error = ANY_ERROR;
+					tmp = tmp->next;
+					continue ;
 				}
+				if (ft_str_isdigit(tmp->argv[1]->str))
+					shell->code_error = ft_atoi(tmp->argv[1]->str);
 				else
-					shell->code_error = 0;
-				quit_mini(shell);
+				{
+					ft_printf("exit: numerical argument required\n");
+					shell->code_error = EXIT_ERROR_ARG;
+				}
 			}
+			else
+				shell->code_error = 0;
+			if (tmp->next == NULL && tmp->prev == NULL)
+				quit_mini(shell);
 		}
 		tmp = tmp->next;
 	}
