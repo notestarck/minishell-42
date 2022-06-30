@@ -88,4 +88,8 @@ estarck@: /Users/estarck/Documents/Cursus/minishell-42 minishell $> unset $TEST
 pose un gros GROS GROS GROS probleme
 
 
-
+heredoc
+redirections
+cd
+export
+unset
