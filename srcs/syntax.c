@@ -6,7 +6,7 @@
 /*   By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 11:30:23 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/30 20:23:25 by reclaire         ###   ########.fr       */
+/*   Updated: 2022/06/30 20:25:08 by reclaire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int	check_error(t_data *shell, t_lst *cmd)
 		{
 			shell->code_error = 1;
 			return (1);
+			
 		}
 		if (tmp->er_quote == 1)
 		{
