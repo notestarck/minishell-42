@@ -6,7 +6,7 @@
 /*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:35:23 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/29 16:43:05 by estarck          ###   ########.fr       */
+/*   Updated: 2022/06/30 15:05:07 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ void	init_env_path(t_data *shell);
 int		init_blt(t_data *shell, t_lst *cmd);
 
 //Parsing
-t_lst	*parse_prompt(t_data *shell);
+void	parse_prompt(t_data *shell);
 int		find_cmd(t_data *shell);
 
 //Parsing utils

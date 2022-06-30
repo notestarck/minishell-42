@@ -131,7 +131,7 @@ int	main(int argc, char **argv, char **env)
 		launch_shell(shell);
 		if (!shell->ret_prompt)
 			quit_mini(0, shell);
-		shell->cmd = parse_prompt(shell);
+		parse_prompt(shell);
 		check_syntax(shell);
 		if (*shell->ret_prompt != '\0')
 		{

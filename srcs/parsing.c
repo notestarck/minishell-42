@@ -3,104 +3,74 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+        */
+/*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:52:00 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/29 19:52:08 by reclaire         ###   ########.fr       */
+/*   Updated: 2022/06/30 11:07:54by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	parse_arg(t_lst *cmd, char *str)
+static void	cpy_cmd(t_data *shell)
 {
-	int	i;
+	int		i;
+	t_list	*tmp;
+	t_lst	*cmd;
 
 	i = 0;
-	while (str[i] != '|' && str[i])
+	tmp = shell->cmd_list;
+	cmd = shell->cmd;
+	while (tmp)
 	{
-		if (str[i] == '<' || str[i] == '>' || str[i] == '|' || str[i] == 32 || (str[i] >= 9 && str[i] <= 13) || str[i] == '\'' || str[i] == '"')
+		while (tmp && ((t_arg *)tmp->content)->type != PIPE)
 		{
-			if (str[i] == '\'' || str[i] == '"')
-				i = check_quote(cmd, &str[i]) + i + 1;
-			else if ((str[i] == '>' || str[i] == '<') && str[i + 1] != '>' && str[i + 1] != '<' && str[i - 1] != '\\' && str[i])
-				i++;
-			else if ((str[i] == '>' || str[i] == '<') && (str[i + 1] == '>' || str[i + 1] == '<') && str[i - 1] != '\\' && str[i])
-				i += 2;
-			break ;
-		}
-		else if (str[i] != '<' && str[i] != '>' && str[i] != '|' && str[i])
-		{
-			while (str[i] != '<' && str[i] != '>' && str[i] != '|' && str[i] != 32 && !(str[i] >= 9 && str[i] <= 13) && str[i])
-			{
-				if (str[i] == '\'' || str[i] == '"')
-					i = check_quote(cmd, &str[i]) + i + 1;
-				if (str[i] == '\\')
-					i += 2;
-				else
-					i++;
-			}
-			break ;
-		}
-	printf("i = %d\n", i);
-	}
-	return (i);
-}
-
-static int	cpy_arg(t_lst *cmd, char *str)
-{
-	int	i;
-	int	j;
-	int	l;
-
-	i = 0;
-	j = 0;
-	while (str[i] && (str[i] != '|' || str[i + 1] == '|'))
-	{
-		l = 0;
-		l = parse_arg(cmd, &str[i]);
-		cmd->argv[j] = malloc(sizeof(char) * (l + 1));
-		if (!cmd->argv[j])
-			perror("error : malloc");
-		ft_strlcpy(cmd->argv[j], &str[i], l + 1);
-		i = i + l;
-		while (str[i] == ' ' && str[i] != '\0')
+			cmd->argv[i] = ft_strdup(((t_arg *)tmp->content)->str);
+			cmd->sep = ((t_arg *)tmp->content)->type;
 			i++;
-		j++;
-	}
-	cmd->argv[j] = NULL;
-	if (str[i] == '|')
-		i++;
-	return (i);
-}
-
-static void	init_arg(t_lst *cmd, char *str)
-{
-	cmd->argv = malloc(sizeof(char *) * (count_argv(cmd, str) + 1));
-	if (!cmd->argv)
-		perror("error : malloc");
-}
-
-static void	split(t_data *shell, t_lst *cmd)
-{
-	t_lst	*tmp;
-	char	*str;
-
-	tmp = cmd;
-	str = ft_strcut(shell->ret_prompt, ' ');
-	if (*str == '\0')
-		cmd->error = 1;
-	while (*str != '\0')
-	{
-		init_arg(tmp, str);
-		str = cpy_arg(tmp, str) + str;
-		if (*str != '\0')
+			tmp = tmp->next;
+		}
+		cmd->argv[i] = NULL;
+		i = 0;
+		if (tmp)
 		{
-			shell->nbr_cmd = shell->nbr_cmd + 1;
-			tmp = add_cmd(cmd);
-			str = ft_strcut(str, ' ');
+			cmd = cmd->next;
+			tmp = tmp->next;
 		}
 	}
+}
+
+static void	init_cmd(t_data *shell)
+{
+	int		i;
+	t_list	*tmp;
+	t_lst	*cmd;
+
+	i = 0;
+	tmp = shell->cmd_list;
+	shell->cmd = new_cmd();
+	cmd = shell->cmd;
+	while (tmp)
+	{
+		if (((t_arg *)tmp->content)->type == PIPE || tmp->next == NULL)
+		{
+			cmd->argv = malloc(sizeof(char *) * (i + 1));
+			i = 0;
+			tmp = tmp->next;
+			if (tmp)
+				cmd = add_cmd(shell->cmd);
+			continue ;
+		}
+		i++;
+		tmp = tmp->next;
+	}
+}
+
+static void	split(t_data *shell)
+{
+	init_cmd(shell);
+	cpy_cmd(shell);
+
 }
 
 void	append_char(char **str, char c)
@@ -198,6 +168,7 @@ int	pre_process(t_data *shell, t_lst *cmd)
 				i++;
 				continue ;
 			}
+			printf("c = %c", str[i]);
 			append_char(&new, str[i]);
 			i++;
 			continue ;
@@ -317,7 +288,7 @@ int	pre_process(t_data *shell, t_lst *cmd)
 			new = ft_malloc(sizeof(char));
 			*new = '\0';
 			i++;
-			continue;
+			continue ;
 		}
 		escape = 0;
 		append_char(&new, str[i]);
@@ -342,50 +313,26 @@ int	pre_process(t_data *shell, t_lst *cmd)
 	return (1);
 }
 
-t_lst	*parse_prompt(t_data *shell)
+void	parse_prompt(t_data *shell)
 {
 	t_lst		*cmd;
 
 	cmd = new_cmd();
 	if (!pre_process(shell, cmd))
 		cmd->error = 1;
+	split(shell);
 
-	/*
-	Apres la fonction preprocess, tout les arguments sont rangés dans une liste chainée:
-				typedef enum e_type
-				{
-					NONE = -1,
-					ARG,
-					S_RIGHT,
-					S_LEFT,
-					D_RIGHT,
-					D_LEFT,
-					PIPE,
-					AND,
-					OR,
-					WLCRD
-				}	t_type;
-
-				typedef struct s_arg
-				{
-					t_type	type;
-					char	*str;
-				}	t_arg;
-	Le type permet de différencier entre un \| et un |   et   >> et \>\> ou \>> :
-	si l'utilisateur échappe un charactère il sera compté comme un argument (il aura un t_type de 0)
-
-	Une fois la commande exectué, la liste est dans shell->cmd_list
-	Peut tu refaires un petit parseur de shell->cmd_list qui créé des nouvelles 't_lst *cmd' ?
-	Les variables ne marcheront surement qu'a moitié mais je m'en occuperais jeudi
-	Je vais me coucher tot pour pas etre trop décalé avec toi, donc normalement on se verra tot
-
-	PS: la fonction pre_process fait 175 lignes, je vais bien m'amuser demain
-	*/
-
-	//Je met error a un juste pour ne pas
-	//executer les commandes pendant que je teste
-	//Tu peux enlever
-	cmd->error = 1;
-	//split(shell, cmd);
-	return (cmd);
+	cmd = shell->cmd;
+	int	j = 0;
+	while (cmd)
+	{
+		while (cmd->argv[j])
+		{
+			printf("cmd %d - %s\n", j, cmd->argv[j]);
+			j++;
+		}
+		j = 0;
+		cmd = cmd->next;
+	}
+	shell->cmd->error = 0;
 }
