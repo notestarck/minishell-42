@@ -6,7 +6,7 @@
 /*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 16:17:17 by reclaire          #+#    #+#             */
-/*   Updated: 2022/06/29 16:23:08 by estarck          ###   ########.fr       */
+/*   Updated: 2022/06/30 15:29:51 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	exec_echo(t_lst *cmd)
 	}
 	while (cmd->argv[i])
 	{
-		if (cmd->argv[i][0] == '>' && cmd->sep != NONE)
+		if (cmd->argv[i][0] == '>' && cmd->sep != ARG)
 			break ;
 		echo_parse(cmd->argv[i], special_chars);
 		if (cmd->argv[i + 1])

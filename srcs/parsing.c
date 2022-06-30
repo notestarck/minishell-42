@@ -46,7 +46,7 @@ static void	init_cmd(t_data *shell)
 	t_list	*tmp;
 	t_lst	*cmd;
 
-	i = 0;
+	i = 1;
 	tmp = shell->cmd_list;
 	shell->cmd = new_cmd();
 	cmd = shell->cmd;
@@ -54,6 +54,7 @@ static void	init_cmd(t_data *shell)
 	{
 		if (((t_arg *)tmp->content)->type == PIPE || tmp->next == NULL)
 		{
+			printf("i  - %d\n", i);
 			cmd->argv = malloc(sizeof(char *) * (i + 1));
 			i = 0;
 			tmp = tmp->next;
@@ -321,18 +322,4 @@ void	parse_prompt(t_data *shell)
 	if (!pre_process(shell, cmd))
 		cmd->error = 1;
 	split(shell);
-
-	cmd = shell->cmd;
-	int	j = 0;
-	while (cmd)
-	{
-		while (cmd->argv[j])
-		{
-			printf("cmd %d - %s\n", j, cmd->argv[j]);
-			j++;
-		}
-		j = 0;
-		cmd = cmd->next;
-	}
-	shell->cmd->error = 0;
 }

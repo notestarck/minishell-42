@@ -6,7 +6,7 @@
 /*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:35:23 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/30 15:05:07 by estarck          ###   ########.fr       */
+/*   Updated: 2022/06/30 15:29:22 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,7 @@ enum e_built
 
 typedef enum e_type
 {
-	NONE = -1,
-	ARG,
+	ARG = -1,
 	S_RIGHT,
 	S_LEFT,
 	D_RIGHT,
