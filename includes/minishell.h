@@ -6,7 +6,7 @@
 /*   By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:35:23 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/30 20:21:48 by reclaire         ###   ########.fr       */
+/*   Updated: 2022/06/30 21:53:15 by reclaire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,9 @@
 # include <errno.h>
 # include "libft.h"
 
+# define COMMAND_NOT_FOUND 127
+# define EXIT_ERROR_ARG 255
+# define INPUT_ERROR 256
 # define SYNTAX_ERROR 258
 
 typedef enum e_bool
@@ -165,6 +168,6 @@ void	env_new(t_data *shell, char *key, char *value);
 void	env_del(t_data *shell, char *key);
 
 //Quit
-void	quit_mini(int sig, t_data *shell);
+void	quit_mini(t_data *shell);
 
 #endif

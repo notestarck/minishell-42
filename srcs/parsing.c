@@ -31,7 +31,7 @@ static void	cpy_cmd(t_data *shell)
 				if (cmd->sep != -1 && cmd->sep != D_LEFT)
 				{
 					perror("Double redirection");
-					shell->code_error = 1;
+					shell->code_error = SYNTAX_ERROR;
 					return ;
 				}
 				cmd->sep = cmd->argv[i]->type;
@@ -263,6 +263,7 @@ int	pre_process(t_data *shell)
 			push(&args, &new, ARG, &lst_s_quotes, &lst_d_quotes);
 			new = ft_strdup("|");
 			push(&args, &new, PIPE, &lst_s_quotes, &lst_d_quotes);
+			new = ft_strdup("");
 			i++;
 			continue ;
 		}
@@ -276,8 +277,7 @@ int	pre_process(t_data *shell)
 		if (!ft_strncmp(str + i, ">>", 2))
 		{
 			push(&args, &new, ARG, &lst_s_quotes, &lst_d_quotes);
-			new = ft_malloc(sizeof(char));
-			*new = '\0';
+			new = ft_strdup("");
 			append_char(&new, '>');
 			append_char(&new, '>');
 			push(&args, &new, D_RIGHT, &lst_s_quotes, &lst_d_quotes);
@@ -323,13 +323,22 @@ int	pre_process(t_data *shell)
 			i++;
 			continue ;
 		}
-		if (str[i] == ' ' && !escape)
+		if (str[i] == 32 || (str[i] >= 9 && str[i] <= 13) && !escape)
 		{
 			push(&args, &new, ARG, &lst_s_quotes, &lst_d_quotes);
 			new = ft_malloc(sizeof(char));
 			*new = '\0';
 			i++;
 			continue ;
+		}
+		if (escape)
+		{
+			int *n = ft_malloc(sizeof(int));
+			*n = ft_strlen(new);
+			ft_lstadd_back(&lst_s_quotes, ft_lstnew(n));
+			n = ft_malloc(sizeof(int));
+			*n = ft_strlen(new);
+			ft_lstadd_back(&lst_s_quotes, ft_lstnew(n));
 		}
 		escape = 0;
 		append_char(&new, str[i]);

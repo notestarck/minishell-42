@@ -1,0 +1,10 @@
+Makefile
+consigne
+includes
+libft
+libft.a
+minishell
+out.txt
+srcs
+test.txt
+valgrind-suprr

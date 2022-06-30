@@ -88,12 +88,12 @@ void	free_all(t_data *shell)
 	free(shell);
 }
 
-void	quit_mini(int i, t_data *shell)
+void	quit_mini(t_data *shell)
 {
 	free_all(shell);
 	ft_printf("\n");
 	ft_printf("Farewell\n");
-	exit(i);
+	exit(shell->code_error);
 }
 
 void	sig(int sig)
@@ -130,7 +130,10 @@ int	main(int argc, char **argv, char **env)
 	{
 		launch_shell(shell);
 		if (!shell->ret_prompt)
-			quit_mini(0, shell);
+		{
+			shell->code_error = INPUT_ERROR;
+			quit_mini(shell);
+		}
 		parse_prompt(shell);
 		check_syntax(shell);
 		if (*shell->ret_prompt != '\0')

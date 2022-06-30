@@ -6,7 +6,7 @@
 /*   By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 12:25:02 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/30 20:07:54 by reclaire         ###   ########.fr       */
+/*   Updated: 2022/06/30 21:50:44 by reclaire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,24 @@ static void	close_fd(t_data *shell)
 		g_pid = 0;
 		shell->code_error = signal % 255;
 		if (tmp->built == EXIT)
-			quit_mini(2, shell);
+		{
+			if (tmp->next == NULL && tmp->prev == NULL)
+			{
+				if (tmp->argv == NULL)
+				{
+					if (ft_str_isdigit(tmp->argv[0]->str))
+						shell->code_error = ft_atoi(tmp->argv[0]->str);
+					else
+					{
+						ft_printf("exit: numerical argument required\n");
+						shell->code_error = EXIT_ERROR_ARG;
+					}
+				}
+				else
+					shell->code_error = 0;
+				quit_mini(shell);
+			}
+		}
 		tmp = tmp->next;
 	}
 }
@@ -106,7 +123,13 @@ void	run_cmd(t_data *shell)
 	tmp = shell->cmd;
 	while (tmp)
 	{
-		pipe(tmp->pipefd);
+		if (pipe(tmp->pipefd) == -1)
+		{
+			perror("pipe");
+			shell->cmd->error = errno;
+			close_fd(shell);
+			return ;
+		}
 		tmp = tmp->next;
 	}
 	tmp = shell->cmd;
