@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+        */
+/*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 12:25:02 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/30 21:50:44 by reclaire         ###   ########.fr       */
+/*   Updated: 2022/06/30 22:02:56 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,9 @@ static void	close_fd(t_data *shell)
 				if (tmp->argv == NULL)
 				{
 					if (ft_str_isdigit(tmp->argv[0]->str))
+					{
 						shell->code_error = ft_atoi(tmp->argv[0]->str);
+					}
 					else
 					{
 						ft_printf("exit: numerical argument required\n");
