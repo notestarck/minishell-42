@@ -345,6 +345,9 @@ int	pre_process(t_data *shell)
 void	parse_prompt(t_data *shell)
 {
 	if (!pre_process(shell))
-		exit(0);
+	{
+		shell->code_error = SYNTAX_ERROR;
+		return ;
+	}
 	split(shell);
 }
