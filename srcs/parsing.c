@@ -54,6 +54,7 @@ static void	init_cmd(t_data *shell)
 	{
 		if (((t_arg *)tmp->content)->type == PIPE || tmp->next == NULL)
 		{
+			printf("i  - %d\n", i);
 			cmd->argv = malloc(sizeof(char *) * (i + 1));
 			i = 0;
 			tmp = tmp->next;
@@ -318,6 +319,4 @@ void	parse_prompt(t_data *shell)
 	if (!pre_process(shell))
 		exit(0);
 	split(shell);
-
-	//shell->cmd->error = 0;
 }
