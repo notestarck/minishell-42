@@ -6,7 +6,7 @@
 /*   By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:35:23 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/30 17:44:48 by reclaire         ###   ########.fr       */
+/*   Updated: 2022/06/30 20:21:48 by reclaire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@
 # include <string.h>
 # include <errno.h>
 # include "libft.h"
+
+# define SYNTAX_ERROR 258
 
 typedef enum e_bool
 {

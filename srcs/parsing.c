@@ -337,18 +337,7 @@ int	pre_process(t_data *shell)
 	}
 	push(&args, &new, ARG, &lst_s_quotes, &lst_d_quotes);
 	ft_lstremoveif(&args, &free_arg, &cmp, NULL);
-
-	//Print l'entiereté des arguments, avec leurs types
-	t_list *cpy = args;
-	while (cpy)
-	{
-		ft_printf("|>%s<| %d\n", ((t_arg *)cpy->content)->str, ((t_arg *)cpy->content)->type);
-		cpy = cpy->next;
-	}
-	//Fin du print
-
 	shell->cmd_list = args;
-
 	if (s_quote || d_quote)
 		return (0);
 	return (1);

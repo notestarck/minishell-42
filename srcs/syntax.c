@@ -6,7 +6,7 @@
 /*   By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 11:30:23 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/30 17:55:56 by reclaire         ###   ########.fr       */
+/*   Updated: 2022/06/30 20:23:25 by reclaire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,12 @@ int	check_error(t_data *shell, t_lst *cmd)
 			shell->code_error = 1;
 			return (1);
 		}
-		if (*tmp->argv == NULL)
+		if (tmp->argv == NULL)
+			return (1);
+		if (tmp->argv[0] == NULL)
 		{
-			shell->code_error = 1;
+			shell->code_error = SYNTAX_ERROR;
+			ft_printf("-minishell: Syntax error\n");
 			return (1);
 		}
 		tmp = tmp->next;
