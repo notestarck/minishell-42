@@ -144,7 +144,7 @@ int	main(int argc, char **argv, char **env)
 				if (find_cmd(shell))
 					run_cmd(shell);
 			}
-			//free_cmd(shell->cmd);
+			free_cmd(shell->cmd);
 		}
 		free(shell->ret_prompt);
 	}

@@ -6,7 +6,7 @@
 /*   By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 10:59:18 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/30 15:37:06 by reclaire         ###   ########.fr       */
+/*   Updated: 2022/06/30 23:35:11 by reclaire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,16 +29,28 @@ static void	free_dchar(char **str)
 
 void	free_cmd(t_lst *cmd)
 {
-	//t_lst	*tmp;
-//
-	//tmp = cmd;
-	//while (tmp)
-	//{
-	//	free_dchar(cmd->argv);
-	//	if (tmp->p_cmd)
-	//		free(tmp->p_cmd);
-	//	cmd = cmd->next;
-	//	free(tmp);
-	//	tmp = cmd;
-	//}
+	t_lst	*tmp;
+	int		i;
+
+	tmp = cmd;
+	while (tmp)
+	{
+		i = 0;
+		if (tmp->argv != NULL)
+		{
+			while (tmp->argv[i])
+			{
+				free(tmp->argv[i]->str);
+				ft_lstclear(&(tmp->argv[i]->d_quotes), &free);
+				ft_lstclear(&(tmp->argv[i]->s_quotes), &free);
+				free(tmp->argv[i]);
+				i++;
+			}
+		}
+		if (tmp->p_cmd)
+			free(tmp->p_cmd);
+		cmd = cmd->next;
+		free(tmp);
+		tmp = cmd;
+	}
 }

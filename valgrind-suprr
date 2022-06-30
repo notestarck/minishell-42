@@ -5,3 +5,10 @@
    obj:/lib/x86_64-linux-gnu/libreadline.so.7.0
    ...
 }
+{
+   ignore_readline2
+   Memcheck:Leak
+   ...
+   obj:/Users/reclaire/.brew/Cellar/readline/8.1.2/lib/libreadline.8.1.dylib
+   ...
+}

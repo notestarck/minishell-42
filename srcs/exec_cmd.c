@@ -6,7 +6,7 @@
 /*   By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 12:25:02 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/30 23:11:49 by reclaire         ###   ########.fr       */
+/*   Updated: 2022/06/30 23:19:20 by reclaire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ char	**t_arg_to_char(t_arg **cmd)
 	i = 0;
 	while (cmd[i])
 		i++;
-	new = ft_malloc(sizeof(char) * (i + 1));
+	new = ft_malloc(sizeof(char *) * (i + 1));
 	i = 0;
 	while (cmd[i])
 	{
