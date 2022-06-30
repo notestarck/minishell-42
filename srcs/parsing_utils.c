@@ -6,7 +6,7 @@
 /*   By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 16:04:41 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/30 16:04:38 by reclaire         ###   ########.fr       */
+/*   Updated: 2022/06/30 20:41:00 by reclaire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,13 @@ int	is_in_quotes(int i, t_arg *arg)
 	lst2 = arg->d_quotes;
 	while (lst1)
 	{
-		if (*((int *)lst1->content) <= i <= *((int *)lst1->next->content))
+		if (*((int *)lst1->content) <= i && i <= *((int *)lst1->next->content))
 			return (1);
 		lst1 = lst1->next->next;
 	}
 	while (lst2)
 	{
-		if (*((int *)lst2->content) <= i <= *((int *)lst2->next->content))
+		if (*((int *)lst2->content) <= i && i <= *((int *)lst2->next->content))
 			return (2);
 		lst2 = lst2->next->next;
 	}

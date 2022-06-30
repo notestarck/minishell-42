@@ -6,7 +6,7 @@
 /*   By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 11:39:52 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/30 17:57:27 by reclaire         ###   ########.fr       */
+/*   Updated: 2022/06/30 21:53:27 by reclaire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ static int	valid_path(t_data *shell, char *av)
 	if (stat(av, &buf) == -1)
 	{
 		perror("minishell");
-		shell->code_error = 127;
-		return (127);
+		shell->code_error = COMMAND_NOT_FOUND;
+		return (COMMAND_NOT_FOUND);
 	}
 	else
 		return (0);
