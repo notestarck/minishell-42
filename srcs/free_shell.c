@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_shell.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
+/*   By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 10:59:18 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/28 17:47:59 by estarck          ###   ########.fr       */
+/*   Updated: 2022/06/30 15:37:06 by reclaire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,16 +29,16 @@ static void	free_dchar(char **str)
 
 void	free_cmd(t_lst *cmd)
 {
-	t_lst	*tmp;
-
-	tmp = cmd;
-	while (tmp)
-	{
-		free_dchar(cmd->argv);
-		if (tmp->p_cmd)
-			free(tmp->p_cmd);
-		cmd = cmd->next;
-		free(tmp);
-		tmp = cmd;
-	}
+	//t_lst	*tmp;
+//
+	//tmp = cmd;
+	//while (tmp)
+	//{
+	//	free_dchar(cmd->argv);
+	//	if (tmp->p_cmd)
+	//		free(tmp->p_cmd);
+	//	cmd = cmd->next;
+	//	free(tmp);
+	//	tmp = cmd;
+	//}
 }

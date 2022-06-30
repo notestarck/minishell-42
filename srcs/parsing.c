@@ -46,7 +46,7 @@ static void	init_cmd(t_data *shell)
 	t_list	*tmp;
 	t_lst	*cmd;
 
-	i = 0;
+	i = 1;
 	tmp = shell->cmd_list;
 	shell->cmd = new_cmd();
 	cmd = shell->cmd;
@@ -135,7 +135,7 @@ int cmp(t_arg *data, void *ref)
 	return (i == ft_strlen(data->str));
 }
 
-int	pre_process(t_data *shell, t_lst *cmd)
+int	pre_process(t_data *shell)
 {
 	int		i;
 	int		escape;
@@ -315,24 +315,9 @@ int	pre_process(t_data *shell, t_lst *cmd)
 
 void	parse_prompt(t_data *shell)
 {
-	t_lst		*cmd;
-
-	cmd = new_cmd();
-	if (!pre_process(shell, cmd))
-		cmd->error = 1;
+	if (!pre_process(shell))
+		exit(0);
 	split(shell);
 
-	cmd = shell->cmd;
-	int	j = 0;
-	while (cmd)
-	{
-		while (cmd->argv[j])
-		{
-			printf("cmd %d - %s\n", j, cmd->argv[j]);
-			j++;
-		}
-		j = 0;
-		cmd = cmd->next;
-	}
-	shell->cmd->error = 0;
+	//shell->cmd->error = 0;
 }

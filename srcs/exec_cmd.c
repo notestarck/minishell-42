@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
+/*   By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 12:25:02 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/28 18:10:04 by estarck          ###   ########.fr       */
+/*   Updated: 2022/06/30 15:15:11 by reclaire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,8 @@ static void	exec_path(t_data *shell, t_lst *cmd)
 
 static void	exec_cmd(t_data *shell, t_lst *cmd)
 {
-	parse_args(shell, cmd);
-	remove_quotes(cmd);
+	//parse_args(shell, cmd);
+	//remove_quotes(cmd);
 	if (cmd->built != 9 && cmd->sep == -1)
 		builtin(shell, cmd);
 	else if (cmd->sep != -1)
