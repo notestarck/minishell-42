@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_blt.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
+/*   By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 12:11:05 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/30 14:56:18 by estarck          ###   ########.fr       */
+/*   Updated: 2022/06/30 18:28:19 by reclaire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	init_blt(t_data *shell, t_lst *cmd)
 	i = 0;
 	while (shell->builtins[i])
 	{
-		if (!(ft_memcmp(shell->builtins[i], cmd->argv[0],
+		if (!(ft_memcmp(shell->builtins[i], cmd->argv[0]->str,
 					ft_strlen(shell->builtins[i]))))
 		{
 			cmd->built = i;
