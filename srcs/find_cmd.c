@@ -6,7 +6,7 @@
 /*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 11:39:52 by estarck           #+#    #+#             */
-/*   Updated: 2022/07/01 14:09:46 by estarck          ###   ########.fr       */
+/*   Updated: 2022/07/01 14:32:34 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,16 @@ static char	*find_path2(DIR *dir, struct dirent *dp, char **env_path, char *cmd)
 	return (out);
 }
 
+static int	check_acces(char **env_path, DIR *dir)
+{
+	if (access(*env_path, R_OK))
+	{
+		closedir(dir);
+		env_path++;
+		return (1);
+	}
+	return (0);
+}
 //cherche la cmd dans les path de l'env
 static char	*find_path(t_data *shell, char **env_path, char *cmd)
 {
@@ -60,12 +70,8 @@ static char	*find_path(t_data *shell, char **env_path, char *cmd)
 	while (*env_path != NULL)
 	{
 		dir = opendir(*env_path);
-		if (access(*env_path, R_OK))
-		{
-			closedir(dir);
-			env_path++;
+		if (check_acces(env_path, dir))
 			continue ;
-		}
 		dp = readdir(dir);
 		while (dp)
 		{
