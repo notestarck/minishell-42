@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
+/*   By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 16:04:41 by estarck           #+#    #+#             */
-/*   Updated: 2022/07/01 13:30:28 by estarck          ###   ########.fr       */
+/*   Updated: 2022/07/01 13:49:35 by reclaire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ void	check_redir(t_lst *cmd, int i)
 {
 	if (ft_isrange((int)(cmd->argv[i]->type), 0, 3))
 		cmd->sep = cmd->argv[i]->type;
+	if ((int)(cmd->argv[i]->type) == D_LEFT)
+		cmd->heredoc = 1;
 }
 
 int	is_in_quotes(int i, t_arg *arg)

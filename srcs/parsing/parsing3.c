@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing3.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
+/*   By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 04:34:27 by reclaire          #+#    #+#             */
-/*   Updated: 2022/07/01 11:12:13 by estarck          ###   ########.fr       */
+/*   Updated: 2022/07/01 14:11:09 by reclaire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,10 +107,10 @@ int	handle_d_quotes(t_pars_dat *d)
 		}
 		else if (d->str[d->i] == '\\' && !d->d_quote_escape)
 			d->d_quote_escape = 1;
-		else if (d->d_quote_escape)
-			add_quote(d, 1, ft_strlen(d->new), 2);
 		else
 		{
+			if (d->d_quote_escape)
+				add_quote(d, 1, ft_strlen(d->new), 2);
 			d->d_quote_escape = 0;
 			append_char(d, &d->new, d->str[d->i], 0);
 		}

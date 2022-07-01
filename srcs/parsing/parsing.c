@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
+/*   By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 02:40:55 by reclaire          #+#    #+#             */
-/*   Updated: 2022/07/01 13:31:44 by estarck          ###   ########.fr       */
+/*   Updated: 2022/07/01 14:09:41 by reclaire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,10 +66,12 @@ void	pre_process2(t_pars_dat *d)
 		push(d, ARG);
 		d->new = ft_strdup("");
 	}
-	else if (d->escape)
-		add_quote(d, 1, ft_strlen(d->new), 2);
 	else
+	{
+		if (d->escape)
+			add_quote(d, 1, ft_strlen(d->new), 2);
 		append_char(d, &d->new, d->str[d->i], 1);
+	}
 	d->i++;
 }
 

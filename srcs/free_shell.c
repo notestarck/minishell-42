@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_shell.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
+/*   By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 10:59:18 by estarck           #+#    #+#             */
-/*   Updated: 2022/07/01 11:28:51 by estarck          ###   ########.fr       */
+/*   Updated: 2022/07/01 14:09:29 by reclaire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,9 @@ void	free_cmd(t_lst *cmd)
 			while (tmp->argv[i])
 			{
 				free(tmp->argv[i]->str);
-				ft_lstclear(&(tmp->argv[i]->d_quotes), &free);
+				if (tmp->argv[i]->d_quotes)
+					ft_lstclear(&(tmp->argv[i]->d_quotes), &free);
+				if (tmp->argv[i]->s_quotes)
 				ft_lstclear(&(tmp->argv[i]->s_quotes), &free);
 				free(tmp->argv[i]);
 				i++;
