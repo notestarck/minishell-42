@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
+/*   By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 17:33:56 by estarck           #+#    #+#             */
-/*   Updated: 2022/07/01 12:14:55 by estarck          ###   ########.fr       */
+/*   Updated: 2022/07/01 14:30:19 by reclaire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,9 @@ static void	write_cat(t_lst *cmd)
 
 	argv = malloc(sizeof(t_arg *) * 2);
 	argv[0] = ft_malloc(sizeof(t_arg));
+	argv[0]->d_quotes = NULL;
+	argv[0]->s_quotes = NULL;
+	argv[0]->type = ARG;
 	argv[0]->str = ft_strdup("cat");
 	argv[1] = NULL;
 	cmd->argv = argv;

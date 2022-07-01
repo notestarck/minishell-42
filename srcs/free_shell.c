@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_shell.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
+/*   By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 10:59:18 by estarck           #+#    #+#             */
-/*   Updated: 2022/07/01 14:18:58 by estarck          ###   ########.fr       */
+/*   Updated: 2022/07/01 14:25:07 by reclaire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,16 @@ void	free_all(t_data *shell)
 	free(shell);
 }
 
+void	free_targ(t_arg *arg)
+{
+	free(arg->str);
+	if (arg->d_quotes)
+		ft_lstclear(&(arg->d_quotes), &free);
+	if (arg->s_quotes)
+		ft_lstclear(&(arg->s_quotes), &free);
+	free(arg);
+}
+
 void	free_cmd(t_lst *cmd)
 {
 	t_lst	*tmp;
@@ -52,15 +62,7 @@ void	free_cmd(t_lst *cmd)
 		if (tmp->argv != NULL)
 		{
 			while (tmp->argv[i])
-			{
-				free(tmp->argv[i]->str);
-				if (tmp->argv[i]->d_quotes)
-					ft_lstclear(&(tmp->argv[i]->d_quotes), &free);
-				if (tmp->argv[i]->s_quotes)
-					ft_lstclear(&(tmp->argv[i]->s_quotes), &free);
-				free(tmp->argv[i]);
-				i++;
-			}
+				free_targ(tmp->argv[i++]);
 		}
 		if (tmp->p_cmd)
 			free(tmp->p_cmd);
