@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
+/*   By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 11:39:52 by estarck           #+#    #+#             */
-/*   Updated: 2022/07/01 14:32:34 by estarck          ###   ########.fr       */
+/*   Updated: 2022/07/01 14:45:26 by reclaire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ static char	*find_path2(DIR *dir, struct dirent *dp, char **env_path, char *cmd)
 	{
 		ft_printf("-minishell: %s/%s: Permission denied.\n",
 			*env_path, dp->d_name);
-		dp = readdir(dir);
 		return (NULL);
 	}
 	closedir(dir);
@@ -60,6 +59,7 @@ static int	check_acces(char **env_path, DIR *dir)
 	}
 	return (0);
 }
+
 //cherche la cmd dans les path de l'env
 static char	*find_path(t_data *shell, char **env_path, char *cmd)
 {
@@ -78,9 +78,7 @@ static char	*find_path(t_data *shell, char **env_path, char *cmd)
 			if (!ft_strncmp(dp->d_name, cmd, ft_strlen(cmd) + 1))
 			{
 				out = find_path2(dir, dp, env_path, cmd);
-				if (out == NULL)
-					continue ;
-				else
+				if (out != NULL)
 					return (out);
 			}
 			dp = readdir(dir);
@@ -89,8 +87,7 @@ static char	*find_path(t_data *shell, char **env_path, char *cmd)
 		env_path++;
 	}
 	shell->code_error = COMMAND_NOT_FOUND;
-	ft_printf("-minishell: %s: command not found\n", cmd);
-	return (0);
+	return (ft_printf("-minishell: %s: command not found\n", cmd), NULL);
 }
 
 int	find_cmd_2(t_data *shell, t_lst *tmp)
