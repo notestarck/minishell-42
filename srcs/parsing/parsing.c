@@ -6,7 +6,7 @@
 /*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 02:40:55 by reclaire          #+#    #+#             */
-/*   Updated: 2022/07/01 13:46:54 by estarck          ###   ########.fr       */
+/*   Updated: 2022/07/01 14:12:54 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,10 +66,12 @@ void	pre_process2(t_pars_dat *d)
 		push(d, ARG);
 		d->new = ft_strdup("");
 	}
-	else if (d->escape)
-		add_quote(d, 1, ft_strlen(d->new), 2);
 	else
+	{
+		if (d->escape)
+			add_quote(d, 1, ft_strlen(d->new), 2);
 		append_char(d, &d->new, d->str[d->i], 1);
+	}
 	d->i++;
 }
 
