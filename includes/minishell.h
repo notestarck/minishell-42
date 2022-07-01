@@ -6,7 +6,7 @@
 /*   By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:35:23 by estarck           #+#    #+#             */
-/*   Updated: 2022/07/01 15:03:11 by reclaire         ###   ########.fr       */
+/*   Updated: 2022/07/01 15:19:32 by reclaire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,7 @@ int			init_blt(t_data *shell, t_lst *cmd);
 //Parsing
 void		parse_prompt(t_data *shell);
 int			find_cmd(t_data *shell);
+int			valid_path(t_data *shell, char *av);
 void		append_char(t_pars_dat *d, char **str, char c, int t);
 void		init_cmd(t_data *shell);
 void		cpy_cmd(t_data *shell);

@@ -3,29 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   find_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+        */
+/*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 11:39:52 by estarck           #+#    #+#             */
-/*   Updated: 2022/07/01 14:45:26 by reclaire         ###   ########.fr       */
+/*   Updated: 2022/07/01 14:59:33 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-//verifie si le path est valide
-static int	valid_path(t_data *shell, char *av)
-{
-	struct stat	buf;
-
-	if (stat(av, &buf) == -1)
-	{
-		perror("minishell");
-		shell->code_error = COMMAND_NOT_FOUND;
-		return (COMMAND_NOT_FOUND);
-	}
-	else
-		return (0);
-}
 
 static char	*find_path2(DIR *dir, struct dirent *dp, char **env_path, char *cmd)
 {
