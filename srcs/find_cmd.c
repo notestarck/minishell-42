@@ -6,7 +6,7 @@
 /*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 11:39:52 by estarck           #+#    #+#             */
-/*   Updated: 2022/07/01 13:29:47 by estarck          ###   ########.fr       */
+/*   Updated: 2022/07/01 14:09:46 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,40 +27,35 @@ static int	valid_path(t_data *shell, char *av)
 		return (0);
 }
 
-//static char	*find_path2(DIR *dir, struct dirent *dp, char **env_path, char *cmd)
-//{
-//	char			*tmp;
-//	char			*out;
-//	char			*path;
-//	
-//	if (!ft_strncmp(dp->d_name, cmd, ft_strlen(cmd) + 1))
-//	{
-//		path = ft_str_appnd(*env_path, "/", 0, 0);
-//		path = ft_str_appnd(path, dp->d_name, 1, 0);
-//		if (access(path, X_OK))
-//		{
-//			ft_printf("-minishell: %s/%s: Permission denied.\n",
-//				*env_path, dp->d_name);
-//			dp = readdir(dir);
-//			return (NULL);
-//		}
-//		closedir(dir);
-//		tmp = ft_strjoin(*env_path, "/");
-//		out = ft_strjoin(tmp, cmd);
-//		free(tmp);
-//		free(path);
-//		return (out);
-//	}
-//}
+static char	*find_path2(DIR *dir, struct dirent *dp, char **env_path, char *cmd)
+{
+	char			*tmp;
+	char			*out;
+	char			*path;
+
+	path = ft_str_appnd(*env_path, "/", 0, 0);
+	path = ft_str_appnd(path, dp->d_name, 1, 0);
+	if (access(path, X_OK))
+	{
+		ft_printf("-minishell: %s/%s: Permission denied.\n",
+			*env_path, dp->d_name);
+		dp = readdir(dir);
+		return (NULL);
+	}
+	closedir(dir);
+	tmp = ft_strjoin(*env_path, "/");
+	out = ft_strjoin(tmp, cmd);
+	free(tmp);
+	free(path);
+	return (out);
+}
 
 //cherche la cmd dans les path de l'env
 static char	*find_path(t_data *shell, char **env_path, char *cmd)
 {
 	DIR				*dir;
 	struct dirent	*dp;
-	char			*tmp;
 	char			*out;
-	char			*path;
 
 	while (*env_path != NULL)
 	{
@@ -74,28 +69,13 @@ static char	*find_path(t_data *shell, char **env_path, char *cmd)
 		dp = readdir(dir);
 		while (dp)
 		{
-			//out = find_path2(dir, dp, **env_path, *cmd);
-			//if (out == NULL)
-			//	continue ;
-			//else
-			//	return (out);
 			if (!ft_strncmp(dp->d_name, cmd, ft_strlen(cmd) + 1))
 			{
-				path = ft_str_appnd(*env_path, "/", 0, 0);
-				path = ft_str_appnd(path, dp->d_name, 1, 0);
-				if (access(path, X_OK))
-				{
-					ft_printf("-minishell: %s/%s: Permission denied.\n",
-						*env_path, dp->d_name);
-					dp = readdir(dir);
+				out = find_path2(dir, dp, env_path, cmd);
+				if (out == NULL)
 					continue ;
-				}
-				closedir(dir);
-				tmp = ft_strjoin(*env_path, "/");
-				out = ft_strjoin(tmp, cmd);
-				free(tmp);
-				free(path);
-				return (out);
+				else
+					return (out);
 			}
 			dp = readdir(dir);
 		}
