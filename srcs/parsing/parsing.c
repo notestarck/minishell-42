@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
+/*   By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 02:40:55 by reclaire          #+#    #+#             */
-/*   Updated: 2022/07/01 14:12:54 by estarck          ###   ########.fr       */
+/*   Updated: 2022/07/01 15:16:52 by reclaire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,14 +97,22 @@ int	pre_process(t_data *shell)
 	ft_lstremoveif(&d->args, &free_arg, &cmp, NULL);
 	shell->cmd_list = d->args;
 	if (d->s_quote || d->d_quote)
-		return (0);
-	return (1);
+		return (free(d), 0);
+	return (free(d), 1);
 }
 
 void	parse_prompt(t_data *shell)
 {
+	t_list	*tmp;
+
 	if (!pre_process(shell))
 		shell->code_error = -42;
 	init_cmd(shell);
 	cpy_cmd(shell);
+	while (shell->cmd_list)
+	{
+		tmp = shell->cmd_list->next;
+		free(shell->cmd_list);
+		shell->cmd_list = tmp;
+	}
 }
