@@ -6,7 +6,7 @@
 /*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 12:25:02 by estarck           #+#    #+#             */
-/*   Updated: 2022/07/01 12:14:44 by estarck          ###   ########.fr       */
+/*   Updated: 2022/07/01 14:06:05 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,15 +120,7 @@ void	run_cmd(t_data *shell)
 	while (tmp)
 	{
 		if (tmp->heredoc)
-		{
-			printf("heredoc\n"); //a retirer
-			//tmp->tmpfile = ft_strdup("/tmp/minishell-tmp-");
-			//tmp->tmpfile = ft_str_appnd(tmp->tmpfile,
-			//		ft_itoa(ft_rand(shell)), 1, 1);
 			init_heredoc(shell, tmp);
-			//free(tmp->tmpfile);
-			//tmp->sep = -1;
-		}
 		exec_cmd(shell, tmp);
 		tmp = tmp->next;
 	}
