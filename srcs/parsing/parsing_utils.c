@@ -12,6 +12,33 @@
 
 #include <minishell.h>
 
+int	cmp(t_arg *data, void *ref)
+{
+	int	i;
+
+	(void)ref;
+	if (data->str[0] == '\0')
+		return (1);
+	i = 0;
+	while (data->str[i] == 32 || (data->str[i] >= 9 && data->str[i] <= 13))
+		i++;
+	return (i == ft_strlen(data->str));
+}
+
+void	check_redir(t_data *shell, t_lst *cmd, int i)
+{
+	if (ft_isrange((int)(cmd->argv[i]->type), 0, 3))
+	{
+		if (cmd->sep != -1 && cmd->sep != D_LEFT)
+		{
+			perror("Double redirection");
+			shell->code_error = SYNTAX_ERROR;
+			return ;
+		}
+		cmd->sep = cmd->argv[i]->type;
+	}
+}
+
 int	is_in_quotes(int i, t_arg *arg)
 {
 	t_list	*lst1;
@@ -73,65 +100,4 @@ t_lst	*new_cmd(void)
 	new->argv = NULL;
 	new->p_cmd = NULL;
 	return (new);
-}
-
-char	*ft_strcut(char *str, char tok)
-{
-	int	i;
-
-	i = 0;
-	while (str[i] == tok && str[i])
-		i++;
-	return (&str[i]);
-}
-
-int	count_argv(t_lst *cmd, char *str)
-{
-	int	c;
-	int	i;
-
-	i = 0;
-	c = 0;
-	while (str[i])
-	{
-		while ((str[i] == '\\' || str[i] == 32 || (str[i] >= 9 && str[i] <= 13)) && str[i])
-			i++;
-		while ((str[i] != 32 && !(str[i] >= 9 && str[i] <= 13)) && str[i])
-		{
-			if (str[i] == '\'' || str[i] == '"')
-			{
-				c++;
-				i = check_quote(cmd, &str[i]) + i + 1;
-			}
-			else if ((str[i] == '>' || str[i] == '<') && str[i + 1] != '>' && str[i + 1] != '<' && str[i])
-			{
-				i++;
-				c++;
-			}
-			else if (((str[i] == '>' && str[i + 1] == '>') || (str[i] == '<' && str[i + 1] == '<')) && str[i])
-			{
-				i += 2;
-				c++;
-			}
-			else if (str[i] != '<' && str[i] != '>' && str[i] != '|' && str[i])
-			{
-				c++;
-				while (str[i] != '<' && str[i] != '>' && str[i] != '|' && str[i] != 32 && !(str[i] >= 9 && str[i] <= 13) && str[i])
-				{
-					if (str[i] == '\'' || str[i] == '"')
-						i = check_quote(cmd, &str[i]) + i;
-					if (str[i] == '\\')
-						i += 2;
-					else
-						i++;
-				}
-			}
-			else if (str[i] == '\\')
-			{
-				c++;
-				i += 2;
-			}
-		}
-	}
-	return (c);
 }

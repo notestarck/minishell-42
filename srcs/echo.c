@@ -12,38 +12,28 @@
 
 #include "minishell.h"
 
-int	special(char *arg)
-{
-	if (*arg == 'a')
-		write(1, "\a", 1);
-	if (*arg == 'b')
-		write(1, "\b", 1);
-	if (*arg == 't')
-		write(1, "\t", 1);
-	if (*arg == 'n')
-		write(1, "\n", 1);
-	if (*arg == 'v')
-		write(1, "\v", 1);
-	if (*arg == 'f')
-		write(1, "\f", 1);
-	if (*arg == 'r')
-		write(1, "\r", 1);
-	return (1);
-}
-
-void	echo_parse(char *arg, int spec)
+static void	echo_print(t_arg **args, int newline)
 {
 	int	i;
+	int	j;	
 
 	i = 0;
-	while (arg[i])
+	while (args[i])
 	{
-		if (arg[i] == '\\' && spec)
-			i += special(arg + i + 1);
-		else
-			write(1, arg + i, 1);
+		if (args[i]->type != ARG)
+			break ;
+		j = 0;
+		while (args[i]->str[j])
+		{
+			write(1, args[i]->str + j, 1);
+			j++;
+		}
+		if (args[i + 1])
+			write(1, " ", 1);
 		i++;
 	}
+	if (newline)
+		write(1, "\n", 1);
 }
 
 void	exec_echo(t_lst *cmd)
@@ -51,10 +41,8 @@ void	exec_echo(t_lst *cmd)
 	int	i;
 	int	j;
 	int	newline;
-	int	special_chars;
 
 	newline = 1;
-	special_chars = 0;
 	i = 1;
 	while (cmd->argv[i])
 	{
@@ -65,10 +53,6 @@ void	exec_echo(t_lst *cmd)
 		{
 			if (cmd->argv[i]->str[j] == 'n')
 				newline = 0;
-			else if (cmd->argv[i]->str[j] == 'e')
-				special_chars = 1;
-			else if (cmd->argv[i]->str[j] == 'E')
-				special_chars = 0;
 			else
 				break ;
 			j++;
@@ -77,16 +61,5 @@ void	exec_echo(t_lst *cmd)
 			break ;
 		i++;
 	}
-	while (cmd->argv[i])
-	{
-		if (cmd->argv[i]->str[0] == '>' && cmd->sep != ARG)
-			break ;
-		echo_parse(cmd->argv[i]->str, special_chars);
-		if (cmd->argv[i + 1])
-			write(1, " ", 1);
-		i++;
-	}
-	if (newline)
-		write(1, "\n", 1);
-	return ;
+	echo_print(cmd->argv + i, newline);
 }

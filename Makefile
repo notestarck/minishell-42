@@ -12,7 +12,7 @@
 
 .DEFAULT_GOAL := all
 NAME		=	minishell
-SRCS		=	${wildcard srcs/*.c}
+SRCS		=	$(shell find srcs/ -type f -name '*.c')
 OBJS		=	${SRCS:.c=.o}
 
 INCLUDES  	=	-I./includes -I./libft -I/Users/$(USER)/.brew/opt/readline/include

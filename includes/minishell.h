@@ -58,6 +58,21 @@ enum e_built
 	CMD = 9
 };
 
+typedef	struct e_pars_dat
+{
+	t_list	*args;
+	t_list	*lst_s_quotes;
+	t_list	*lst_d_quotes;
+	char	*str;
+	char	*new;
+	int		i;
+	int		escape;
+	int		s_quote;
+	int		d_quote;
+	int		d_quote_escape;
+}	t_pars_dat;
+
+
 typedef enum e_type
 {
 	ARG = -1,
@@ -111,64 +126,76 @@ typedef struct s_data
 extern pid_t	g_pid;
 
 //Init
-void	init_env_path(t_data *shell);
-int		init_blt(t_data *shell, t_lst *cmd);
+void		init_env_path(t_data *shell);
+int			init_blt(t_data *shell, t_lst *cmd);
 
 //Parsing
-void	parse_prompt(t_data *shell);
-int		find_cmd(t_data *shell);
+void		parse_prompt(t_data *shell);
+int			find_cmd(t_data *shell);
+void		append_char(t_pars_dat *d, char **str, char c, int t);
+void		init_cmd(t_data *shell);
+void		cpy_cmd(t_data *shell);
+void		check_redir(t_data *shell, t_lst *cmd, int i);
+void		push(t_pars_dat *d, t_type type);
+t_pars_dat	*create_dat(t_data *shell);
+void		add_quote(t_pars_dat *d, int t, int v, int j);
+int			handle_redir(t_pars_dat *d, char c, int size, t_type type);
+int			handle_s_quotes(t_pars_dat *d);
+int			handle_d_quotes(t_pars_dat *d);
 
 //Parsing utils
-t_lst	*add_cmd(t_lst *cmd);
-t_lst	*new_cmd(void);
-char	*ft_strcut(char *str, char tok);
-int		count_argv(t_lst *cmd, char *str);
-int		is_in_quotes(int i, t_arg *arg);
+t_lst		*add_cmd(t_lst *cmd);
+t_lst		*new_cmd(void);
+int 		cmp(t_arg *data, void *ref);
+int			is_in_quotes(int i, t_arg *arg);
 
 //Exec cmd
-void	run_cmd(t_data *shell);
-void	fd_manager(t_data *shell, t_lst *cmd);
-char	**t_arg_to_char(t_arg **cmd);
+void		run_cmd(t_data *shell);
+void		fd_manager(t_data *shell, t_lst *cmd);
+char		**t_arg_to_char(t_arg **cmd);
 
 //Exec op
-void	run_op(t_data *shell, t_lst *cmd);
-void	fd_manager2(t_data *shell, t_lst *cmd, int fd);
-void	init_heredoc(t_lst *cmd);
-void	s_left(t_data *shell, t_lst *cmd);
-void	s_right(t_data *shell, t_lst *cmd);
-void	d_right(t_data *shell, t_lst *cmd);
+void		run_op(t_data *shell, t_lst *cmd);
+void		fd_manager2(t_data *shell, t_lst *cmd, int fd);
+void		init_heredoc(t_lst *cmd);
+void		s_left(t_data *shell, t_lst *cmd);
+void		s_right(t_data *shell, t_lst *cmd);
+void		d_right(t_data *shell, t_lst *cmd);
 
 //Exec cmd utils
-void	parse_args(t_data *shell, t_lst *cmd);
-int		ft_rand(t_data *shell);
-void	remove_quotes(t_lst *cmd);
-int		insert_var(t_data *shell, char **arg, int start);
+void		parse_args(t_data *shell, t_lst *cmd);
+int			ft_rand(t_data *shell);
+void		remove_quotes(t_lst *cmd);
+int			insert_var(t_data *shell, char **arg, int start);
 
 //Exec blt
-void	builtin(t_data *shell, t_lst *cmd);
-void	exec_blt(t_data *shell, t_lst *cmd);
-void	exec_cd(t_data *shell, t_lst *cmd);
-void	exec_pwd(t_data *shell, t_lst *cmd);
-void	exec_env(t_data *shell);
-void	exec_export(t_data *shell, t_lst *cmd);
-void	exec_unset(t_data *shell, t_lst *cmd);
-void	exec_echo(t_lst *cmd);
+void		builtin(t_data *shell, t_lst *cmd);
+void		exec_blt(t_data *shell, t_lst *cmd);
+void		exec_cd(t_data *shell, t_lst *cmd);
+void		exec_pwd(t_data *shell, t_lst *cmd);
+void		exec_env(t_data *shell);
+void		exec_export(t_data *shell, t_lst *cmd);
+void		exec_unset(t_data *shell, t_lst *cmd);
+void		exec_echo(t_lst *cmd);
 
 //Free minishell
-void	free_cmd(t_lst *cmd);
+void		free_cmd(t_lst *cmd);
+void		free_all(t_data *shell);
+void		free_arg(void *t);
 
 //syntax error
-int		check_error(t_data *shell, t_lst *cmd);
-int		check_quote(t_lst *cmd, char *str);
-void	check_syntax(t_data *shell);
+int			check_error(t_data *shell, t_lst *cmd);
+int			check_quote(t_lst *cmd, char *str);
+void		check_syntax(t_data *shell);
 
 //Utils
-char	*env_get(t_data *shell, char *key);
-void	env_set(t_data *shell, char *key, char *value);
-void	env_new(t_data *shell, char *key, char *value);
-void	env_del(t_data *shell, char *key);
+void		init_env(t_data *shell, char **env);
+char		*env_get(t_data *shell, char *key);
+void		env_set(t_data *shell, char *key, char *value);
+void		env_new(t_data *shell, char *key, char *value);
+void		env_del(t_data *shell, char *key);
 
 //Quit
-void	quit_mini(t_data *shell);
+void		quit_mini(t_data *shell);
 
 #endif

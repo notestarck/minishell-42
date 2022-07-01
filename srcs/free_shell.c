@@ -12,6 +12,34 @@
 
 #include "minishell.h"
 
+void	free_arg(void *t)
+{
+	t_arg	*a;
+
+	a = (t_arg *)t;
+	free(a->str);
+	free(a);
+}
+
+void	free_all(t_data *shell)
+{
+	int	n;
+
+	clear_history();
+	n = -1;
+	while (shell->env[++n])
+		free(shell->env[n]);
+	free(shell->env);
+	n = -1;
+	if (shell->env_path)
+	{
+		while (shell->env_path[++n])
+			free(shell->env_path[n]);
+		free(shell->env_path);
+	}
+	free(shell);
+}
+
 static void	free_dchar(char **str)
 {
 	int	i;

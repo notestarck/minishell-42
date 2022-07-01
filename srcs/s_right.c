@@ -83,8 +83,4 @@ void	s_right(t_data *shell, t_lst *cmd)
 		waitpid(-1, 0, 0);
 		close(fd);
 	}
-	//fd = -1;
-	//while (args[++fd])
-	//	free(args[fd]);
-	//free(args);
 }

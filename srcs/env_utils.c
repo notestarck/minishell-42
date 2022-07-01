@@ -12,6 +12,27 @@
 
 #include "minishell.h"
 
+void	init_env(t_data *shell, char **env)
+{
+	int	i;
+
+	i = 0;
+	(void)shell;
+	while (env[i])
+		i++;
+	shell->env = malloc(sizeof(char *) * (i + 1));
+	if (shell->env == NULL)
+		perror("error : malloc env");
+	i = 0;
+	while (env[i])
+	{
+		shell->env[i] = malloc(sizeof(char) * (ft_strlen(env[i]) + 1));
+		ft_strlcpy(shell->env[i], env[i], ft_strlen(env[i]) + 1);
+		i++;
+	}
+	shell->env[i] = NULL;
+}
+
 char	*env_get(t_data *shell, char *key)
 {
 	int		i;

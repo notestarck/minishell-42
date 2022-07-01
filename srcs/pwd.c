@@ -17,13 +17,6 @@ void	exec_pwd(t_data *shell, t_lst *cmd)
 	int	i;
 
 	i = 0;
-	//while (cmd->argv[i])
-	//	i++;
-	//if (i != 1)
-	//{
-	//	ft_printf("pwd: too many arguments\n");
-	//	return ;
-	//}
 	while (shell->env[i])
 	{
 		if (!ft_strncmp(shell->env[i], "PWD", 3))
