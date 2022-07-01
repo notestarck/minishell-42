@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_shell.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+        */
+/*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 10:59:18 by estarck           #+#    #+#             */
-/*   Updated: 2022/07/01 14:09:29 by reclaire         ###   ########.fr       */
+/*   Updated: 2022/07/01 14:18:58 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,21 +40,6 @@ void	free_all(t_data *shell)
 	free(shell);
 }
 
-//static void	free_dchar(char **str)
-//{
-//	int	i;
-//
-//	i = 0;
-//	if (str == NULL)
-//		return ;
-//	while (str[i])
-//	{
-//		free(str[i]);
-//		i++;
-//	}
-//	free(str);
-//}
-
 void	free_cmd(t_lst *cmd)
 {
 	t_lst	*tmp;
@@ -72,7 +57,7 @@ void	free_cmd(t_lst *cmd)
 				if (tmp->argv[i]->d_quotes)
 					ft_lstclear(&(tmp->argv[i]->d_quotes), &free);
 				if (tmp->argv[i]->s_quotes)
-				ft_lstclear(&(tmp->argv[i]->s_quotes), &free);
+					ft_lstclear(&(tmp->argv[i]->s_quotes), &free);
 				free(tmp->argv[i]);
 				i++;
 			}

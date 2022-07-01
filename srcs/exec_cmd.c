@@ -6,7 +6,7 @@
 /*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 12:25:02 by estarck           #+#    #+#             */
-/*   Updated: 2022/07/01 14:12:45 by estarck          ###   ########.fr       */
+/*   Updated: 2022/07/01 14:17:57 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,25 +54,6 @@ void	fd_manager(t_data *shell, t_lst *cmd)
 		close(tmp->pipefd[WRITE]);
 		tmp = tmp->next;
 	}
-}
-
-char	**t_arg_to_char(t_arg **cmd)
-{
-	char	**new;
-	int		i;
-
-	i = 0;
-	while (cmd[i])
-		i++;
-	new = ft_malloc(sizeof(char *) * (i + 1));
-	i = 0;
-	while (cmd[i])
-	{
-		new[i] = cmd[i]->str;
-		i++;
-	}
-	new[i] = NULL;
-	return (new);
 }
 
 static void	exec_path(t_data *shell, t_lst *cmd)
