@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_shell.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+        */
+/*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 10:59:18 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/30 23:35:11 by reclaire         ###   ########.fr       */
+/*   Updated: 2022/07/01 11:28:51 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,20 +40,20 @@ void	free_all(t_data *shell)
 	free(shell);
 }
 
-static void	free_dchar(char **str)
-{
-	int	i;
-
-	i = 0;
-	if (str == NULL)
-		return ;
-	while (str[i])
-	{
-		free(str[i]);
-		i++;
-	}
-	free(str);
-}
+//static void	free_dchar(char **str)
+//{
+//	int	i;
+//
+//	i = 0;
+//	if (str == NULL)
+//		return ;
+//	while (str[i])
+//	{
+//		free(str[i]);
+//		i++;
+//	}
+//	free(str);
+//}
 
 void	free_cmd(t_lst *cmd)
 {

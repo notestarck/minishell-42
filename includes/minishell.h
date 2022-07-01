@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+        */
+/*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:35:23 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/30 22:08:30 by reclaire         ###   ########.fr       */
+/*   Updated: 2022/07/01 12:11:05 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@
 # define INPUT_ERROR 256
 # define SYNTAX_ERROR 258
 
+extern pid_t	g_pid;
+
 typedef enum e_bool
 {
 	FALSE,
@@ -58,7 +60,7 @@ enum e_built
 	CMD = 9
 };
 
-typedef	struct e_pars_dat
+typedef struct e_pars_dat
 {
 	t_list	*args;
 	t_list	*lst_s_quotes;
@@ -71,7 +73,6 @@ typedef	struct e_pars_dat
 	int		d_quote;
 	int		d_quote_escape;
 }	t_pars_dat;
-
 
 typedef enum e_type
 {
@@ -123,8 +124,6 @@ typedef struct s_data
 	int		test;
 }	t_data;
 
-extern pid_t	g_pid;
-
 //Init
 void		init_env_path(t_data *shell);
 int			init_blt(t_data *shell, t_lst *cmd);
@@ -135,7 +134,7 @@ int			find_cmd(t_data *shell);
 void		append_char(t_pars_dat *d, char **str, char c, int t);
 void		init_cmd(t_data *shell);
 void		cpy_cmd(t_data *shell);
-void		check_redir(t_data *shell, t_lst *cmd, int i);
+void		check_redir(t_lst *cmd, int i);
 void		push(t_pars_dat *d, t_type type);
 t_pars_dat	*create_dat(t_data *shell);
 void		add_quote(t_pars_dat *d, int t, int v, int j);
@@ -146,7 +145,7 @@ int			handle_d_quotes(t_pars_dat *d);
 //Parsing utils
 t_lst		*add_cmd(t_lst *cmd);
 t_lst		*new_cmd(void);
-int 		cmp(t_arg *data, void *ref);
+int			cmp(t_arg *data, void *ref);
 int			is_in_quotes(int i, t_arg *arg);
 
 //Exec cmd
@@ -157,7 +156,7 @@ char		**t_arg_to_char(t_arg **cmd);
 //Exec op
 void		run_op(t_data *shell, t_lst *cmd);
 void		fd_manager2(t_data *shell, t_lst *cmd, int fd);
-void		init_heredoc(t_lst *cmd);
+void		init_heredoc(t_data *shell, t_lst *cmd);
 void		s_left(t_data *shell, t_lst *cmd);
 void		s_right(t_data *shell, t_lst *cmd);
 void		d_right(t_data *shell, t_lst *cmd);
@@ -172,11 +171,12 @@ int			insert_var(t_data *shell, char **arg, int start);
 void		builtin(t_data *shell, t_lst *cmd);
 void		exec_blt(t_data *shell, t_lst *cmd);
 void		exec_cd(t_data *shell, t_lst *cmd);
-void		exec_pwd(t_data *shell, t_lst *cmd);
+void		exec_pwd(t_data *shell);
 void		exec_env(t_data *shell);
 void		exec_export(t_data *shell, t_lst *cmd);
 void		exec_unset(t_data *shell, t_lst *cmd);
 void		exec_echo(t_lst *cmd);
+void		exec_exit(t_data *shell, t_lst *tmp);
 
 //Free minishell
 void		free_cmd(t_lst *cmd);

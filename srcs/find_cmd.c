@@ -6,7 +6,7 @@
 /*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 11:39:52 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/30 23:01:31 by estarck          ###   ########.fr       */
+/*   Updated: 2022/07/01 13:29:47 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,32 @@ static int	valid_path(t_data *shell, char *av)
 	else
 		return (0);
 }
+
+//static char	*find_path2(DIR *dir, struct dirent *dp, char **env_path, char *cmd)
+//{
+//	char			*tmp;
+//	char			*out;
+//	char			*path;
+//	
+//	if (!ft_strncmp(dp->d_name, cmd, ft_strlen(cmd) + 1))
+//	{
+//		path = ft_str_appnd(*env_path, "/", 0, 0);
+//		path = ft_str_appnd(path, dp->d_name, 1, 0);
+//		if (access(path, X_OK))
+//		{
+//			ft_printf("-minishell: %s/%s: Permission denied.\n",
+//				*env_path, dp->d_name);
+//			dp = readdir(dir);
+//			return (NULL);
+//		}
+//		closedir(dir);
+//		tmp = ft_strjoin(*env_path, "/");
+//		out = ft_strjoin(tmp, cmd);
+//		free(tmp);
+//		free(path);
+//		return (out);
+//	}
+//}
 
 //cherche la cmd dans les path de l'env
 static char	*find_path(t_data *shell, char **env_path, char *cmd)
@@ -48,6 +74,11 @@ static char	*find_path(t_data *shell, char **env_path, char *cmd)
 		dp = readdir(dir);
 		while (dp)
 		{
+			//out = find_path2(dir, dp, **env_path, *cmd);
+			//if (out == NULL)
+			//	continue ;
+			//else
+			//	return (out);
 			if (!ft_strncmp(dp->d_name, cmd, ft_strlen(cmd) + 1))
 			{
 				path = ft_str_appnd(*env_path, "/", 0, 0);
@@ -76,6 +107,33 @@ static char	*find_path(t_data *shell, char **env_path, char *cmd)
 	return (0);
 }
 
+int	find_cmd_2(t_data *shell, t_lst *tmp)
+{
+	if (init_blt(shell, tmp) == -1)
+	{
+		if (ft_strchr(tmp->argv[0]->str, 47))
+		{
+			if (valid_path(shell, tmp->argv[0]->str))
+				return (0);
+			tmp->p_cmd = malloc(sizeof(char) * \
+				(ft_strlen(tmp->argv[0]->str) + 1));
+			ft_strlcpy(tmp->p_cmd, tmp->argv[0]->str, \
+				ft_strlen(tmp->argv[0]->str) + 1);
+		}
+		else if (ft_strchr(&tmp->argv[0]->str[0], 60) && \
+			ft_strchr(&tmp->argv[0]->str[1], 60))
+			tmp->p_cmd = find_path(shell, shell->env_path, "cat");
+		else
+		{
+			tmp->p_cmd = find_path(shell, shell->env_path, tmp->argv[0]->str);
+			if (tmp->p_cmd == NULL)
+				return (0);
+		}
+		tmp->built = 9;
+	}
+	return (1);
+}
+
 int	find_cmd(t_data *shell)
 {
 	t_lst	*tmp;
@@ -84,28 +142,8 @@ int	find_cmd(t_data *shell)
 	tmp = shell->cmd;
 	while (tmp)
 	{
-		if (init_blt(shell, tmp) == -1)
-		{
-			if (ft_strchr(tmp->argv[0]->str, 47))
-			{
-				if (valid_path(shell, tmp->argv[0]->str))
-					return (0);
-				tmp->p_cmd = malloc(sizeof(char) * \
-					(ft_strlen(tmp->argv[0]->str) + 1));
-				ft_strlcpy(tmp->p_cmd, tmp->argv[0]->str, \
-					ft_strlen(tmp->argv[0]->str) + 1);
-			}
-			else if (ft_strchr(&tmp->argv[0]->str[0], 60) && \
-				ft_strchr(&tmp->argv[0]->str[1], 60))
-				tmp->p_cmd = find_path(shell, shell->env_path, "cat");
-			else
-			{
-				tmp->p_cmd = find_path(shell, shell->env_path, tmp->argv[0]->str);
-				if (tmp->p_cmd == NULL)
-					return (0);
-			}
-			tmp->built = 9;
-		}
+		if (!find_cmd_2(shell, tmp))
+			return (0);
 		tmp = tmp->next;
 	}
 	return (1);

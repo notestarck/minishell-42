@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+        */
+/*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 12:25:02 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/30 23:19:20 by reclaire         ###   ########.fr       */
+/*   Updated: 2022/07/01 12:14:44 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,29 +32,7 @@ static void	close_fd(t_data *shell)
 		if (tmp->built == 9)
 			shell->code_error = signal % 255;
 		if (tmp->built == EXIT)
-		{
-			if (tmp->argv[1] != NULL)
-			{
-				if (tmp->argv[2] != NULL)
-				{
-					ft_printf("exit: too many arguments\n");
-					shell->code_error = ANY_ERROR;
-					tmp = tmp->next;
-					continue ;
-				}
-				if (ft_str_isdigit(tmp->argv[1]->str))
-					shell->code_error = ft_atoi(tmp->argv[1]->str);
-				else
-				{
-					ft_printf("exit: numerical argument required\n");
-					shell->code_error = EXIT_ERROR_ARG;
-				}
-			}
-			else
-				shell->code_error = 0;
-			if (tmp->next == NULL && tmp->prev == NULL)
-				quit_mini(shell);
-		}
+			exec_exit(shell, tmp);
 		tmp = tmp->next;
 	}
 }
@@ -143,12 +121,13 @@ void	run_cmd(t_data *shell)
 	{
 		if (tmp->heredoc)
 		{
-			tmp->tmpfile = ft_strdup("/tmp/minishell-tmp-");
-			tmp->tmpfile = ft_str_appnd(tmp->tmpfile,
-					ft_itoa(ft_rand(shell)), 1, 1);
-			init_heredoc(tmp);
-			free(tmp->tmpfile);
-			tmp->sep = -1;
+			printf("heredoc\n"); //a retirer
+			//tmp->tmpfile = ft_strdup("/tmp/minishell-tmp-");
+			//tmp->tmpfile = ft_str_appnd(tmp->tmpfile,
+			//		ft_itoa(ft_rand(shell)), 1, 1);
+			init_heredoc(shell, tmp);
+			//free(tmp->tmpfile);
+			//tmp->sep = -1;
 		}
 		exec_cmd(shell, tmp);
 		tmp = tmp->next;

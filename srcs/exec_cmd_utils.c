@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+        */
+/*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 12:10:03 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/30 20:09:00 by reclaire         ###   ########.fr       */
+/*   Updated: 2022/07/01 13:33:12 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,41 +38,19 @@ void	parse_args(t_data *shell, t_lst *cmd)
 	}
 }
 
-void	remove_quotes(t_lst *cmd)
+static void	insert_var_inter(t_data *shell, char **arg, int start)
 {
+	char	*out;
+	char	*value;
 	int		i;
-	int		j;
-	int		count;
-	char	*str;
 
-	i = 0;
-	while (cmd->argv[i])
-	{
-		j = 0;
-		count = 0;
-		while (cmd->argv[i]->str[j])
-		{
-			if (cmd->argv[i]->str[j] == '\'' || cmd->argv[i]->str[j] == '\"')
-				count++;
-			j++;
-		}
-		str = ft_malloc(sizeof(char) * (ft_strlen(cmd->argv[i]->str) - count + 1));
-		j = 0;
-		count = 0;
-		while (cmd->argv[i]->str[j])
-		{
-			if (cmd->argv[i]->str[j] != '\'' && cmd->argv[i]->str[j] != '\"')
-			{
-				str[count] = cmd->argv[i]->str[j];
-				count++;
-			}
-			j++;
-		}
-		str[count] = '\0';
-		free(cmd->argv[i]);
-		cmd->argv[i]->str = str;
-		i++;
-	}
+	i = 1;
+	value = ft_itoa(shell->code_error);
+	out = ft_substr(*arg, 0, start);
+	out = ft_str_appnd(out, value, 1, 1);
+	out = ft_str_appnd(out, *arg + start + i + 1, 1, 0);
+	free(*arg);
+	*arg = out;
 }
 
 int	insert_var(t_data *shell, char **arg, int start)
@@ -85,12 +63,7 @@ int	insert_var(t_data *shell, char **arg, int start)
 	i = 1;
 	if ((*arg)[start + i] == '?')
 	{
-		value = ft_itoa(shell->code_error);
-		out = ft_substr(*arg, 0, start);
-		out = ft_str_appnd(out, value, 1, 1);
-		out = ft_str_appnd(out, *arg + start + i + 1, 1, 0);
-		free(*arg);
-		*arg = out;
+		insert_var_inter(shell, arg, start);
 		return (1);
 	}
 	while ((*arg)[start + i] && ft_isalnum((*arg)[start + i]))

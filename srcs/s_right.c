@@ -3,29 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   s_right.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+        */
+/*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 16:38:18 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/30 17:55:01 by reclaire         ###   ########.fr       */
+/*   Updated: 2022/07/01 09:34:03 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static t_arg	**find_args(t_lst *cmd)
+static char	**find_args(t_lst *cmd)
 {
 	int		i;
 	int		j;
-	t_arg	**ret;
+	char	**ret;
 
 	i = 0;
 	j = 0;
 	while (*(cmd->argv[i]->str) != '>')
 		i++;
-	ret = ft_malloc(sizeof(t_arg *) * (i + 1));
+	ret = ft_malloc(sizeof(char *) * (i + 1));
+	if (ret == NULL)
+		return (perror("error : malloc find_args"), NULL);
 	while (j < i)
 	{
-		ret[j] = cmd->argv[i];
+		ret[j] = malloc(sizeof(char) * ft_strlen(cmd->argv[j]->str) + 1);
+		if (ret[j] == NULL)
+			return (perror("error : malloc"), NULL);
+		ft_strlcpy(ret[j], cmd->argv[j]->str, ft_strlen(cmd->argv[j]->str) + 1);
 		j++;
 	}
 	ret[j] = NULL;
@@ -66,7 +71,7 @@ void	s_right(t_data *shell, t_lst *cmd)
 {
 	int		fd;
 	char	*filename;
-	t_arg	**args;
+	char	**args;
 
 	filename = find_dir(cmd);
 	args = find_args(cmd);
@@ -77,7 +82,7 @@ void	s_right(t_data *shell, t_lst *cmd)
 	if (g_pid < 0)
 		return (close (fd), perror("error : fork s_right"));
 	else if (g_pid == 0)
-		exec_child(shell, cmd, t_arg_to_char(args), fd);
+		exec_child(shell, cmd, args, fd);
 	else
 	{
 		waitpid(-1, 0, 0);

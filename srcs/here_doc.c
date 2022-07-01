@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+        */
+/*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 17:33:56 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/30 18:51:22 by reclaire         ###   ########.fr       */
+/*   Updated: 2022/07/01 12:14:55 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,13 @@ static void	run_heredocs(t_lst *cmd)
 	unlink(cmd->tmpfile);
 }
 
-void	init_heredoc(t_lst *cmd)
+void	init_heredoc(t_data *shell, t_lst *cmd)
 {
+	cmd->tmpfile = ft_strdup("/tmp/minishell-tmp-");
+	cmd->tmpfile = ft_str_appnd(cmd->tmpfile,
+			ft_itoa(ft_rand(shell)), 1, 1);
 	run_heredocs(cmd);
 	repars_heredocs(cmd);
+	free(cmd->tmpfile);
+	cmd->sep = -1;
 }

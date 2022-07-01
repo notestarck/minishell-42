@@ -91,8 +91,6 @@ int	main(int argc, char **argv, char **env)
 	signal(SIGINT, sig);
 	signal(SIGQUIT, sig);
 	shell = init_shell();
-	ft_printf("ls -la > d  cause une erreur, pas réussi a trouver pourquoi.\nAussi, certains characteres disparaissent \
-	 apres un \\ dans une \"\", mais bon on peut limite l'ignorer ca.");
 	init_env(shell, env);
 	while (42)
 	{
@@ -105,7 +103,7 @@ int	main(int argc, char **argv, char **env)
 				if (find_cmd(shell))
 					run_cmd(shell);
 			}
-			//free_cmd(shell->cmd);
+			free_cmd(shell->cmd);
 		}
 		free(shell->ret_prompt);
 	}

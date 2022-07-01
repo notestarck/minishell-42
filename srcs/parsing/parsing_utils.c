@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+        */
+/*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 16:04:41 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/30 20:41:00 by reclaire         ###   ########.fr       */
+/*   Updated: 2022/07/01 13:30:28 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	cmp(t_arg *data, void *ref)
 {
-	int	i;
+	size_t	i;
 
 	(void)ref;
 	if (data->str[0] == '\0')
@@ -25,18 +25,10 @@ int	cmp(t_arg *data, void *ref)
 	return (i == ft_strlen(data->str));
 }
 
-void	check_redir(t_data *shell, t_lst *cmd, int i)
+void	check_redir(t_lst *cmd, int i)
 {
 	if (ft_isrange((int)(cmd->argv[i]->type), 0, 3))
-	{
-		if (cmd->sep != -1 && cmd->sep != D_LEFT)
-		{
-			perror("Double redirection");
-			shell->code_error = SYNTAX_ERROR;
-			return ;
-		}
 		cmd->sep = cmd->argv[i]->type;
-	}
 }
 
 int	is_in_quotes(int i, t_arg *arg)

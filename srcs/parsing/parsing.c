@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+        */
+/*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 02:40:55 by reclaire          #+#    #+#             */
-/*   Updated: 2022/07/01 02:40:55 by reclaire         ###   ########.fr       */
+/*   Updated: 2022/07/01 13:31:44 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,8 @@ void	pre_process2(t_pars_dat *d)
 		return ;
 	else if (handle_redir(d, '<', 1, S_LEFT))
 		return ;
-	else if (d->str[d->i] == 32 || (d->str[d->i] >= 9
-			&& d->str[d->i] <= 13) && !d->escape)
+	else if ((d->str[d->i] == 32 || (d->str[d->i] >= 9
+				&& d->str[d->i] <= 13)) && !d->escape)
 	{
 		push(d, ARG);
 		d->new = ft_strdup("");
@@ -76,7 +76,6 @@ void	pre_process2(t_pars_dat *d)
 int	pre_process(t_data *shell)
 {
 	t_pars_dat	*d;
-	int			tmp;
 
 	d = create_dat(shell);
 	while (d->str[d->i])
@@ -103,10 +102,7 @@ int	pre_process(t_data *shell)
 void	parse_prompt(t_data *shell)
 {
 	if (!pre_process(shell))
-	{
-		shell->code_error = SYNTAX_ERROR;
-		return ;
-	}
+		shell->code_error = -42;
 	init_cmd(shell);
 	cpy_cmd(shell);
 }

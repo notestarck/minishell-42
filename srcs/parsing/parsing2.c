@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+        */
+/*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 02:44:55 by reclaire          #+#    #+#             */
-/*   Updated: 2022/07/01 02:44:55 by reclaire         ###   ########.fr       */
+/*   Updated: 2022/07/01 09:33:06 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	cpy_cmd(t_data *shell)
 		while (tmp && ((t_arg *)tmp->content)->type != PIPE)
 		{
 			cmd->argv[i] = tmp->content;
-			check_redir(shell, cmd, i);
+			check_redir(cmd, i);
 			i++;
 			tmp = tmp->next;
 		}

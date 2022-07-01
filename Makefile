@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+         #
+#    By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/25 09:55:54 by reclaire          #+#    #+#              #
-#    Updated: 2022/06/29 19:52:00 by reclaire         ###   ########.fr        #
+#    Updated: 2022/07/01 09:26:19 by estarck          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ OBJS		=	${SRCS:.c=.o}
 INCLUDES  	=	-I./includes -I./libft -I/Users/$(USER)/.brew/opt/readline/include
 CC			=	gcc
 #CFLAGS		:=	-Wall -Wextra -Werror -O3 
-CFLAGS		:=	-g
+CFLAGS		:=	-Wall -Wextra -Werror -g
 ifdef MOREFLAGS
 CFLAGS		:=	$(CFLAGS) $(MOREFLAGS)
 endif

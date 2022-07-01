@@ -6,7 +6,7 @@
 /*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 11:31:57 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/24 12:24:08 by estarck          ###   ########.fr       */
+/*   Updated: 2022/07/01 09:30:27 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	exec_blt(t_data *shell, t_lst *cmd)
 	if (cmd->built == CD)
 		exec_cd(shell, cmd);
 	else if (cmd->built == PWD)
-		exec_pwd(shell, cmd);
+		exec_pwd(shell);
 	else if (cmd->built == ENV)
 		exec_env(shell);
 	else if (cmd->built == EXPORT)

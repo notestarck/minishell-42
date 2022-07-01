@@ -65,31 +65,9 @@ Les wildcards * doivent fonctionner pour le répertoire courant.
 
 TRucs a faire:
 
--mise a la norme
-
-Nouvelle correction
-
--cd ne fonctionne pas avec un ' ' dans le nom du fichier
--gerer le \>
--on ne gere pas les \n, \t, \v...
--exit doit fermer dans tous les cas, peu importe les arguments et meme avec exit > sans message d'erreur.
--cd ne renvoit pas le bon code erreur
--ctrl-\ affiche une nouvelle ligne au lieu de ne rien faire et l'affiche avec son contenu
--ctrl-\ avec une commande bloquante comme cat affiche une nouvelle ligne au lieu de ne rien faire
--ctrl-c suivi de ctrl-d = segfault si pas eu de commande avant
--ctrl-d fait une segfault
--retour erreur des builtins a mettre en place;
--export $TEST=42 export 42=42
--unset sans argument = crash
--export sans argument = crash
-
-estarck@: /Users/estarck/Documents/Cursus/minishell-42 minishell $> export $TEST=42
-estarck@: /Users/estarck/Documents/Cursus/minishell-42 minishell $> unset $TEST
-pose un gros GROS GROS GROS probleme
-
-
-heredoc
-redirections
-cd
-export
-unset
+-^C
+-\""Bonjour" ne fonctionne pas ni "Bonjour\"lulu" ni "BOnjour\tlulu" ni echo "lulu$USERlulu"
+-si les quotes sont pas bien referme ca print quand meme --normalement ok
+-unset PWD ne fonctionnait pas quand les free etaient desactives
+-le heredoc ne fonctionne plus
+- cd sans arg plante

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+        */
+/*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 13:13:48 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/30 22:58:00 by reclaire         ###   ########.fr       */
+/*   Updated: 2022/07/01 11:18:08 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	exec_pwd(t_data *shell, t_lst *cmd)
+void	exec_pwd(t_data *shell)
 {
 	int	i;
 
@@ -20,7 +20,7 @@ void	exec_pwd(t_data *shell, t_lst *cmd)
 	while (shell->env[i])
 	{
 		if (!ft_strncmp(shell->env[i], "PWD", 3))
-			printf("%s\n", (shell->env[i] + 4));
+			ft_printf("%s\n", (shell->env[i] + 4));
 		i++;
 	}
 	return ;
