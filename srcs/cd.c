@@ -6,7 +6,7 @@
 /*   By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 11:11:55 by estarck           #+#    #+#             */
-/*   Updated: 2022/06/30 22:28:29 by reclaire         ###   ########.fr       */
+/*   Updated: 2022/07/01 13:40:45 by reclaire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	exec_cd(t_data *shell, t_lst *cmd)
 
 	if (cmd->next != NULL)
 		return ;
-	if (cmd->argv[1]->str == NULL || !ft_strncmp(cmd->argv[1]->str, "--", 2)
+	if (cmd->argv[1] == NULL || !ft_strncmp(cmd->argv[1]->str, "--", 2)
 		|| !ft_strncmp(cmd->argv[1]->str, "~", 1))
 		tmp2 = env_get(shell, "HOME");
 	else if (!ft_strncmp(cmd->argv[1]->str, "-", 1))
