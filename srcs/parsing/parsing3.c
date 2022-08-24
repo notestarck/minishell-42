@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing3.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+        */
+/*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 04:34:27 by reclaire          #+#    #+#             */
-/*   Updated: 2022/07/01 14:11:09 by reclaire         ###   ########.fr       */
+/*   Updated: 2022/08/24 13:51:52 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	add_quote(t_pars_dat *d, int t, int v, int j)
 			d->s_quote = !d->s_quote;
 			ft_lstadd_back(&d->lst_s_quotes, ft_lstnew(n));
 		}
-		else
+		else if (t == 2)
 		{
 			d->d_quote = !d->d_quote;
 			ft_lstadd_back(&d->lst_d_quotes, ft_lstnew(n));

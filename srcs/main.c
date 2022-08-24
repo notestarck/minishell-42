@@ -58,7 +58,7 @@ void	quit_mini(t_data *shell)
 {
 	free_all(shell);
 	ft_printf("\n");
-	ft_printf("Farewell\n");
+	ft_printf("Farewell\n"); //a supprimer
 	exit(shell->code_error);
 }
 
