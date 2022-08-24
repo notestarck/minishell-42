@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
+/*   By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:35:23 by estarck           #+#    #+#             */
-/*   Updated: 2022/07/01 14:57:25 by estarck          ###   ########.fr       */
+/*   Updated: 2022/07/01 15:19:32 by reclaire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,6 @@
 # define SYNTAX_ERROR 258
 
 extern pid_t	g_pid;
-
-typedef enum e_bool
-{
-	FALSE,
-	RIGHT
-}	t_bool;
 
 enum e_write
 {
@@ -165,7 +159,6 @@ void		d_right(t_data *shell, t_lst *cmd);
 //Exec cmd utils
 void		parse_args(t_data *shell, t_lst *cmd);
 int			ft_rand(t_data *shell);
-void		remove_quotes(t_lst *cmd);
 int			insert_var(t_data *shell, char **arg, int start);
 
 //Exec blt

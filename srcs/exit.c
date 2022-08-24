@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
+/*   By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 11:55:16 by estarck           #+#    #+#             */
-/*   Updated: 2022/07/01 12:02:33 by estarck          ###   ########.fr       */
+/*   Updated: 2022/07/01 15:13:28 by reclaire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void	exec_exit(t_data *shell, t_lst *tmp)
 	}
 	else
 		shell->code_error = 0;
+	free_cmd(shell->cmd);
 	if (tmp->next == NULL && tmp->prev == NULL)
 		quit_mini(shell);
 }

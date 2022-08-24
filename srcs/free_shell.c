@@ -6,7 +6,7 @@
 /*   By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 10:59:18 by estarck           #+#    #+#             */
-/*   Updated: 2022/07/01 14:25:07 by reclaire         ###   ########.fr       */
+/*   Updated: 2022/07/01 15:11:27 by reclaire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ void	free_cmd(t_lst *cmd)
 			while (tmp->argv[i])
 				free_targ(tmp->argv[i++]);
 		}
+		free(tmp->argv);
 		if (tmp->p_cmd)
 			free(tmp->p_cmd);
 		cmd = cmd->next;
