@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+         #
+#    By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/25 09:55:54 by reclaire          #+#    #+#              #
-#    Updated: 2022/08/18 08:18:24 by estarck          ###   ########.fr        #
+#    Updated: 2022/09/05 14:46:27 by reclaire         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,10 +15,11 @@ NAME		=	minishell
 SRCS		=	$(shell find srcs/ -type f -name '*.c')
 OBJS		=	${SRCS:.c=.o}
 
-INCLUDES  	=	-I./includes -I./libft -I/usr/local/Cellar/readline/8.1.2/include
+INCLUDES  	=	-I./includes -I./libft
 CC			=	gcc
 #CFLAGS		:=	-Wall -Wextra -Werror -O3 
-CFLAGS		:=	-Wall -Wextra -Werror -g
+#CFLAGS		:=	-Wall -Wextra -Werror -g
+CFLAGS		:=	-g
 ifdef MOREFLAGS
 CFLAGS		:=	$(CFLAGS) $(MOREFLAGS)
 endif
@@ -32,7 +33,7 @@ libft.a:
 			cp libft/libft.a .
 
 $(NAME):	libft.a $(OBJS)
-			$(CC) $(CFLAGS) -g -lreadline -L/usr/local/Cellar/readline/8.1.2/lib $(OBJS) libft.a -o $(NAME)
+			$(CC) $(CFLAGS) -g $(OBJS) libft.a -lreadline -o $(NAME)
 
 all:		$(NAME)
 

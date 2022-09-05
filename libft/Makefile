@@ -92,7 +92,8 @@ SRCS	=	ft_atoi.c \
 OBJS		=	${SRCS:.c=.o}
 INCLUDES  	=	-I./ -I./gnl -I./ft_printf
 CC			=	gcc
-CFLAGS		:=	-Wall -Wextra -Werror -O3
+#CFLAGS		:=	-Wall -Wextra -Werror -O3
+CFLAGS		:=	-O3
 ifdef MOREFLAGS
 CFLAGS		:=	$(CFLAGS) $(MOREFLAGS)
 endif
