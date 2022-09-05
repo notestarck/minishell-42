@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
+/*   By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 17:33:56 by estarck           #+#    #+#             */
-/*   Updated: 2022/07/01 14:36:24 by estarck          ###   ########.fr       */
+/*   Updated: 2022/09/05 15:52:26 by reclaire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,20 +30,32 @@ static void	repars_heredocs(t_lst *cmd)
 {
 	t_arg	**argv;
 	int		i;
+	int		j;
 
 	i = 0;
-	while (cmd->argv[i] && ft_strncmp(cmd->argv[i]->str, "<<", 3))
+	j = 0;
+	while (cmd->argv[i])
+	{
+		if (!ft_strncmp(cmd->argv[i]->str, "<<", 2))
+		{
+			i += 2; // "<<"
+			continue ;
+		}
+		j++;
 		i++;
-	if (i == 0)
-	{
-		write_cat(cmd);
-		return ;
 	}
-	argv = ft_malloc(sizeof(t_arg *) * (i + 1));
+	argv = ft_malloc(sizeof(t_arg *) * (j + 1));
 	i = 0;
-	while (cmd->argv[i] && ft_strncmp(cmd->argv[i]->str, "<<", 3))
+	j = 0;
+	while (cmd->argv[i])
 	{
-		argv[i] = cmd->argv[i];
+		if (!ft_strncmp(cmd->argv[i]->str, "<<", 2))
+		{
+			i += 2;
+			continue ;
+		}
+		argv[j] = cmd->argv[i];
+		j++;
 		i++;
 	}
 	argv[i] = NULL;
@@ -88,6 +100,21 @@ static void	run_heredocs(t_lst *cmd)
 	unlink(cmd->tmpfile);
 }
 
+void	launch_heredoc(t_data *shell, t_lst *cmd)
+{
+	g_pid = fork();
+	if (g_pid == 0)
+	{
+		dup2(cmd->pipefd[READ], STDIN_FILENO);
+		execve(cmd->p_cmd, t_arg_to_char(cmd->argv), shell->env);
+	}
+	else
+	{
+		wait(NULL);
+		close(cmd->pipefd[READ]);
+	}
+}
+
 void	init_heredoc(t_data *shell, t_lst *cmd)
 {
 	cmd->tmpfile = ft_strdup("/tmp/minishell-tmp-");
@@ -95,6 +122,7 @@ void	init_heredoc(t_data *shell, t_lst *cmd)
 			ft_itoa(ft_rand(shell)), 1, 1);
 	run_heredocs(cmd);
 	repars_heredocs(cmd);
+	launch_heredoc(shell, cmd);
 	free(cmd->tmpfile);
 	cmd->sep = -1;
 }

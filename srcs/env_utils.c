@@ -42,8 +42,8 @@ char	*env_get(t_data *shell, char *key)
 	i = 0;
 	while (shell->env[i])
 	{
-		key2 = ft_str_appnd("=", key, 0, 0);
-		if (!ft_strncmp(shell->env[i], key, ft_strlen(key2)))
+		key2 = ft_str_appnd(key, "=", 0, 0);
+		if (!ft_strncmp(shell->env[i], key2, ft_strlen(key2)))
 		{
 			return (ft_substr(shell->env[i], ft_strlen(key) + 1,
 					ft_strlen(shell->env[i])));
