@@ -6,7 +6,7 @@
 #    By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/25 09:55:54 by reclaire          #+#    #+#              #
-#    Updated: 2022/07/01 09:26:19 by estarck          ###   ########.fr        #
+#    Updated: 2022/08/18 08:18:24 by estarck          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME		=	minishell
 SRCS		=	$(shell find srcs/ -type f -name '*.c')
 OBJS		=	${SRCS:.c=.o}
 
-INCLUDES  	=	-I./includes -I./libft -I/Users/$(USER)/.brew/opt/readline/include
+INCLUDES  	=	-I./includes -I./libft -I/usr/local/Cellar/readline/8.1.2/include
 CC			=	gcc
 #CFLAGS		:=	-Wall -Wextra -Werror -O3 
 CFLAGS		:=	-Wall -Wextra -Werror -g
@@ -32,7 +32,7 @@ libft.a:
 			cp libft/libft.a .
 
 $(NAME):	libft.a $(OBJS)
-			$(CC) $(CFLAGS) -lreadline -L/Users/$(USER)/.brew/opt/readline/lib $(OBJS) libft.a -o $(NAME)
+			$(CC) $(CFLAGS) -g -lreadline -L/usr/local/Cellar/readline/8.1.2/lib $(OBJS) libft.a -o $(NAME)
 
 all:		$(NAME)
 

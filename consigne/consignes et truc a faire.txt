@@ -81,3 +81,4 @@ estarck@: /Users/estarck/Documents/Cursus/minishell-42 minishell $> <<
 heredoc> sd
 [1]    71731 segmentation fault  ./minishell
 
+virer Farewell
