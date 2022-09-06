@@ -65,23 +65,9 @@ Les wildcards * doivent fonctionner pour le répertoire courant.
 
 TRucs a faire:
 
--le heredoc ne fonctionne plus avec des redirection > test.txt
-- cd sans arg plante avec un expace dans le nom du fichier genre "ecole 42"
+-mettre une erreur heredoc + redirection
 
 la cmd : echo ~ ~te~st" ~ '$USER  \""+\\$USER+$US\ER~$USERS' ~ t"e$USER \'~'' ""'`' ""' \' ""'" \' 
 |-> ne s'affcihe pas correctement du tout
-
-estarck@: /Users/estarck/Documents/Cursus/minishell-42 minishell $> ls >|<<
-[1]    72995 segmentation fault  ./minishell
-
-estarck@: /Users/estarck/Documents/Cursus/minishell-42 minishell $> <<>>
-heredoc>
-heredoc>
-heredoc>
-[1]    72770 segmentation fault  ./minishell
-
-estarck@: /Users/estarck/Documents/Cursus/minishell-42 minishell $> <<
-heredoc> sd
-[1]    71731 segmentation fault  ./minishell
 
 virer Farewell

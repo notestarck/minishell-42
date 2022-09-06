@@ -57,6 +57,7 @@ void	add_quote(t_pars_dat *d, int t, int v, int j)
 int	handle_redir(t_pars_dat *d, char c, int size, t_type type)
 {
 	char	*ref;
+	int		j;
 
 	ref = ft_malloc(sizeof(char) * (size + 1));
 	size--;
@@ -74,6 +75,17 @@ int	handle_redir(t_pars_dat *d, char c, int size, t_type type)
 		d->new = ft_strdup("");
 		d->i += ft_strlen(ref);
 		free(ref);
+		j = 0;
+		while (d->str[d->i + j])
+		{
+			if (ft_isalnum(d->str[d->i + j]))
+				return (1);
+			if(!(d->str[d->i + j] == 32 || (d->str[d->i + j] >= 9
+				&& d->str[d->i + j] <= 13)))
+				break ;
+			j++;
+		}
+		d->err = 1;
 		return (1);
 	}
 	free(ref);

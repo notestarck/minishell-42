@@ -6,7 +6,7 @@
 /*   By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 12:25:02 by estarck           #+#    #+#             */
-/*   Updated: 2022/09/05 15:35:41 by reclaire         ###   ########.fr       */
+/*   Updated: 2022/09/05 16:35:57 by reclaire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ static void exec_path(t_data *shell, t_lst *cmd)
 	}
 }
 
-static void exec_cmd(t_data *shell, t_lst *cmd)
+void exec_cmd(t_data *shell, t_lst *cmd)
 {
 	parse_args(shell, cmd);
 	if (cmd->built != 9 && cmd->sep == -1)

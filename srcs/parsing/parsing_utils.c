@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
+/*   By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 16:04:41 by estarck           #+#    #+#             */
-/*   Updated: 2022/08/24 14:28:32 by estarck          ###   ########.fr       */
+/*   Updated: 2022/09/05 17:17:32 by reclaire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	is_in_quotes(int i, t_arg *arg)
 
 	lst1 = arg->s_quotes;
 	lst2 = arg->d_quotes;
-	while (lst1 && lst1->next) //il manquait la verification de lst1->next
+	while (lst1 && lst1->next)
 	{
 		if (*((int *)lst1->content) <= i && i <= *((int *)lst1->next->content))
 			return (1);

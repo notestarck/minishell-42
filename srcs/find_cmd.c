@@ -34,12 +34,12 @@ static char	*find_path2(DIR *dir, struct dirent *dp, char **env_path, char *cmd)
 	return (out);
 }
 
-static int	check_acces(char **env_path, DIR *dir)
+static int	check_access(char ***env_path, DIR *dir)
 {
-	if (access(*env_path, R_OK))
+	if (access(**env_path, R_OK))
 	{
 		closedir(dir);
-		env_path++;
+		(*env_path)++;
 		return (1);
 	}
 	return (0);
@@ -55,7 +55,7 @@ static char	*find_path(t_data *shell, char **env_path, char *cmd)
 	while (*env_path != NULL)
 	{
 		dir = opendir(*env_path);
-		if (check_acces(env_path, dir))
+		if (check_access(&env_path, dir))
 			continue ;
 		dp = readdir(dir);
 		while (dp)

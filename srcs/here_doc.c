@@ -6,7 +6,7 @@
 /*   By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 17:33:56 by estarck           #+#    #+#             */
-/*   Updated: 2022/09/05 15:52:26 by reclaire         ###   ########.fr       */
+/*   Updated: 2022/09/05 16:37:24 by reclaire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,11 @@ static void	repars_heredocs(t_lst *cmd)
 		j++;
 		i++;
 	}
+	if (j == 0)
+	{
+		write_cat(cmd);
+		return ;
+	}
 	argv = ft_malloc(sizeof(t_arg *) * (j + 1));
 	i = 0;
 	j = 0;
@@ -51,6 +56,8 @@ static void	repars_heredocs(t_lst *cmd)
 	{
 		if (!ft_strncmp(cmd->argv[i]->str, "<<", 2))
 		{
+			free_arg(cmd->argv[i]);
+			free_arg(cmd->argv[i + 1]);
 			i += 2;
 			continue ;
 		}

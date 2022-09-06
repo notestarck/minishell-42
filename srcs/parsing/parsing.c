@@ -52,6 +52,8 @@ int	handle_specials(t_pars_dat *d)
 
 void	pre_process2(t_pars_dat *d)
 {
+	int	i;
+
 	if (handle_redir(d, '>', 2, D_RIGHT))
 		return ;
 	else if (handle_redir(d, '<', 2, D_LEFT))
@@ -80,6 +82,7 @@ int	pre_process(t_data *shell)
 	t_pars_dat	*d;
 
 	d = create_dat(shell);
+	d->err = 0;
 	while (d->str[d->i])
 	{
 		if (handle_s_quotes(d))
@@ -91,13 +94,23 @@ int	pre_process(t_data *shell)
 		if (ft_strchr("><|", d->str[d->i]) && d->escape)
 			append_char(d, &d->new, d->str[d->i], 1);
 		else
+		{
 			pre_process2(d);
+			if (d->err == 1)
+			{
+				ft_printf("-minishell: Syntax error\n");
+				return (0);
+			}
+		}
 	}
 	push(d, ARG);
 	ft_lstremoveif(&d->args, &free_arg, &cmp, NULL);
 	shell->cmd_list = d->args;
 	if (d->s_quote || d->d_quote)
+	{
+		ft_printf("-minishell: Syntax error\n");
 		return (free(d), 0);
+	}
 	return (free(d), 1);
 }
 

@@ -6,7 +6,7 @@
 /*   By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 16:05:56 by estarck           #+#    #+#             */
-/*   Updated: 2022/09/05 15:34:37 by reclaire         ###   ########.fr       */
+/*   Updated: 2022/09/05 16:34:39 by reclaire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,12 @@ void	fd_manager2(t_data *shell, t_lst *cmd, int fd)
 
 void	run_op(t_data *shell, t_lst *cmd)
 {
+	if (cmd->heredoc || cmd->sep == D_LEFT)
+	{
+		init_heredoc(shell, cmd);
+	}
 	if (cmd->sep == S_LEFT)
 		s_left(shell, cmd);
-	else if (cmd->sep == D_LEFT)
-		init_heredoc(shell, cmd);
 	else if (cmd->sep == S_RIGHT)
 		s_right(shell, cmd);
 	else if (cmd->sep == D_RIGHT)

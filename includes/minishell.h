@@ -6,7 +6,7 @@
 /*   By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:35:23 by estarck           #+#    #+#             */
-/*   Updated: 2022/07/01 15:19:32 by reclaire         ###   ########.fr       */
+/*   Updated: 2022/09/05 16:36:13 by reclaire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ typedef struct e_pars_dat
 	int		s_quote;
 	int		d_quote;
 	int		d_quote_escape;
+	int		err;
 }	t_pars_dat;
 
 typedef enum e_type
@@ -147,6 +148,7 @@ int			is_in_quotes(int i, t_arg *arg);
 void		run_cmd(t_data *shell);
 void		fd_manager(t_data *shell, t_lst *cmd);
 char		**t_arg_to_char(t_arg **cmd);
+void		exec_cmd(t_data *shell, t_lst *cmd);
 
 //Exec op
 void		run_op(t_data *shell, t_lst *cmd);
@@ -159,7 +161,7 @@ void		d_right(t_data *shell, t_lst *cmd);
 //Exec cmd utils
 void		parse_args(t_data *shell, t_lst *cmd);
 int			ft_rand(t_data *shell);
-int			insert_var(t_data *shell, char **arg, int start);
+int			insert_var(t_data *shell, t_arg *arg, int start);
 
 //Exec blt
 void		builtin(t_data *shell, t_lst *cmd);

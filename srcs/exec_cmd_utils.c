@@ -31,7 +31,7 @@ void	parse_args(t_data *shell, t_lst *cmd)
 		{
 			if (cmd->argv[i]->str[j] == '$' && cmd->argv[i]->str[j + 1] != '\0'
 				&& is_in_quotes(j, cmd->argv[i]) != 1)
-				j += insert_var(shell, &(cmd->argv[i]->str), j);
+				j += insert_var(shell, cmd->argv[i], j);
 			j++;
 		}
 		i++;
@@ -53,29 +53,31 @@ static void	insert_var_inter(t_data *shell, char **arg, int start)
 	*arg = out;
 }
 
-int	insert_var(t_data *shell, char **arg, int start)
+int	insert_var(t_data *shell, t_arg *arg, int start)
 {
 	char	*key;
 	char	*out;
 	char	*value;
 	int		i;
+	int		j;
 
 	i = 1;
-	if ((*arg)[start + i] == '?')
+	if (arg->str[start + i] == '?')
 	{
-		insert_var_inter(shell, arg, start);
+		insert_var_inter(shell, &arg->str, start);
 		return (1);
 	}
-	while ((*arg)[start + i] && ft_isalnum((*arg)[start + i]))
+	j = is_in_quotes(start, arg);
+	while (arg->str[start + i] && ft_isalnum(arg->str[start + i]) && j == is_in_quotes(start + i, arg))
 		i++;
 	key = malloc(sizeof(char) * i);
-	ft_strlcpy(key, (*arg) + start + 1, i);
+	ft_strlcpy(key, arg->str + start + 1, i);
 	value = env_get(shell, key);
-	out = ft_substr(*arg, 0, start);
+	out = ft_substr(arg->str, 0, start);
 	out = ft_str_appnd(out, value, 1, 1);
-	out = ft_str_appnd(out, *arg + start + i, 1, 0);
+	out = ft_str_appnd(out, arg->str + start + i, 1, 0);
 	free(key);
-	free(*arg);
-	*arg = out;
+	free(arg->str);
+	arg->str = out;
 	return (i - 1);
 }
