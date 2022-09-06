@@ -3,16 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+        */
+/*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 16:17:17 by reclaire          #+#    #+#             */
-/*   Updated: 2022/06/30 20:31:32 by reclaire         ###   ########.fr       */
+/*   Updated: 2022/09/06 11:15:05 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	echo_print(t_arg **args, int newline)
+static void	echo_tild(t_data *shell)
+{
+	ft_printf("%s", env_get(shell, "HOME"));
+}
+
+static void	echo_print(t_data *shell, t_arg **args, int newline)
 {
 	int	i;
 	int	j;	
@@ -25,7 +30,10 @@ static void	echo_print(t_arg **args, int newline)
 		j = 0;
 		while (args[i]->str[j])
 		{
-			write(1, args[i]->str + j, 1);
+			if (ft_strcmp(args[i]->str, "~") == 0 && args[i]->d_quotes == NULL && args[i]->s_quotes == NULL)
+				echo_tild(shell);
+			else
+				write(1, args[i]->str + j, 1);
 			j++;
 		}
 		if (args[i + 1])
@@ -36,7 +44,7 @@ static void	echo_print(t_arg **args, int newline)
 		write(1, "\n", 1);
 }
 
-void	exec_echo(t_lst *cmd)
+void	exec_echo(t_data *shell, t_lst *cmd)
 {
 	int	i;
 	int	j;
@@ -61,5 +69,5 @@ void	exec_echo(t_lst *cmd)
 			break ;
 		i++;
 	}
-	echo_print(cmd->argv + i, newline);
+	echo_print(shell, cmd->argv + i, newline);
 }

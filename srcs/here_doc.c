@@ -3,28 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+        */
+/*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 17:33:56 by estarck           #+#    #+#             */
-/*   Updated: 2022/09/05 16:37:24 by reclaire         ###   ########.fr       */
+/*   Updated: 2022/09/06 10:23:53 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	write_cat(t_lst *cmd)
-{
-	t_arg	**argv;
-
-	argv = malloc(sizeof(t_arg *) * 2);
-	argv[0] = ft_malloc(sizeof(t_arg));
-	argv[0]->d_quotes = NULL;
-	argv[0]->s_quotes = NULL;
-	argv[0]->type = ARG;
-	argv[0]->str = ft_strdup("cat");
-	argv[1] = NULL;
-	cmd->argv = argv;
-}
+//static void	write_cat(t_lst *cmd)
+//{
+//	t_arg	**argv;
+//
+//	argv = malloc(sizeof(t_arg *) * 2);
+//	argv[0] = ft_malloc(sizeof(t_arg));
+//	argv[0]->d_quotes = NULL;
+//	argv[0]->s_quotes = NULL;
+//	argv[0]->type = ARG;
+//	argv[0]->str = ft_strdup("cat");
+//	argv[1] = NULL;
+//	cmd->argv = argv;
+//}
 
 static void	repars_heredocs(t_lst *cmd)
 {
