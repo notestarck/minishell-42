@@ -6,7 +6,7 @@
 /*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 11:31:57 by estarck           #+#    #+#             */
-/*   Updated: 2022/09/06 10:49:35 by estarck          ###   ########.fr       */
+/*   Updated: 2022/09/07 19:51:30 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,12 @@ void	builtin(t_data *shell, t_lst *cmd)
 {
 	if (cmd->built == PWD || cmd->built == ECHO || cmd->built == ENV)
 	{
+		if (cmd->argv[1] != NULL && cmd->built == PWD)
+		{		
+			ft_printf("pwd: too many arguments\n");
+			shell->code_error = 1;
+			return ;
+		}
 		set_fork_builtin(shell, cmd);
 		return ;
 	}

@@ -6,7 +6,7 @@
 #    By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/25 09:55:54 by reclaire          #+#    #+#              #
-#    Updated: 2022/09/07 16:22:47 by estarck          ###   ########.fr        #
+#    Updated: 2022/09/07 20:02:26 by estarck          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,8 +18,7 @@ OBJS		=	${SRCS:.c=.o}
 
 INCLUDES  	=	-I./includes -I./libft -I/Users/$(USER)/.brew/opt/readline/include
 CC			=	gcc
-#CFLAGS		:=	-Wall -Wextra -Werror -O3 
-CFLAGS		:=	-Wall -Wextra -Werror -g
+CFLAGS		:=	-Wall -Wextra -Werror
 ifdef MOREFLAGS
 CFLAGS		:=	$(CFLAGS) $(MOREFLAGS)
 endif
