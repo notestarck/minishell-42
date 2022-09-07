@@ -69,5 +69,7 @@ TRucs a faire:
 
 la cmd : echo ~ ~te~st" ~ '$USER  \""+\\$USER+$US\ER~$USERS' ~ t"e$USER \'~'' ""'`' ""' \' ""'" \' 
 |-> ne s'affcihe pas correctement du tout
+cler_history() ou rl_clear_history
+boucle infini avec echo \$USER
 
 virer Farewell
