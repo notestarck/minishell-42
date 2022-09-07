@@ -70,7 +70,7 @@ void	env_del(t_data *shell, char *key)
 	size = 0;
 	while (shell->env[size])
 		size++;
-	out = malloc(sizeof(char *) * size);
+	out = ft_malloc(sizeof(char *) * (size + 1));
 	i = 0;
 	j = 0;
 	while (i < size && j < size)
@@ -79,7 +79,9 @@ void	env_del(t_data *shell, char *key)
 				- (shell->env[i]));
 		if (ft_strncmp(curr, key, ft_strlen(curr)))
 			out[i++] = ft_strdup(shell->env[j]);
-		free(shell->env[j++]);
+		free(shell->env[j]);
+		free(curr);
+		j++;
 	}
 	out[i] = NULL;
 	free(shell->env);
