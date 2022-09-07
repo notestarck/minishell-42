@@ -87,7 +87,8 @@ SRCS	=	ft_atoi.c \
 			ft_printf/handle_s.c \
 			ft_printf/handle_u.c \
 			ft_printf/handle_uX.c \
-			ft_printf/handle_x.c
+			ft_printf/handle_x.c \
+			ft_lstremove.c
 
 OBJS		=	${SRCS:.c=.o}
 INCLUDES  	=	-I./ -I./gnl -I./ft_printf

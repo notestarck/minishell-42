@@ -23,6 +23,8 @@ typedef struct s_list
 	struct s_list	*next;
 }					t_list;
 
+int		ft_lstremove(t_list **lst, t_list *elem, void (*del)(void *));
+
 char	*ft_strcat(char *dest, char *src);
 
 //Compares two strings
