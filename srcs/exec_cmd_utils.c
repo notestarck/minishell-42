@@ -29,11 +29,15 @@ void	parse_args(t_data *shell, t_lst *cmd)
 		j = 0;
 		while (cmd->argv[i]->str[j])
 		{
+			printf("%c ", cmd->argv[i]->str[j]);
 			if (cmd->argv[i]->str[j] == '$' && cmd->argv[i]->str[j + 1] != '\0'
 				&& is_in_quotes(j, cmd->argv[i]) != 1)
+			{
 				j += insert_var(shell, cmd->argv[i], j);
+			}
 			j++;
 		}
+		printf("\n");
 		i++;
 	}
 }
@@ -70,8 +74,12 @@ int	insert_var(t_data *shell, t_arg *arg, int start)
 	j = is_in_quotes(start, arg);
 	while (arg->str[start + i] && ft_isalnum(arg->str[start + i]) && j == is_in_quotes(start + i, arg))
 		i++;
+	if (j != is_in_quotes(start + i, arg))
+		i--;
+	//printf("	%s %s\n", arg->str + start, arg->str + start + i);
 	key = malloc(sizeof(char) * i);
 	ft_strlcpy(key, arg->str + start + 1, i);
+	//printf("		%s\n", key);
 	value = env_get(shell, key);
 	out = ft_substr(arg->str, 0, start);
 	out = ft_str_appnd(out, value, 1, 1);
