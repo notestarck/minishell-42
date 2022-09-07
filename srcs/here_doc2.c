@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
+/*   By: reclaire <reclaire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 16:30:51 by estarck           #+#    #+#             */
-/*   Updated: 2022/09/07 17:16:52 by estarck          ###   ########.fr       */
+/*   Updated: 2022/09/07 18:47:54 by reclaire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	repars_heredocs2(t_lst *cmd, t_arg **argv)
 		j++;
 		i++;
 	}
-	argv[i] = NULL;
+	argv[j] = NULL;
 	free(cmd->argv);
 	cmd->argv = argv;
 }

@@ -12,3 +12,17 @@
    obj:/Users/reclaire/.brew/Cellar/readline/8.1.2/lib/libreadline.8.1.dylib
    ...
 }
+{
+   ignore_readline3
+   Memcheck:Leak
+   ...
+   obj:/usr/lib/system/libxpc.dylib
+   ...
+}
+{
+   ignore_readline3
+   Memcheck:Leak
+   ...
+   obj:/usr/lib/**
+   ...
+}

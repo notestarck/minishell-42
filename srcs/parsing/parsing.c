@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
+/*   By: reclaire <reclaire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 02:40:55 by reclaire          #+#    #+#             */
-/*   Updated: 2022/09/07 16:26:20 by estarck          ###   ########.fr       */
+/*   Updated: 2022/09/07 18:57:54 by reclaire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,12 +75,8 @@ void	pre_process2(t_pars_dat *d)
 	d->i++;
 }
 
-int	pre_process(t_data *shell)
+int	pre_precesss2(t_pars_dat *d)
 {
-	t_pars_dat	*d;
-
-	d = create_dat(shell);
-	d->err = 0;
 	while (d->str[d->i])
 	{
 		if (handle_s_quotes(d))
@@ -98,26 +94,21 @@ int	pre_process(t_data *shell)
 				return (ft_printf("-minishell: Syntax error\n"), 0);
 		}
 	}
+	return (1);
+}
+
+int	pre_process(t_data *shell)
+{
+	t_pars_dat	*d;
+
+	d = create_dat(shell);
+	d->err = 0;
+	if (!pre_precesss2(d))
+		return (0);
 	push(d, ARG);
 	ft_lstremoveif(&d->args, &free_arg, &cmp, NULL);
 	shell->cmd_list = d->args;
 	if (d->s_quote || d->d_quote)
 		return (ft_printf("-minishell: Syntax error\n"), free(d), 0);
 	return (free(d), 1);
-}
-
-void	parse_prompt(t_data *shell)
-{
-	t_list	*tmp;
-
-	if (!pre_process(shell))
-		shell->code_error = -42;
-	init_cmd(shell);
-	cpy_cmd(shell);
-	while (shell->cmd_list)
-	{
-		tmp = shell->cmd_list->next;
-		free(shell->cmd_list);
-		shell->cmd_list = tmp;
-	}
 }

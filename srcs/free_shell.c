@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_shell.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
+/*   By: reclaire <reclaire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 10:59:18 by estarck           #+#    #+#             */
-/*   Updated: 2022/09/07 17:13:14 by estarck          ###   ########.fr       */
+/*   Updated: 2022/09/07 18:42:17 by reclaire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	free_all(t_data *shell)
 
 void	free_targ(t_arg *arg)
 {
-	//free(arg->str);
+	free(arg->str);
 	if (arg->d_quotes)
 		ft_lstclear(&(arg->d_quotes), &free);
 	if (arg->s_quotes)

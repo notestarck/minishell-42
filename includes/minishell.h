@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
+/*   By: reclaire <reclaire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:35:23 by estarck           #+#    #+#             */
-/*   Updated: 2022/09/07 16:59:59 by estarck          ###   ########.fr       */
+/*   Updated: 2022/09/07 18:58:21 by reclaire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,6 +159,7 @@ void		repars_heredocs(t_lst *cmd);
 void		s_left(t_data *shell, t_lst *cmd);
 void		s_right(t_data *shell, t_lst *cmd);
 void		d_right(t_data *shell, t_lst *cmd);
+int			pre_process(t_data *shell);
 
 //Exec cmd utils
 void		parse_args(t_data *shell, t_lst *cmd);

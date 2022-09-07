@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing4.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
+/*   By: reclaire <reclaire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 17:20:18 by estarck           #+#    #+#             */
-/*   Updated: 2022/09/07 17:27:46 by estarck          ###   ########.fr       */
+/*   Updated: 2022/09/07 18:57:57 by reclaire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,20 @@ int	handle_redir(t_pars_dat *d, char c, int size, t_type type)
 	}
 	free(ref);
 	return (0);
+}
+
+void	parse_prompt(t_data *shell)
+{
+	t_list	*tmp;
+
+	if (!pre_process(shell))
+		shell->code_error = -42;
+	init_cmd(shell);
+	cpy_cmd(shell);
+	while (shell->cmd_list)
+	{
+		tmp = shell->cmd_list->next;
+		free(shell->cmd_list);
+		shell->cmd_list = tmp;
+	}
 }
