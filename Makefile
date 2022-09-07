@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+         #
+#    By: reclaire <reclaire@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/25 09:55:54 by reclaire          #+#    #+#              #
-#    Updated: 2022/09/05 14:46:27 by reclaire         ###   ########.fr        #
+#    Updated: 2022/09/07 15:04:41 by reclaire         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,11 +15,11 @@ NAME		=	minishell
 SRCS		=	$(shell find srcs/ -type f -name '*.c')
 OBJS		=	${SRCS:.c=.o}
 
-INCLUDES  	=	-I./includes -I./libft
+INCLUDES  	=	-I./includes -I./libft -I/Users/$(USER)/.brew/opt/readline/include
 CC			=	gcc
 #CFLAGS		:=	-Wall -Wextra -Werror -O3 
 #CFLAGS		:=	-Wall -Wextra -Werror -g
-CFLAGS		:=	-g
+CFLAGS		:=	-g -L/Users/$(USER)/.brew/opt/readline/lib
 ifdef MOREFLAGS
 CFLAGS		:=	$(CFLAGS) $(MOREFLAGS)
 endif

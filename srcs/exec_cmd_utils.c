@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
+/*   By: reclaire <reclaire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 12:10:03 by estarck           #+#    #+#             */
-/*   Updated: 2022/07/01 13:33:12 by estarck          ###   ########.fr       */
+/*   Updated: 2022/09/07 16:00:29 by reclaire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,15 +29,14 @@ void	parse_args(t_data *shell, t_lst *cmd)
 		j = 0;
 		while (cmd->argv[i]->str[j])
 		{
-			printf("%c ", cmd->argv[i]->str[j]);
 			if (cmd->argv[i]->str[j] == '$' && cmd->argv[i]->str[j + 1] != '\0'
 				&& is_in_quotes(j, cmd->argv[i]) != 1)
 			{
 				j += insert_var(shell, cmd->argv[i], j);
 			}
-			j++;
+			//else
+				j++;
 		}
-		printf("\n");
 		i++;
 	}
 }
@@ -72,20 +71,61 @@ int	insert_var(t_data *shell, t_arg *arg, int start)
 		return (1);
 	}
 	j = is_in_quotes(start, arg);
+	printf("J = %d\n", j);
 	while (arg->str[start + i] && ft_isalnum(arg->str[start + i]) && j == is_in_quotes(start + i, arg))
+	{
 		i++;
-	if (j != is_in_quotes(start + i, arg))
-		i--;
-	//printf("	%s %s\n", arg->str + start, arg->str + start + i);
+		printf("1:|%s|    2:|%s|   3:|%d|\n", arg->str + start, arg->str + start+i, is_in_quotes(start + i, arg));
+	}
+	//if (j != is_in_quotes(start + i, arg))
+	//	i--;
 	key = malloc(sizeof(char) * i);
 	ft_strlcpy(key, arg->str + start + 1, i);
-	//printf("		%s\n", key);
 	value = env_get(shell, key);
+	j = ft_strlen(value);
+
+	t_list	*lst1;
+	t_list	*lst2;
+
+	lst1 = arg->s_quotes;
+	lst2 = arg->d_quotes;
+	while (lst1)
+	{
+		if (*((int *)lst1->content) >= 0 && *((int *)lst1->content) <= ft_strlen(key) - 1)
+		{
+			lst2 = lst1->next;
+			ft_lstremove(&arg->s_quotes, lst1, NULL);
+			lst1 = lst2;
+		}
+		else
+		{
+			*((int *)lst1->content) += j - ft_strlen(key) - 1;
+			lst1 = lst1->next;
+		}
+	}
+	while (lst2)
+	{
+		if (*((int *)lst2->content) >= 0 && *((int *)lst2->content) <= ft_strlen(key) - 1)
+		{
+			lst1 = lst2->next;
+			ft_lstremove(&arg->s_quotes, lst2, NULL);
+			lst2 = lst1;
+		}
+		else
+		{
+			*((int *)lst2->content) += j - ft_strlen(key) - 1;
+			lst2 = lst2->next;
+		}
+	}
+
 	out = ft_substr(arg->str, 0, start);
 	out = ft_str_appnd(out, value, 1, 1);
 	out = ft_str_appnd(out, arg->str + start + i, 1, 0);
 	free(key);
 	free(arg->str);
 	arg->str = out;
-	return (i - 1);
+	if (i == 0)
+		return (j);
+	else
+		return (j - 1);
 }
