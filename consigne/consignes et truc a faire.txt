@@ -68,8 +68,5 @@ TRucs a faire:
 -mettre une erreur heredoc + redirection
 
 la cmd : echo ~ ~te~st" ~ '$USER  \""+\\$USER+$US\ER~$USERS' ~ t"e$USER \'~'' ""'`' ""' \' ""'" \' 
-|-> ne s'affcihe pas correctement du tout
 cler_history() ou rl_clear_history
-boucle infini avec echo \$USER
-
-virer Farewell
+segfault sur les heredocs wc<<test

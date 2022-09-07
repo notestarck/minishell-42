@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+        */
+/*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 12:25:02 by estarck           #+#    #+#             */
-/*   Updated: 2022/09/05 16:35:57 by reclaire         ###   ########.fr       */
+/*   Updated: 2022/09/07 16:41:44 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void close_fd(t_data *shell)
+static void	close_fd(t_data *shell)
 {
-	t_lst *tmp;
-	int signal;
+	t_lst	*tmp;
+	int		signal;
 
 	tmp = shell->cmd;
 	while (tmp)
@@ -37,9 +37,9 @@ static void close_fd(t_data *shell)
 	}
 }
 
-void fd_manager(t_data *shell, t_lst *cmd)
+void	fd_manager(t_data *shell, t_lst *cmd)
 {
-	t_lst *tmp;
+	t_lst	*tmp;
 
 	tmp = shell->cmd;
 	if (cmd->next)
@@ -56,7 +56,7 @@ void fd_manager(t_data *shell, t_lst *cmd)
 	}
 }
 
-static void exec_path(t_data *shell, t_lst *cmd)
+static void	exec_path(t_data *shell, t_lst *cmd)
 {
 	g_pid = fork();
 	if (g_pid < 0)
@@ -70,7 +70,7 @@ static void exec_path(t_data *shell, t_lst *cmd)
 	}
 }
 
-void exec_cmd(t_data *shell, t_lst *cmd)
+void	exec_cmd(t_data *shell, t_lst *cmd)
 {
 	parse_args(shell, cmd);
 	if (cmd->built != 9 && cmd->sep == -1)
@@ -81,9 +81,9 @@ void exec_cmd(t_data *shell, t_lst *cmd)
 		exec_path(shell, cmd);
 }
 
-void run_cmd(t_data *shell)
+void	run_cmd(t_data *shell)
 {
-	t_lst *tmp;
+	t_lst	*tmp;
 
 	tmp = shell->cmd;
 	while (tmp)
@@ -93,15 +93,13 @@ void run_cmd(t_data *shell)
 			perror("pipe");
 			shell->cmd->error = errno;
 			close_fd(shell);
-			return;
+			return ;
 		}
 		tmp = tmp->next;
 	}
 	tmp = shell->cmd;
 	while (tmp)
 	{
-		//if (tmp->heredoc)
-		//	init_heredoc(shell, tmp);
 		exec_cmd(shell, tmp);
 		tmp = tmp->next;
 	}

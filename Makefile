@@ -3,12 +3,13 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: reclaire <reclaire@student.42.fr>          +#+  +:+       +#+         #
+#    By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/25 09:55:54 by reclaire          #+#    #+#              #
-#    Updated: 2022/09/07 15:04:41 by reclaire         ###   ########.fr        #
+#    Updated: 2022/09/07 16:22:47 by estarck          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
 
 .DEFAULT_GOAL := all
 NAME		=	minishell
@@ -18,8 +19,7 @@ OBJS		=	${SRCS:.c=.o}
 INCLUDES  	=	-I./includes -I./libft -I/Users/$(USER)/.brew/opt/readline/include
 CC			=	gcc
 #CFLAGS		:=	-Wall -Wextra -Werror -O3 
-#CFLAGS		:=	-Wall -Wextra -Werror -g
-CFLAGS		:=	-g -L/Users/$(USER)/.brew/opt/readline/lib
+CFLAGS		:=	-Wall -Wextra -Werror -g
 ifdef MOREFLAGS
 CFLAGS		:=	$(CFLAGS) $(MOREFLAGS)
 endif
@@ -33,7 +33,8 @@ libft.a:
 			cp libft/libft.a .
 
 $(NAME):	libft.a $(OBJS)
-			$(CC) $(CFLAGS) -g $(OBJS) libft.a -lreadline -o $(NAME)
+			$(CC) $(CFLAGS) -lreadline -L/Users/$(USER)/.brew/opt/readline/lib $(OBJS) libft.a -o $(NAME)
+
 
 all:		$(NAME)
 

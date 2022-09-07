@@ -6,7 +6,7 @@
 /*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 04:34:27 by reclaire          #+#    #+#             */
-/*   Updated: 2022/08/24 13:51:52 by estarck          ###   ########.fr       */
+/*   Updated: 2022/09/07 17:21:05 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,44 +52,6 @@ void	add_quote(t_pars_dat *d, int t, int v, int j)
 		}
 		k++;
 	}
-}
-
-int	handle_redir(t_pars_dat *d, char c, int size, t_type type)
-{
-	char	*ref;
-	int		j;
-
-	ref = ft_malloc(sizeof(char) * (size + 1));
-	size--;
-	ref[size + 1] = '\0';
-	while (size >= 0)
-	{
-		ref[size] = c;
-		size--;
-	}
-	if (!ft_strncmp(d->str + d->i, ref, ft_strlen(ref)))
-	{
-		push(d, ARG);
-		d->new = ft_strdup(ref);
-		push(d, type);
-		d->new = ft_strdup("");
-		d->i += ft_strlen(ref);
-		free(ref);
-		j = 0;
-		while (d->str[d->i + j])
-		{
-			if (ft_isalnum(d->str[d->i + j]))
-				return (1);
-			if(!(d->str[d->i + j] == 32 || (d->str[d->i + j] >= 9
-				&& d->str[d->i + j] <= 13)))
-				break ;
-			j++;
-		}
-		d->err = 1;
-		return (1);
-	}
-	free(ref);
-	return (0);
 }
 
 int	handle_s_quotes(t_pars_dat *d)

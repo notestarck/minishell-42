@@ -6,7 +6,7 @@
 /*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:35:23 by estarck           #+#    #+#             */
-/*   Updated: 2022/09/06 10:49:59 by estarck          ###   ########.fr       */
+/*   Updated: 2022/09/07 16:59:59 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,11 +149,13 @@ void		run_cmd(t_data *shell);
 void		fd_manager(t_data *shell, t_lst *cmd);
 char		**t_arg_to_char(t_arg **cmd);
 void		exec_cmd(t_data *shell, t_lst *cmd);
+void		insert_var_inter(t_data *shell, char **arg, int start);
 
 //Exec op
 void		run_op(t_data *shell, t_lst *cmd);
 void		fd_manager2(t_data *shell, t_lst *cmd, int fd);
 void		init_heredoc(t_data *shell, t_lst *cmd);
+void		repars_heredocs(t_lst *cmd);
 void		s_left(t_data *shell, t_lst *cmd);
 void		s_right(t_data *shell, t_lst *cmd);
 void		d_right(t_data *shell, t_lst *cmd);

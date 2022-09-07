@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reclaire <reclaire@student.42mulhouse.f    +#+  +:+       +#+        */
+/*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 02:40:55 by reclaire          #+#    #+#             */
-/*   Updated: 2022/07/01 15:16:52 by reclaire         ###   ########.fr       */
+/*   Updated: 2022/09/07 16:26:20 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,6 @@ int	handle_specials(t_pars_dat *d)
 
 void	pre_process2(t_pars_dat *d)
 {
-	int	i;
-
 	if (handle_redir(d, '>', 2, D_RIGHT))
 		return ;
 	else if (handle_redir(d, '<', 2, D_LEFT))
@@ -97,20 +95,14 @@ int	pre_process(t_data *shell)
 		{
 			pre_process2(d);
 			if (d->err == 1)
-			{
-				ft_printf("-minishell: Syntax error\n");
-				return (0);
-			}
+				return (ft_printf("-minishell: Syntax error\n"), 0);
 		}
 	}
 	push(d, ARG);
 	ft_lstremoveif(&d->args, &free_arg, &cmp, NULL);
 	shell->cmd_list = d->args;
 	if (d->s_quote || d->d_quote)
-	{
-		ft_printf("-minishell: Syntax error\n");
-		return (free(d), 0);
-	}
+		return (ft_printf("-minishell: Syntax error\n"), free(d), 0);
 	return (free(d), 1);
 }
 

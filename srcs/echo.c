@@ -6,7 +6,7 @@
 /*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 16:17:17 by reclaire          #+#    #+#             */
-/*   Updated: 2022/09/06 11:15:05 by estarck          ###   ########.fr       */
+/*   Updated: 2022/09/07 16:40:34 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ static void	echo_print(t_data *shell, t_arg **args, int newline)
 		j = 0;
 		while (args[i]->str[j])
 		{
-			if (ft_strcmp(args[i]->str, "~") == 0 && args[i]->d_quotes == NULL && args[i]->s_quotes == NULL)
+			if (ft_strcmp(args[i]->str, "~") == 0 && args[i]->d_quotes == NULL
+				&& args[i]->s_quotes == NULL)
 				echo_tild(shell);
 			else
 				write(1, args[i]->str + j, 1);

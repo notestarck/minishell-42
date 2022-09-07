@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: estarck <estarck@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/03 11:30:23 by estarck           #+#    #+#             */
-/*   Updated: 2022/09/05 17:16:35by estarck          ###   ########.fr       */
+/*   Created: 2022/09/07 17:17:11 by estarck           #+#    #+#             */
+/*   Updated: 2022/09/07 17:17:14 by estarck          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 
 static int	check_tmp_error(t_data *shell, t_lst *tmp)
 {
-	if ((tmp->er_quote == 1 || tmp->error == 1) || (tmp->heredoc && tmp->sep == S_RIGHT) || (tmp->heredoc && tmp->sep == D_RIGHT))
+	if ((tmp->er_quote == 1 || tmp->error == 1)
+		|| (tmp->heredoc && tmp->sep == S_RIGHT)
+		|| (tmp->heredoc && tmp->sep == D_RIGHT))
 	{
 		ft_printf("-minishell: Syntax error\n");
 		shell->code_error = SYNTAX_ERROR;
