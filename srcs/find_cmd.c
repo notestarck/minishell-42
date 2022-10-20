@@ -45,7 +45,6 @@ static int	check_access(char ***env_path, DIR *dir)
 	return (0);
 }
 
-//cherche la cmd dans les path de l'env
 static char	*find_path(t_data *shell, char **env_path, char *cmd)
 {
 	DIR				*dir;
